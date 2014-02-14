@@ -1,0 +1,47 @@
+<#
+Copyright (C) 2013-2014  Olaf Radicke <briefkasten@olaf-rdicke.de>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or later
+version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#>
+
+<%session
+    include="core/model/UserSession.h" >
+    tntwebwizard::Core::UserSession userSession( request.getSerial() );
+    // MySessionClass session(request.getSerial());
+</%session>
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>TNT-WEB-WIZARD - Home</title>
+    <meta charset = "UTF-8" />
+    <& "style" &>
+</head>
+<body>
+
+    <br />
+
+    <div class="centerbox">
+        <ul>
+            <li><a href="">Load project data</a></li>
+            <li><a href="">Project browser</a></li>
+            <li><a href="">New Project</a></li>
+            <li><a href="">New component</a></li>
+            <li><a href="">Database support</a></li>
+            <li><a href="">REST (xml/json) API support</a></li>
+        </ul>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+{
+    "binName": "tntwebwizard",
+    "projectName": "tntwebwizard",
+    "versionNo": 1,
+    "tarballName": "tntwebwizard",
+    "projectURL": "",
+    "cppCompiler": "g++",
+    "cppFiles": [
+        "./src/routereverse/manager/Manager.cpp",
+        "./src/main.cpp",
+        "./src/core/model/Config.cpp",
+        "./src/core/model/UserSession.cpp"
+    ],
+    "cppFlags": "-c -Wall -pedantic  -I ./src  ",
+    "cppLinkerFlags": " -I./src -lcxxtools -ltntnet -ltntdb ",
+    "ecppCompiler": "ecppc",
+    "ecppFlags": "-I./src",
+    "hFiles": [
+        "./src/routereverse/initcomponent.h",
+        "./src/routereverse/manager/Manager.h",
+        "./src/routereverse/models/URLData.h",
+        "./src/core/model/UserSession.h",
+        "./src/core/model/Config.h"
+    ],
+    "ecppFiles": [
+        "./src/core/view/home.ecpp"
+    ],
+    "resourcesFiles": [],
+    "extreDist": [],
+    "thirdpartlibs": "",
+    "tntdbsupport": "y",
+    "standalone": "y",
+    "buildDir": "bulid",
+    "email": "breifkasten@olaf-radicke.de"
+}
