@@ -27,7 +27,7 @@
 #include <exception>
 
 
-namespace tntwebwizard {
+namespace Tww {
 namespace RouteReverse {
 
 
@@ -134,7 +134,7 @@ std::string  Manager::getAbsolutURL(
 }
 
 } // END namespace SessionForm
-} // namespace tntwebwizard
+} // namespace Tww
 
 
 

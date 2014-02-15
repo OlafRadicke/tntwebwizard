@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <%session
     include="core/model/UserSession.h" >
-    tntwebwizard::Core::UserSession userSession( request.getSerial() );
+    Tww::Core::UserSession userSession( request.getSerial() );
     // MySessionClass session(request.getSerial());
 </%session>
 

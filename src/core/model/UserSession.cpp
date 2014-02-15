@@ -26,7 +26,7 @@
 #include <ostream>
 #include <iostream>
 
-namespace tntwebwizard {
+namespace Tww {
 namespace Core {
 
 log_define("core.models.UserSession")
@@ -54,4 +54,4 @@ std::string UserSession::getSesstonPath() {
 
 
 } // namespace Core
-} // namespace tntwebwizard
+} // namespace Tww

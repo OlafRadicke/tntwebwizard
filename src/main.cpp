@@ -26,7 +26,7 @@
 #include <string>
 #include <cxxtools/log.h>
 
-namespace tntwebwizard {
+// namespace Tww
 
 log_define("main")
 
@@ -37,7 +37,7 @@ int main ( int argc, char* argv[] )
         /* initialize random seed: */
         srand (time(NULL));
 
-        Core::Config& config = Core::Config::it();
+        Tww::Core::Config& config = Tww::Core::Config::it();
         config.read();
 
         log_init( config.logging() );
@@ -65,8 +65,8 @@ int main ( int argc, char* argv[] )
         // controller rout for SessionForm token check.
         app.mapUrl( "^/SessionForm/NoAvailabeToken", "NoAvailabeTokenView" );
 
-        RouteReverse::initcomponent( app );
-        Core::initcomponent( app );
+        Tww::RouteReverse::initcomponent( app );
+        Tww::Core::initcomponent( app );
 
         std::cout << "tntwebwizard is started and run on http://" << config.appIp()
             << ":" <<  config.appPort() << "/" << std::endl;
@@ -84,4 +84,3 @@ int main ( int argc, char* argv[] )
     return 0;
 }
 
-} // namespace tntwebwizard

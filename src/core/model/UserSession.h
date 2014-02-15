@@ -21,11 +21,11 @@
 #ifndef CORE_USERSESSION_H
 #define CORE_USERSESSION_H
 
-//#include <tnt/httprequest.h>
+#include <tnt/httprequest.h>
 
 #include <string>
 
-namespace tntwebwizard {
+namespace Tww {
 namespace Core {
 
 
@@ -58,6 +58,6 @@ private:
 
 
 } // namespace Core
-} // namespace tntwebwizard
+} // namespace Tww
 
 #endif

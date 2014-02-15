@@ -25,7 +25,7 @@
 #include <cxxtools/serializationinfo.h>
 
 
-namespace tntwebwizard {
+namespace Tww {
 namespace Core {
 
 /**
@@ -81,6 +81,6 @@ public:
 };
 
 } // namespace core
-} // namespace tntwebwizard
+} // namespace Tww
 
 #endif

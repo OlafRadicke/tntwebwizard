@@ -27,7 +27,7 @@
 #include <fstream>
 #include <ostream>
 
-namespace tntwebwizard {
+namespace Tww {
 namespace Core {
 
 Config& Config::it()
@@ -90,4 +90,4 @@ void operator>>= (const cxxtools::SerializationInfo& si, Config& config )
 
 
 } // namespace core
-} // namespace tntwebwizard
+} // namespace Tww

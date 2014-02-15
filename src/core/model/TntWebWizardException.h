@@ -7,7 +7,7 @@
 
 
 
-namespace tntwebwizard {
+namespace Tww {
 namespace Core {
 
     /**
@@ -27,6 +27,6 @@ namespace Core {
     };
 
 } // end namespace Core
-} // namespace tntwebwizard
+} // namespace Tww
 
 #endif

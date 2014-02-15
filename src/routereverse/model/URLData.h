@@ -24,7 +24,7 @@
 #include <tnt/tntnet.h>
 
 
-namespace tntwebwizard {
+namespace Tww {
 namespace RouteReverse {
 
 /**
@@ -59,7 +59,7 @@ public:
 
 
 } // END namespace RouteReverse
-} // namespace tntwebwizard
+} // namespace Tww
 
 
 #endif // ROUTEREVERSE_URLDATA_H

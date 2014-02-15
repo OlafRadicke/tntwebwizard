@@ -7,7 +7,7 @@
 
 
 
-namespace tntwebwizard {
+namespace Tww {
 namespace RouteReverse {
 
     /**
@@ -27,6 +27,6 @@ namespace RouteReverse {
     };
 
 } // end namespace RouteReverse
-} // namespace tntwebwizard
+} // namespace Tww
 
 #endif

@@ -27,7 +27,7 @@
 #include <tnt/tntnet.h>
 
 
-namespace tntwebwizard {
+namespace Tww {
 namespace Core {
 
     log_define("Core.initcomponent")
@@ -90,7 +90,7 @@ void initcomponent ( tnt::Tntnet &app ) {
 
 
 } // END namespace Core
-} // namespace tntwebwizard
+} // namespace Tww
 
 #endif // CORE_INITCOMPONENT_H
 

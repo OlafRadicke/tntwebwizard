@@ -26,7 +26,7 @@
 #include <routereverse/model/URLData.h>
 #include <routereverse/manager/Manager.h>
 
-namespace tntwebwizard {
+namespace Tww {
 namespace RouteReverse {
 
 /**
@@ -41,7 +41,7 @@ void initcomponent ( tnt::Tntnet &app ) {
 
 
 } // END namespace RouteReverse
-} // namespace tntwebwizard
+} // namespace Tww
 
 
 #endif // ROUTEREVERSE_INITCOMPONENT_H
