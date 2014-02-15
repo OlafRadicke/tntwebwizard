@@ -25,7 +25,10 @@
     "ecppFiles": [
         "./src/core/view/home.ecpp"
     ],
-    "resourcesFiles": [],
+    "resourcesFiles": [
+        "./src/core/resources/tntwebwizard.css",
+        "./src/core/resources/favicon.ico"
+    ],
     "extreDist": [],
     "thirdpartlibs": "",
     "tntdbsupport": "y",
