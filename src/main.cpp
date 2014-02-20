@@ -58,7 +58,7 @@ int main ( int argc, char* argv[] )
         // 1 to 1 rout
         app.mapUrl( "^/(.*)$", "$1" );
         // default route for /
-        app.mapUrl( "^/$", "home" );
+        app.mapUrl( "^/$", "core_home" );
 
         // controller rout for SessionForm token check.
         app.mapUrl( "^/(.*)", "SessionForm::Controller" );

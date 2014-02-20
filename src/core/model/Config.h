@@ -80,7 +80,7 @@ public:
 
 };
 
-} // namespace core
+} // namespace Core
 } // namespace Tww
 
 #endif

@@ -1,12 +1,9 @@
 {
     "binName": "tntwebwizard",
-    "projectName": "tntwebwizard",
-    "versionNo": 1,
-    "tarballName": "tntwebwizard",
-    "projectURL": "",
     "cppCompiler": "g++",
     "cppFiles": [
         "./src/main.cpp",
+	"./src/core/controller/BasicProjectDataController.cpp",
         "./src/core/model/Config.cpp",
         "./src/core/model/UserSession.cpp",
         "./src/routereverse/manager/Manager.cpp"
@@ -16,23 +13,21 @@
     "ecppCompiler": "ecppc",
     "ecppFlags": "-I./src",
     "hFiles": [
+	"./src/core/controller/BasicProjectDataController.h",
+        "./src/core/model/UserSession.h",
+        "./src/core/model/Config.h",
         "./src/routereverse/initcomponent.h",
         "./src/routereverse/manager/Manager.h",
-        "./src/routereverse/models/URLData.h",
-        "./src/core/model/UserSession.h",
-        "./src/core/model/Config.h"
+        "./src/routereverse/models/URLData.h"
     ],
     "ecppFiles": [
-        "./src/core/view/home.ecpp"
+        "./src/core/view/core_home.ecpp",
+	"./src/core/view/core_basicprojectdata.ecpp"
     ],
     "resourcesFiles": [
+	"./src/core/resources/normalize.css",
         "./src/core/resources/tntwebwizard.css",
         "./src/core/resources/favicon.ico"
     ],
-    "extreDist": [],
-    "thirdpartlibs": "",
-    "tntdbsupport": "y",
-    "standalone": "y",
-    "buildDir": "bulid",
-    "email": "breifkasten@olaf-radicke.de"
+    "buildDir": "bulid"
 }

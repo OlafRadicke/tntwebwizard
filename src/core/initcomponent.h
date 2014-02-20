@@ -39,47 +39,21 @@ namespace Core {
 void initcomponent ( tnt::Tntnet &app ) {
     RouteReverse::URLData urlData;
 
-
     // feed-icon.png
 
-//     RouteReverse::URLData urlData4;
-//     urlData4.componentName      = "resources";
-//     urlData4.urlRegEx           = "^/Core/feed-icon.png$";
-//     urlData4.componentPathInfo  = "Core/resources/feed-icon.png";
-//     RouteReverse::Manager::addRoute( urlData4, app );
-//
-//     RouteReverse::URLData urlData4_1;
-//     urlData4_1.componentName      = "Core/feed-icon.png";
-//     urlData4_1.reverseRoute       = "Core/feed-icon.png";
-//     RouteReverse::Manager::addRoute( urlData4_1, app );
+    RouteReverse::URLData urlData_1;
+    urlData_1.componentName      = "resources";
+    urlData_1.urlRegEx           = "^/core/resources/feed-icon.png$";
+    urlData_1.componentPathInfo  = "core/resources/feed-icon.png";
+    RouteReverse::Manager::addRoute( urlData_1, app );
 
-    // SwitchToHandheldVersion
+    // basic_project_data
 
-//     RouteReverse::URLData urlData5_1;
-//     urlData5_1.urlRegEx           = "^SwitchToHandheldVersion$";
-//     urlData5_1.componentName      = "SwitchToHandheldVersionView";
-//     RouteReverse::Manager::addRoute( urlData5_1, app );
-//
-//     RouteReverse::URLData urlData5_2;
-//     urlData5_2.urlRegEx           = "^SwitchToHandheldVersion$";
-//     urlData5_2.componentName      = "SwitchToHandheldVersionController";
-//     RouteReverse::Manager::addRoute( urlData5_2, app );
-//
-//     RouteReverse::URLData urlData5_3;
-//     urlData5_3.reverseRoute       = "SwitchToHandheldVersion";
-//     urlData5_3.componentName      = "SwitchToHandheldVersion";
-//     RouteReverse::Manager::addRoute( urlData5_3, app );
-
-    // NewAccount
-
-//     app.mapUrl("^NewAccount$", "NewAccountView");
-//     app.mapUrl("^NewAccount$", "NewAccountController");
-//
-//     RouteReverse::URLData urlData6;
-//     urlData5_3.reverseRoute       = "NewAccount";
-//     urlData5_3.componentName      = "NewAccount";
-//     RouteReverse::Manager::addRoute( urlData5_3, app );
-
+    RouteReverse::URLData urlData_2;
+    urlData_2.componentName      = "core_basicprojectdata";
+    urlData_2.urlRegEx             = "^/core/basicprojectdata$";
+    urlData_2.reverseRoute       = "core/basicprojectdata";
+    RouteReverse::Manager::addRoute( urlData_2, app );
 
     // ready get info...
 

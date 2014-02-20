@@ -1,0 +1,85 @@
+<#
+Copyright (C) 2013-2014  Olaf Radicke <briefkasten@olaf-rdicke.de>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or later
+version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#>
+
+<%session
+    include="core/model/UserSession.h" >
+        Tww::Core::UserSession userSession( request.getSerial() );
+</%session>
+<%request
+    include="core/controller/BasicProjectDataController.h">
+        Tww::Core::BasicProjectDataController
+            basicProjectDataController( userSession );
+</%request>
+<%pre>
+    #include <routereverse/manager/Manager.h>
+</%pre>
+<%cpp>
+
+    basicProjectDataController.worker(
+        request,
+        reply,
+        qparam
+    );
+
+    std::string href_normalize_css = Tww::RouteReverse::Manager::getLinkTo(
+        "/core/resources/normalize.css",
+        request
+    );
+
+    std::string href_tntwebwizard_css = Tww::RouteReverse::Manager::getLinkTo(
+        "/core/resources/tntwebwizard.css",
+        request
+    );
+
+</%cpp>
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>TNT-WEB-WIZARD - Home</title>
+    <meta charset = "UTF-8">
+    <link
+        rel="icon"
+        href="/core/resources/favicon.ico"
+        type="image/x-icon">
+    <link
+        rel="stylesheet"
+        href="<$ href_normalize_css $>"
+        type="text/css">
+    <link
+        rel="stylesheet"
+        href="<$ href_tntwebwizard_css $>"
+        type="text/css">
+</head>
+<body>
+    <h1>BASIC PROJECT DATA</h1>
+    <br />
+% if ( basicProjectDataController.feedback != "" ) {
+
+        <div class="feedback-box">
+            <b><$ basicProjectDataController.feedback $> </b>
+        </div>
+
+% }
+    <div class="centerbox">
+
+        <form method="post">
+            <p>project name:<br><input name="form_projectname" type="text" size="30" maxlength="30"></p>
+        </form>
+    </div>
+
+</body>
+</html>

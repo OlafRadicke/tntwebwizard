@@ -15,11 +15,28 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #>
 
+
 <%session
     include="core/model/UserSession.h" >
-    Tww::Core::UserSession userSession( request.getSerial() );
-    // MySessionClass session(request.getSerial());
+        Tww::Core::UserSession userSession( request.getSerial() );
 </%session>
+
+<%pre>
+    #include <routereverse/manager/Manager.h>
+    #include <string>
+    #include <iostream>
+</%pre>
+
+<%cpp>
+
+    std::string href_core_basicprojectdata = Tww::RouteReverse::Manager::getLinkTo(
+        "core_basicprojectdata",
+        request
+    );
+
+    std::cout << __FILE__ << __LINE__ << href_core_basicprojectdata << std::endl;
+
+</%cpp>
 
 <!DOCTYPE HTML>
 <html>
@@ -30,17 +47,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         rel="icon"
         href="/core/resources/favicon.ico"
         type="image/x-icon">
+<!--
     <link
         rel="stylesheet"
         href="/core/resources/tntwebwizard.css"
         type="text/css">
+-->
+
+    <link
+        rel="stylesheet"
+        href="<$ Tww::RouteReverse::Manager::getLinkTo(                     "/core/resources/tntwebwizard.css", request ) $>"
+        type="text/css">
 </head>
 <body>
-
+    <h1>TNT-WEB-WIZARD</h1>
     <br />
-
+    Go to...
     <div class="centerbox">
         <ul>
+            <li><a href="<$ href_core_basicprojectdata $>">Basic Project Data</a></li>
             <li><a href="">Load project data</a></li>
             <li><a href="">Project browser</a></li>
             <li><a href="">New Project</a></li>
