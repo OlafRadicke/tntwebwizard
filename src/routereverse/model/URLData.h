@@ -46,7 +46,8 @@ public:
     std::string  componentName;
 
     /**
-     * Storage the path info for multibinary components.
+     * Storage the path info for multi binary components.
+     * For example resources components.
      */
     std::string  componentPathInfo;
 

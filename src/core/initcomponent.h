@@ -39,13 +39,54 @@ namespace Core {
 void initcomponent ( tnt::Tntnet &app ) {
     RouteReverse::URLData urlData;
 
-    // feed-icon.png
+    // ######################## RESOURCES ############################
+    app.mapUrl("^/(.*)", "resources")
+       .setPathInfo("resources/$1");
 
-    RouteReverse::URLData urlData_1;
-    urlData_1.componentName      = "resources";
-    urlData_1.urlRegEx           = "^/core/resources/feed-icon.png$";
-    urlData_1.componentPathInfo  = "core/resources/feed-icon.png";
-    RouteReverse::Manager::addRoute( urlData_1, app );
+    app.mapUrl("^/core/favicon.ico$", "resources")
+        .setPathInfo("resources/core/favicon.ico");
+
+    // /core/resources/tntnet.png
+
+//     app.mapUrl("^/tntnet.png$", "resources")
+//         .setPathInfo("src/core/resource/tntnet.png");
+//
+//     app.mapUrl("^/tntnet2.png$", "resources")
+//         .setPathInfo("resources/tntnet.png");
+
+//     RouteReverse::URLData urlData_1_1;
+//     urlData_1_1.componentName      = "resources";
+//     urlData_1_1.urlRegEx           = "^/core/tntnet.png$";
+//     urlData_1_1.reverseRoute       = "core/tntnet.png";
+//     urlData_1_1.componentPathInfo  = "core/resources/tntnet.png";
+//     RouteReverse::Manager::addRoute( urlData_1_1, app );
+
+    // /core/resources/normalize.css
+
+    app.mapUrl("^/core/normalize.css$", "resources")
+        .setPathInfo("core/resource/normalize.css");
+
+//     RouteReverse::URLData urlData_1_2;
+//     urlData_1_2.componentName      = "resources";
+//     urlData_1_2.urlRegEx           = "^/core/normalize.css$";
+//     urlData_1_2.reverseRoute       = "/core/normalize.css";
+//     urlData_1_2.componentPathInfo  = "core/normalize.css";
+//     RouteReverse::Manager::addRoute( urlData_1_2, app );
+
+    // /core/resources/tntwebwizard.css
+
+    app.mapUrl("^/core/tntwebwizard.css$", "resources")
+        .setPathInfo("core/resource/tntwebwizard.css");
+
+//     RouteReverse::URLData urlData_1_3;
+//     urlData_1_3.componentName      = "resources";
+//     urlData_1_3.urlRegEx           = "^/core/tntwebwizard.css$";
+//     urlData_1_3.reverseRoute       = "/core/tntwebwizard.css";
+//     urlData_1_3.componentPathInfo  = "core/resources/tntwebwizard.css";
+//     RouteReverse::Manager::addRoute( urlData_1_3, app );
+
+
+    // ############################ SITES ##########################
 
     // basic_project_data
 

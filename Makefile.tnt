@@ -22,12 +22,14 @@
     ],
     "ecppFiles": [
         "./src/core/view/core_home.ecpp",
-	"./src/core/view/core_basicprojectdata.ecpp"
+	"./src/core/view/core_basicprojectdata.ecpp",
+	"./src/core/view/core_part_title.eccp"
     ],
     "resourcesFiles": [
-	"./src/core/resources/normalize.css",
-        "./src/core/resources/tntwebwizard.css",
-        "./src/core/resources/favicon.ico"
+        "./src/core/resource/favicon.ico",
+	"./src/core/resource/normalize.css",
+	"./src/core/resource/tntnet.png",
+        "./src/core/resource/tntwebwizard.css"
     ],
     "buildDir": "bulid"
 }
