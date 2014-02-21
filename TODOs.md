@@ -11,3 +11,5 @@
 * REST (json,xml)
 * Exception class
 * Logging
+
+Blogartikel Flag "-I ./src"

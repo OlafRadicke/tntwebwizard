@@ -58,7 +58,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <& core_part_title qparam >
 
-    <h1>BASIC PROJECT DATA</h1>
+    <h2>BASIC PROJECT DATA</h2>
     <br />
 % if ( basicProjectDataController.feedback != "" ) {
 

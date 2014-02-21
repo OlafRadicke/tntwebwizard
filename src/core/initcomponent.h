@@ -43,49 +43,58 @@ void initcomponent ( tnt::Tntnet &app ) {
 
     // /core/resources/tntnet.png
 
-    app.mapUrl("^/core/tntnet.png$", "resources")
-        .setPathInfo("./src/core/resources/tntnet.png");
+    app.mapUrl(
+        "^/core/tntnet.png$",
+        "resources"
+    ).setPathInfo("core/resources/tntnet.png");
 
     RouteReverse::Manager::add(
-        std::string("core_tntnet_png"),
-        std::string("core/tntnet.png") );
+        "core_tntnet_png",
+        "core/tntnet.png"
+    );
 
     // /core/resources/normalize.css
 
     app.mapUrl("^/core/normalize.css$", "resources")
-        .setPathInfo("./src/core/resource/normalize.css");
+        .setPathInfo("core/resources/normalize.css");
 
-    RouteReverse::Manager::add( "core_normalize_css", "core/normalize.css" );
-
-//     RouteReverse::URLData urlData_1_2;
-//     urlData_1_2.componentName      = "resources";
-//     urlData_1_2.urlRegEx           = "^/core/normalize.css$";
-//     urlData_1_2.reverseRoute       = "/core/normalize.css";
-//     urlData_1_2.componentPathInfo  = "core/normalize.css";
-//     RouteReverse::Manager::addRoute( urlData_1_2, app );
+    RouteReverse::Manager::add(
+        "core_normalize_css",
+        "core/normalize.css"
+    );
 
     // /core/resources/tntwebwizard.css
 
-    app.mapUrl("^/core/tntwebwizard.css$", "resources")
-        .setPathInfo("core/resource/tntwebwizard.css");
+    app.mapUrl(
+        "^/core/tntwebwizard.css$",
+        "resources"
+    ).setPathInfo( "core/resources/tntwebwizard.css" );
 
-//     RouteReverse::URLData urlData_1_3;
-//     urlData_1_3.componentName      = "resources";
-//     urlData_1_3.urlRegEx           = "^/core/tntwebwizard.css$";
-//     urlData_1_3.reverseRoute       = "/core/tntwebwizard.css";
-//     urlData_1_3.componentPathInfo  = "core/resources/tntwebwizard.css";
-//     RouteReverse::Manager::addRoute( urlData_1_3, app );
-
+    RouteReverse::Manager::add(
+        "core_tntwebwizard_css",
+        "core/tntwebwizard.css"
+    );
 
     // ############################ SITES ##########################
 
     // basic_project_data
 
-    RouteReverse::URLData urlData_2;
-    urlData_2.componentName      = "core_basicprojectdata";
-    urlData_2.urlRegEx             = "^/core/basicprojectdata$";
-    urlData_2.reverseRoute       = "core/basicprojectdata";
-    RouteReverse::Manager::addRoute( urlData_2, app );
+
+    app.mapUrl(
+        "^/core/basicprojectdata$",
+        "core_basicprojectdata"
+    );
+
+    RouteReverse::Manager::add(
+        "core_basicprojectdata",
+        "/core/basicprojectdata"
+    );
+
+//     RouteReverse::URLData urlData_2;
+//     urlData_2.componentName      = "core_basicprojectdata";
+//     urlData_2.urlRegEx             = "^/core/basicprojectdata$";
+//     urlData_2.reverseRoute       = "core/basicprojectdata";
+//     RouteReverse::Manager::addRoute( urlData_2, app );
 
     // ready get info...
 
