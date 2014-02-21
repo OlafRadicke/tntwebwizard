@@ -5,14 +5,14 @@
 <%cpp>
 
     std::string href_tntnet_png = Tww::RouteReverse::Manager::getLinkTo(
-        "core/tntnet.png",
+        std::string("core_tntnet_png"),
         request
     );
 
 </%cpp>
 
-      <div id="header">
+    <div id="header">
         <a href="/" class="maintitle">TNT-WEB-WIZARD</a>
         <span id="subheader"><a href="http://tntnet.org">tntnet.org</a></span>
-        <a href="/"><img id="logo" src="/tntnet.png" alt="Tntnet logo"></a>
-      </div>
+        <a href="/"><img id="logo" src="<$ href_tntnet_png $>" alt="Tntnet logo"></a>
+    </div>

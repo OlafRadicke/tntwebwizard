@@ -40,31 +40,22 @@ void initcomponent ( tnt::Tntnet &app ) {
     RouteReverse::URLData urlData;
 
     // ######################## RESOURCES ############################
-    app.mapUrl("^/(.*)", "resources")
-       .setPathInfo("resources/$1");
-
-    app.mapUrl("^/core/favicon.ico$", "resources")
-        .setPathInfo("resources/core/favicon.ico");
 
     // /core/resources/tntnet.png
 
-//     app.mapUrl("^/tntnet.png$", "resources")
-//         .setPathInfo("src/core/resource/tntnet.png");
-//
-//     app.mapUrl("^/tntnet2.png$", "resources")
-//         .setPathInfo("resources/tntnet.png");
+    app.mapUrl("^/core/tntnet.png$", "resources")
+        .setPathInfo("./src/core/resources/tntnet.png");
 
-//     RouteReverse::URLData urlData_1_1;
-//     urlData_1_1.componentName      = "resources";
-//     urlData_1_1.urlRegEx           = "^/core/tntnet.png$";
-//     urlData_1_1.reverseRoute       = "core/tntnet.png";
-//     urlData_1_1.componentPathInfo  = "core/resources/tntnet.png";
-//     RouteReverse::Manager::addRoute( urlData_1_1, app );
+    RouteReverse::Manager::add(
+        std::string("core_tntnet_png"),
+        std::string("core/tntnet.png") );
 
     // /core/resources/normalize.css
 
     app.mapUrl("^/core/normalize.css$", "resources")
-        .setPathInfo("core/resource/normalize.css");
+        .setPathInfo("./src/core/resource/normalize.css");
+
+    RouteReverse::Manager::add( "core_normalize_css", "core/normalize.css" );
 
 //     RouteReverse::URLData urlData_1_2;
 //     urlData_1_2.componentName      = "resources";

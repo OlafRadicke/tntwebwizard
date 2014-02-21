@@ -40,10 +40,19 @@ public:
 
     /**
      * Add a url component rout.
+     * @param targetID a ID for a target component.
+     * @param reverseRoute The reverse route.
+     */
+    static void add( std::string targetID, std::string reverseRoute );
+
+
+    /**
+     * Add a url component rout.
      * @param urlData Contains routing data.
      * @param app reference of the application server.
      */
     static void addRoute( const URLData &urlData, tnt::Tntnet &app );
+
 
 // G --------------------------------------------------------------------------
 

@@ -33,13 +33,28 @@ namespace RouteReverse {
 
 log_define("RouteReverse.Manager")
 
-// std::map< std::string, std::string > Manager::reverseMAP = std::map< std::string, std::string >();
-
-
 std::map< std::string, std::string > Manager::reverseMAP;
 
 
 // A --------------------------------------------------------------------------
+
+
+void Manager::add( std::string targetID, std::string reverseRoute ) {
+
+        if ( Manager::reverseMAP.count( targetID ) > 0 ) {
+            std::ostringstream errorText;
+            errorText << "[" << __FILE__ << " "
+                <<  __LINE__  << "] "
+                << " the target id " << targetID
+                << " is all ready set with reverse route!";
+            log_debug( errorText );
+            throw RouteReverseException( errorText.str() );
+        }
+        Manager::reverseMAP[ targetID ] = reverseRoute;
+        log_debug( "List of know reverse routes: \n" <<
+            RouteReverse::Manager::getAllReversesRoutes() );
+
+}
 
 
 void Manager::addRoute( const URLData &urlData, tnt::Tntnet &app ) {
@@ -68,6 +83,8 @@ void Manager::addRoute( const URLData &urlData, tnt::Tntnet &app ) {
             RouteReverse::Manager::getAllReversesRoutes() );
     }
 }
+
+
 
 
 // G --------------------------------------------------------------------------

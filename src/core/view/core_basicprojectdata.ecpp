@@ -81,7 +81,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 type="text"
                 size="30"
                  maxlength="30">
-
+            <br>
             <input type="submit" value=" Absenden ">
             <input type="reset" value=" Abbrechen">
         </form>

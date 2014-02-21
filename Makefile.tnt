@@ -26,10 +26,10 @@
 	"./src/core/view/core_part_title.eccp"
     ],
     "resourcesFiles": [
-        "./src/core/resource/favicon.ico",
-	"./src/core/resource/normalize.css",
-	"./src/core/resource/tntnet.png",
-        "./src/core/resource/tntwebwizard.css"
+        "./src/core/resources/favicon.ico",
+	"./src/core/resources/normalize.css",
+	"./src/core/resources/tntnet.png",
+        "./src/core/resources/tntwebwizard.css"
     ],
     "buildDir": "bulid"
 }

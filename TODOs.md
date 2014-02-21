@@ -2,6 +2,7 @@
 
 ## Modules
 
+* resources (makefil, route, upload)
 * ACL
 * user session
 * route reverse
