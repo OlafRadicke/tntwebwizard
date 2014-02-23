@@ -34,48 +34,36 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         request
     );
 
-    std::cout << __FILE__ << __LINE__ << href_core_basicprojectdata << std::endl;
-
 </%cpp>
 
 <!DOCTYPE HTML>
 <html>
 <head>
     <title>TNT-WEB-WIZARD - Home</title>
-    <meta charset = "UTF-8">
-    <link
-        rel="icon"
-        href="/core/resources/favicon.ico"
-        type="image/x-icon">
-<!--
-    <link
-        rel="stylesheet"
-        href="/core/resources/tntwebwizard.css"
-        type="text/css">
--->
-
-    <link
-        rel="stylesheet"
-        href="<$ Tww::RouteReverse::Manager::getLinkTo(                     "/core/resources/tntwebwizard.css", request ) $>"
-        type="text/css">
+    <& core_part_head qparam >
 </head>
 <body>
 
     <& core_part_title qparam >
-    <h1>TNT-WEB-WIZARD</h1>
-    <br />
-    Go to...
-    <div class="centerbox">
-        <ul>
-            <li><a href="<$ href_core_basicprojectdata $>">Basic Project Data</a></li>
-            <li><a href="">Load project data</a></li>
-            <li><a href="">Project browser</a></li>
-            <li><a href="">New Project</a></li>
-            <li><a href="">New component</a></li>
-            <li><a href="">Database support</a></li>
-            <li><a href="">REST (xml/json) API support</a></li>
-        </ul>
-    </div>
+    <& core_part_menu qparam >
 
+      <div id="content">
+
+        <h2>TNT-WEB-WIZARD</h2>
+        <br />
+        Go to...
+        <div class="centerbox">
+            <ul>
+                <li><a href="<$ href_core_basicprojectdata $>">Basic Project Data</a></li>
+                <li><a href="">Load project data</a></li>
+                <li><a href="">Project browser</a></li>
+                <li><a href="">New Project</a></li>
+                <li><a href="">New component</a></li>
+                <li><a href="">Database support</a></li>
+                <li><a href="">REST (xml/json) API support</a></li>
+            </ul>
+        </div>
+
+      </div>
 </body>
 </html>

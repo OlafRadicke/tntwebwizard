@@ -21,9 +21,11 @@
 
 #include <core/controller/BasicProjectDataController.h>
 #include <core/model/UserSession.h>
+#include <core/model/ProjectData.h>
 
 #include <tnt/httprequest.h>
 #include <tnt/httpreply.h>
+#include <cxxtools/log.h>
 
 #include <string>
 
@@ -31,12 +33,29 @@ namespace Tww {
 namespace Core {
 
 
+log_define("Core.BasicProjectDataController")
+
 void BasicProjectDataController::worker (
     tnt::HttpRequest& request,
     tnt::HttpReply& reply,
     tnt::QueryParams& qparam
 ){
-    // pass
+    // define the query parameters
+    std::string  form_projectname =
+        qparam.arg<std::string>("form_projectname");
+    std::string  form_binaryfilename =
+        qparam.arg<std::string>("form_binaryfilename");
+    bool  form_save =
+        qparam.arg<bool>("form_save");
+
+    log_debug("form_save: " << form_save );
+    log_debug("form_projectname: " << form_projectname );
+
+    if ( form_save ) {
+        this->projectData.setProjectName( form_projectname );
+    } else {
+        // read project configuration...
+    }
 }
 
 } // namespace core

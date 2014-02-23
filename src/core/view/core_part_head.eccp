@@ -1,0 +1,39 @@
+
+<%pre>
+    #include <routereverse/manager/Manager.h>
+</%pre>
+<%cpp>
+
+    std::string href_favicon_ico =
+        Tww::RouteReverse::Manager::getLinkTo(
+            "core_favicon_ico",
+            request
+    );
+
+    std::string href_normalize_css =
+        Tww::RouteReverse::Manager::getLinkTo(
+            "core_normalize_css",
+            request
+    );
+
+    std::string href_tntwebwizard_css =
+        Tww::RouteReverse::Manager::getLinkTo(
+            "core_tntwebwizard_css",
+            request
+    );
+
+</%cpp>
+
+    <meta charset = "UTF-8">
+    <link
+        rel="icon"
+        href="<$ href_favicon_ico $>"
+        type="image/x-icon">
+    <link
+        rel="stylesheet"
+        href="<$ href_normalize_css $>"
+        type="text/css">
+    <link
+        rel="stylesheet"
+        href="<$ href_tntwebwizard_css $>"
+        type="text/css">

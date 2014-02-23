@@ -290,3 +290,18 @@ footer .fmenu {
         width: 100%;
     }
 }
+
+/* ======================== Olaf adds ======================== */
+
+label {
+    float: left;
+    width: 30%
+}
+
+input {
+    display: block;
+}
+
+button {
+    display: block;
+}

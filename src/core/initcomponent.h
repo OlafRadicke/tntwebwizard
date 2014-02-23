@@ -41,6 +41,18 @@ void initcomponent ( tnt::Tntnet &app ) {
 
     // ######################## RESOURCES ############################
 
+    // /core/favicon.ico
+
+    app.mapUrl(
+        "^/core/favicon.ico$",
+        "resources"
+    ).setPathInfo("core/resources/favicon.ico");
+
+    RouteReverse::Manager::add(
+        "core_favicon_ico",
+        "core/favicon.ico"
+    );
+
     // /core/resources/tntnet.png
 
     app.mapUrl(
@@ -87,7 +99,7 @@ void initcomponent ( tnt::Tntnet &app ) {
 
     RouteReverse::Manager::add(
         "core_basicprojectdata",
-        "/core/basicprojectdata"
+        "core/basicprojectdata"
     );
 
 //     RouteReverse::URLData urlData_2;

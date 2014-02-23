@@ -16,13 +16,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #>
 
 <%session
-    include="core/model/UserSession.h" >
+    include="core/model/UserSession.h"
+    include="core/model/ProjectData.h" >
         Tww::Core::UserSession userSession( request.getSerial() );
+        Tww::Core::ProjectData projectData();
 </%session>
 <%request
     include="core/controller/BasicProjectDataController.h">
         Tww::Core::BasicProjectDataController
-            basicProjectDataController( userSession );
+            basicProjectDataController( userSession, projectData );
 </%request>
 <%pre>
     #include <routereverse/manager/Manager.h>
@@ -40,51 +42,54 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <html>
 <head>
     <title>TNT-WEB-WIZARD - Home</title>
-    <meta charset = "UTF-8">
-    <link
-        rel="icon"
-        href="/core/favicon.ico"
-        type="image/x-icon">
-    <link
-        rel="stylesheet"
-        href="/core/normalize.css"
-        type="text/css">
-    <link
-        rel="stylesheet"
-        href="/core/tntwebwizard.css"
-        type="text/css">
+    <& core_part_head qparam >
 </head>
 <body>
 
     <& core_part_title qparam >
+    <& core_part_menu qparam >
 
-    <h2>BASIC PROJECT DATA</h2>
-    <br />
+    <div id="content">
+
+        <h2>BASIC PROJECT DATA</h2>
+        <br />
 % if ( basicProjectDataController.feedback != "" ) {
 
-        <div class="feedback-box">
-            <b><$ basicProjectDataController.feedback $> </b>
-        </div>
+            <div class="feedback-box">
+                <b><$ basicProjectDataController.feedback $> </b>
+            </div>
 
 % }
-    <div class="centerbox">
+        <div class="centerbox">
 
-        <form method="post">
-            Project name:<input
-                name="form_projectname"
-                type="text"
-                size="30"
-                maxlength="30">
-            <br>
-            Binary file name: <input
-                name="form_binaryfilename"
-                type="text"
-                size="30"
-                 maxlength="30">
-            <br>
-            <input type="submit" value=" Absenden ">
-            <input type="reset" value=" Abbrechen">
-        </form>
+            <form method="post">
+                <label from="projectname">Project name:</label>
+                <input
+                    id="projectname"
+                    name="form_projectname"
+                    type="text"
+                    size="30"
+                    maxlength="30"
+                    value="<$ projectData.getProjectName() $>">
+                <br>
+                <label from="binaryfilename">Binary file name:</label>
+                <input
+                    id="binaryfilename"
+                    name="form_binaryfilename"
+                    type="text"
+                    size="30"
+                    maxlength="30">
+                <br>
+                <button
+                    name="form_save"
+                    type="submit"
+                    value="form_save" >Save</button>
+            </form>
+        </div>
+
+        <h2>Json</h2>
+
+        <$ projectData.getJson( ) $>
     </div>
 
 </body>

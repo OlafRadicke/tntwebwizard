@@ -22,6 +22,7 @@
 #define CORE_BASICPROJECTDATACONTROLLER_H
 
 #include <core/model/UserSession.h>
+#include <core/model/ProjectData.h>
 
 #include <tnt/httprequest.h>
 #include <tnt/httpreply.h>
@@ -38,8 +39,13 @@ class BasicProjectDataController {
 
 public:
 
-    BasicProjectDataController( Tww::Core::UserSession& _userSession ):
-        userSession( _userSession ){};
+    BasicProjectDataController(
+        Tww::Core::UserSession& _userSession,
+        Tww::Core::ProjectData& _projectData
+    ):
+        userSession( _userSession ),
+        projectData( _projectData )
+        {};
 
     void worker (
         tnt::HttpRequest& request,
@@ -52,6 +58,10 @@ public:
 
 private:
 
+    /**
+     * Class with project data.
+     */
+    Tww::Core::ProjectData& projectData;
 
 };
 

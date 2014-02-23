@@ -12,4 +12,9 @@
 * Exception class
 * Logging
 
-Blogartikel Flag "-I ./src"
+
+
+    <& core_part_head qparam >
+vs.
+
+<%include>filename</%include>

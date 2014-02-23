@@ -3,8 +3,9 @@
     "cppCompiler": "g++",
     "cppFiles": [
         "./src/main.cpp",
-	"./src/core/controller/BasicProjectDataController.cpp",
+        "./src/core/controller/BasicProjectDataController.cpp",
         "./src/core/model/Config.cpp",
+        "./src/core/model/ProjectData.cpp",
         "./src/core/model/UserSession.cpp",
         "./src/routereverse/manager/Manager.cpp"
     ],
@@ -13,22 +14,25 @@
     "ecppCompiler": "ecppc",
     "ecppFlags": "-I./src",
     "hFiles": [
-	"./src/core/controller/BasicProjectDataController.h",
-        "./src/core/model/UserSession.h",
+        "./src/core/controller/BasicProjectDataController.h",
         "./src/core/model/Config.h",
+        "./src/core/model/ProjectData.h",
+        "./src/core/model/UserSession.h",
         "./src/routereverse/initcomponent.h",
         "./src/routereverse/manager/Manager.h",
         "./src/routereverse/models/URLData.h"
     ],
     "ecppFiles": [
         "./src/core/view/core_home.ecpp",
-	"./src/core/view/core_basicprojectdata.ecpp",
-	"./src/core/view/core_part_title.eccp"
+        "./src/core/view/core_basicprojectdata.ecpp",
+        "./src/core/view/core_part_head.eccp",
+        "./src/core/view/core_part_menu.eccp",
+        "./src/core/view/core_part_title.eccp"
     ],
     "resourcesFiles": [
         "core/resources/favicon.ico",
-	"core/resources/normalize.css",
-	"core/resources/tntnet.png",
+        "core/resources/normalize.css",
+        "core/resources/tntnet.png",
         "core/resources/tntwebwizard.css"
     ],
     "buildDir": "bulid"

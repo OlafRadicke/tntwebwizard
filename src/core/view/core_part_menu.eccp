@@ -1,0 +1,42 @@
+
+<%pre>
+    #include <routereverse/manager/Manager.h>
+</%pre>
+<%cpp>
+
+    std::string href_core_basicprojectdata = Tww::RouteReverse::Manager::getLinkTo(
+        "core_basicprojectdata",
+        request
+    );
+
+</%cpp>
+
+    <div id="menu">
+        <ul class="nav">
+            <li class="header">Project configuration</li>
+            <li><a href="/">Home</a></li>
+            <li><a href="<$ href_core_basicprojectdata $>">Basic Project Data</a></li>
+            <li><a href="">Load project data</a></li>
+            <li><a href="">Project browser</a></li>
+            <li><a href="">New Project</a></li>
+            <li><a href="">New component</a></li>
+            <li><a href="">Database support</a></li>
+            <li><a href="">REST (xml/json) API support</a></li>
+
+        </ul>
+
+        <ul class="nav">
+            <li class="header">Documentation</li>
+            <li><a href="">Quick start guide (Tntnet)</a></li>
+            <li><a href="">Using this wizard</a></li>
+        </ul>
+
+        <ul class="nav">
+            <li class="header">About</li>
+            <li><a href="">Tntnet</a></li>
+            <li><a href="">Tntwebwizard</a></li>
+            <li><a href="https://github.com/OlafRadicke/tntwebwizard">Tntwebwizard on GitHub</a></li>
+        </ul>
+    </div>
+
+

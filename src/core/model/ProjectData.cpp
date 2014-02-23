@@ -21,8 +21,10 @@
 #include <core/model/ProjectData.h>
 #include <core/model/TntWebWizardException.h>
 
-#include <cxxtools/jsondeserializer.h>
 #include <cxxtools/fileinfo.h>
+#include <cxxtools/jsondeserializer.h>
+#include <cxxtools/jsonserializer.h>
+#include <cxxtools/log.h>
 
 #include <fstream>
 #include <ostream>
@@ -30,11 +32,8 @@
 namespace Tww {
 namespace Core {
 
-ProjectData& ProjectData::it()
-{
-    static ProjectData theProjectData;
-    return theProjectData;
-}
+log_define("Core.ProjectData")
+
 
 void ProjectData::read(const std::string& filename)
 {
@@ -62,20 +61,19 @@ void ProjectData::read(const std::string& filename)
     deserializer.deserialize(*this);
 }
 
-std::string ProjectData::getJsonExport( const unsigned long userID ) {
+std::string ProjectData::getJson( ) {
     std::string json_text;
-    log_debug( "getJsonExport for userID: " << userID );
+    log_debug( "getJsonExport ");
 
-    QuoteExportContainer quoteContainer;
-    quoteContainer.allUserQuotes = ProjectData::getAllQuoteOfUser( userID );
     try
     {
         std::stringstream sstream;
         cxxtools::JsonSerializer serializer( sstream );
         // this makes it just nice to read
         serializer.beautify(true);
-        serializer.serialize( quoteContainer ).finish();
+        serializer.serialize( *this ).finish();
         json_text = sstream.str();
+
     }
     catch (const std::exception& e)
     {
@@ -86,24 +84,16 @@ std::string ProjectData::getJsonExport( const unsigned long userID ) {
 }
 
 
-/**
-* define how to deserialize the project data file
-* @arg si serialization info
-* @arg projektData project data class
-*/
 void operator>>= (const cxxtools::SerializationInfo& si, ProjectData& projektData )
 {
-    si.getMember("projectName")     >>= projektData.projectName;
+    si.getMember("project_name") >>= projektData.projectName;
+    si.getMember("wizard_version") >>= projektData.wizardVersion;
 }
 
-/**
-* define how to serialize the ProjectData
-* @arg si serialization info
-* @arg ProjectData project data class
-*/
 void operator<<= ( cxxtools::SerializationInfo& si, const ProjectData& projektData )
 {
-    si.addMember("projectName") <<= projektData.projectName();
+    si.addMember("project_name") <<= projektData.getProjectName();
+    si.addMember("wizard_version") <<= projektData.getWizardVersion();
 }
 
 
