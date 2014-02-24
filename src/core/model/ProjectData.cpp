@@ -36,33 +36,7 @@ namespace Core {
 
 log_define("Core.ProjectData")
 
-
-void ProjectData::read(const std::string& filename)
-{
-    if ( cxxtools::FileInfo::exists( filename ) )
-    {
-        std::ifstream in(filename.c_str());
-        if (!in) {
-            std::ostringstream errorText;
-            errorText << "failed to open configuration file \"";
-            errorText  << filename << '"';
-            throw Core::TntWebWizardException( errorText.str() );
-        }
-        cxxtools::xml::XmlDeserializer deserializer(in);
-        deserializer.deserialize(*this);
-    } else {
-        log_debug( filename.c_str() << " does not exist");
-    }
-}
-
-void ProjectData::write(const std::string filename)
-{
-    // writ config in file...
-    std::ofstream out( filename.c_str() );
-    cxxtools::xml::XmlSerializer serializer(out);
-    serializer.serialize( *this, "projectdata");
-    log_debug( "Project configuration data is writed in " << filename );
-}
+// === G ===
 
 std::string ProjectData::getJson( ) {
     std::string json_text;
@@ -86,7 +60,6 @@ std::string ProjectData::getJson( ) {
     return json_text;
 }
 
-
 std::string ProjectData::getXml( ) {
 
     std::string xmlCode;
@@ -107,17 +80,51 @@ std::string ProjectData::getXml( ) {
     return xmlCode;
 }
 
+// === O ===
 
 void operator>>= (const cxxtools::SerializationInfo& si, ProjectData& projektData )
 {
-    si.getMember("project_name") >>= projektData.projectName;
     si.getMember("wizard_version") >>= projektData.wizardVersion;
+    si.getMember("project_name") >>= projektData.projectName;
+    si.getMember("source_code_header") >>= projektData.sourceCodeHeader;
 }
 
 void operator<<= ( cxxtools::SerializationInfo& si, const ProjectData& projektData )
 {
-    si.addMember("project_name") <<= projektData.getProjectName();
     si.addMember("wizard_version") <<= projektData.getWizardVersion();
+    si.addMember("project_name") <<= projektData.getProjectName();
+    si.addMember("source_code_header") <<= projektData.getSourceCodeHeader();
+}
+
+// === R ===
+
+void ProjectData::read(const std::string& filename)
+{
+    if ( cxxtools::FileInfo::exists( filename ) )
+    {
+        std::ifstream in(filename.c_str());
+        if (!in) {
+            std::ostringstream errorText;
+            errorText << "failed to open configuration file \"";
+            errorText  << filename << '"';
+            throw Core::TntWebWizardException( errorText.str() );
+        }
+        cxxtools::xml::XmlDeserializer deserializer(in);
+        deserializer.deserialize(*this);
+    } else {
+        log_debug( filename.c_str() << " does not exist");
+    }
+}
+
+// === W ===
+
+void ProjectData::write(const std::string filename)
+{
+    // writ config in file...
+    std::ofstream out( filename.c_str() );
+    cxxtools::xml::XmlSerializer serializer(out);
+    serializer.serialize( *this, "projectdata");
+    log_debug( "Project configuration data is writed in " << filename );
 }
 
 

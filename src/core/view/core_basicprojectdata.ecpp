@@ -78,7 +78,32 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     name="form_binaryfilename"
                     type="text"
                     size="30"
-                    maxlength="30">
+                    maxlength="30"
+                    value="<$ projectData.getProjectName() $>">
+                <br>
+                <label from="licence_template">Licence template:</label>
+                <select
+                    id="licence_template"
+                    name="form_licence_template">
+                    <option value="GPL3">GPL3</option>
+                    <option value="AGPL3">AGPL3</option>
+                    <option value="Apache">Apache</option>
+                    <option value="MIT">MIT</option>
+                    <option value="BSD2">BSD2</option>
+                </select> <button
+                    name="form_assume_licence"
+                    type="submit"
+                    value="form_assume_licence" >Assume licence template</button>
+                <br>
+                <label from="sourcecodeheader">Source code header:</label>
+                <textarea
+                    id="sourcecodeheader"
+                    name="form_sourcecodeheader"
+                    rows="15"
+                    cols="80"><$ projectData.getSourceCodeHeader()  $>
+                </textarea>
+
+
                 <br>
                 <button
                     name="form_save"
@@ -86,10 +111,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     value="form_save" >Save</button>
             </form>
         </div>
-
-        <h2>Json code</h2>
-
-        <$ projectData.getJson( ) $>
 
         <h2>XML code</h2>
         <$ projectData.getXml( ) $>

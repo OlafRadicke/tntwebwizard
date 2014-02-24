@@ -61,7 +61,16 @@ private:
      * Class with project data.
      */
     Tww::Core::ProjectData& projectData;
+
+    /**
+     * Session information.
+     */
     UserSession& userSession;
+
+    /**
+     * Assume a licence from a template.
+     */
+    void assumeLicence( const std::string& _licence_template );
 
 };
 

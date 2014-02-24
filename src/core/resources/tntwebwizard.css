@@ -295,10 +295,18 @@ footer .fmenu {
 
 label {
     float: left;
-    width: 30%
+/*     width: 20% */
+}
+
+select {
+    display: block;
 }
 
 input {
+    display: block;
+}
+
+textarea{
     display: block;
 }
 

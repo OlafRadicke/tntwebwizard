@@ -78,6 +78,11 @@ public:
     const std::string& getProjectName() const
     { return this->projectName; }
 
+    /**
+     * Get the header template with the licence and author.
+     */
+    const std::string& getSourceCodeHeader() const
+    { return this->sourceCodeHeader; }
 
     /**
      * Get project name.
@@ -98,7 +103,13 @@ public:
      * Set project name.
      */
     void setProjectName( std::string _projectName )
-    { this->projectName = _projectName; }
+    { this->projectName = _projectName; };
+
+    /**
+     * Set the header template with the licence and author.
+     */
+    void setSourceCodeHeader( std::string _sourceCodeHeader )
+    { this->sourceCodeHeader = _sourceCodeHeader ; };
 
     // === W ===
 
@@ -114,12 +125,17 @@ private:
      * The version of wizard that is create the configuration file.
      * With this number it can check the compatibility of a configuration.
      */
-    int                         wizardVersion;
+    int wizardVersion;
 
     /**
      * Name of the project.
      */
-    std::string                 projectName;
+    std::string projectName;
+
+    /**
+     * The header template with the licence and author.
+     */
+    std::string sourceCodeHeader;
 
 
 };
