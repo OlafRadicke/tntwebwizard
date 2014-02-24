@@ -18,6 +18,8 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+// http://www.tntnet.org/howto/serialization-howto.html
+
 #ifndef CORE_PROJECTDATA_H
 #define CORE_PROJECTDATA_H
 
@@ -59,11 +61,16 @@ public:
     // === G ===
 
     /**
-     * Get a export of user quote data in json format.
-     * @arg userID Id of a user.
+     * Get a export of user projekt data in json format.
      * @return A json document.
      */
     std::string getJson( );
+
+    /**
+     * Get a export of user projekt data in xml format.
+     * @return A xml document.
+     */
+    std::string getXml();
 
     /**
      * Get project name.
@@ -83,16 +90,22 @@ public:
     /**
      * read the project configuration file.
      */
-    void read(const std::string& filename = "");
+    void read(const std::string& filename);
 
     // === S ===
-
 
     /**
      * Set project name.
      */
     void setProjectName( std::string _projectName )
     { this->projectName = _projectName; }
+
+    // === W ===
+
+    /**
+     * Write the project configuration in a file.
+     */
+    void write(const std::string filename);
 
 
 private:

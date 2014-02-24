@@ -24,6 +24,8 @@
 #include <cxxtools/fileinfo.h>
 #include <cxxtools/jsondeserializer.h>
 #include <cxxtools/jsonserializer.h>
+#include <cxxtools/xml/xmlserializer.h>
+#include <cxxtools/xml/xml.h>
 #include <cxxtools/log.h>
 
 #include <fstream>
@@ -37,33 +39,34 @@ log_define("Core.ProjectData")
 
 void ProjectData::read(const std::string& filename)
 {
-    std::string fname;
-
-    if (!filename.empty())
+    if ( cxxtools::FileInfo::exists( filename ) )
     {
-        fname = filename;
+        std::ifstream in(filename.c_str());
+        if (!in) {
+            std::ostringstream errorText;
+            errorText << "failed to open configuration file \"";
+            errorText  << filename << '"';
+            throw Core::TntWebWizardException( errorText.str() );
+        }
+        cxxtools::xml::XmlDeserializer deserializer(in);
+        deserializer.deserialize(*this);
+    } else {
+        log_debug( filename.c_str() << " does not exist");
     }
-    if (cxxtools::FileInfo::exists("tntwebwizard.pro"))
-    {
-        fname = "tntwebwizard.pro";
-    }
+}
 
-
-    std::ifstream in(fname.c_str());
-    if (!in) {
-        std::ostringstream errorText;
-        errorText << "failed to open configuration file \"";
-        errorText  << fname << '"';
-//         log_debug( "failed to open configuration file \"" << fname << '"' );
-        throw Core::TntWebWizardException( errorText.str() );
-    }
-    cxxtools::JsonDeserializer deserializer(in);
-    deserializer.deserialize(*this);
+void ProjectData::write(const std::string filename)
+{
+    // writ config in file...
+    std::ofstream out( filename.c_str() );
+    cxxtools::xml::XmlSerializer serializer(out);
+    serializer.serialize( *this, "projectdata");
+    log_debug( "Project configuration data is writed in " << filename );
 }
 
 std::string ProjectData::getJson( ) {
     std::string json_text;
-    log_debug( "getJsonExport ");
+    log_debug( "getJson ");
 
     try
     {
@@ -81,6 +84,27 @@ std::string ProjectData::getJson( ) {
     }
 
     return json_text;
+}
+
+
+std::string ProjectData::getXml( ) {
+
+    std::string xmlCode;
+    log_debug( "getXml ");
+
+    try
+    {
+        std::stringstream sstream;
+        cxxtools::xml::XmlSerializer serializer(sstream);
+        sstream << serializer.toString( *this, "projectdata", true );
+        xmlCode = sstream.str();
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+    }
+
+    return xmlCode;
 }
 
 

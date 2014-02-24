@@ -5,6 +5,7 @@
         "./src/main.cpp",
         "./src/core/controller/BasicProjectDataController.cpp",
         "./src/core/model/Config.cpp",
+        "./src/core/model/MakefileData.cpp",
         "./src/core/model/ProjectData.cpp",
         "./src/core/model/UserSession.cpp",
         "./src/routereverse/manager/Manager.cpp"
@@ -16,11 +17,12 @@
     "hFiles": [
         "./src/core/controller/BasicProjectDataController.h",
         "./src/core/model/Config.h",
+        "./src/core/model/MakefileData.h",
         "./src/core/model/ProjectData.h",
         "./src/core/model/UserSession.h",
         "./src/routereverse/initcomponent.h",
         "./src/routereverse/manager/Manager.h",
-        "./src/routereverse/models/URLData.h"
+        "./src/routereverse/model/URLData.h"
     ],
     "ecppFiles": [
         "./src/core/view/core_home.ecpp",

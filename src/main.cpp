@@ -23,8 +23,11 @@
 
 #include <tnt/tntnet.h>
 #include <tnt/configurator.h>
-#include <string>
 #include <cxxtools/log.h>
+#include <cxxtools/directory.h>
+
+#include <string>
+#include <stdlib.h>
 
 // namespace Tww
 
@@ -41,6 +44,18 @@ int main ( int argc, char* argv[] )
         config.read();
 
         log_init( config.logging() );
+
+        // clean up tmp directory
+//         if ( cxxtools::Directory::exists( "/tmp/tntwebwizard/" ) ) {
+//             cxxtools::Directory tmpsessiondir( "/tmp/tntwebwizard/" );
+//             tmpsessiondir.remove();
+//             log_info("Remove old tmp directory");
+//         }
+        if ( cxxtools::Directory::exists( "/tmp/tntwebwizard/" ) ) {
+            system("rm -r /tmp/tntwebwizard/");
+        }
+
+
 
         // Init Application Server
         tnt::Tntnet app;

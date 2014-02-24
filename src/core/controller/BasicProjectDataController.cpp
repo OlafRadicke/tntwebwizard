@@ -35,6 +35,7 @@ namespace Core {
 
 log_define("Core.BasicProjectDataController")
 
+
 void BasicProjectDataController::worker (
     tnt::HttpRequest& request,
     tnt::HttpReply& reply,
@@ -48,13 +49,19 @@ void BasicProjectDataController::worker (
     bool  form_save =
         qparam.arg<bool>("form_save");
 
+    std::stringstream filename;
+    filename << this->userSession.getSesstonPath() << "/tntwebwizard.pro";
+
     log_debug("form_save: " << form_save );
     log_debug("form_projectname: " << form_projectname );
 
     if ( form_save ) {
         this->projectData.setProjectName( form_projectname );
+        this->projectData.write( filename.str() );
     } else {
         // read project configuration...
+        log_debug("filename: " << filename.str() );
+        this->projectData.read( filename.str() );
     }
 }
 

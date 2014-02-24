@@ -87,9 +87,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </form>
         </div>
 
-        <h2>Json</h2>
+        <h2>Json code</h2>
 
         <$ projectData.getJson( ) $>
+
+        <h2>XML code</h2>
+        <$ projectData.getXml( ) $>
     </div>
 
 </body>

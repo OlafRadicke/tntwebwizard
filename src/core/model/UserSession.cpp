@@ -21,6 +21,7 @@
 #include <core/model/UserSession.h>
 
 #include <cxxtools/log.h>
+#include <cxxtools/directory.h>
 
 #include <fstream>
 #include <ostream>
@@ -32,20 +33,34 @@ namespace Core {
 log_define("core.models.UserSession")
 
 UserSession::UserSession ( cxxtools::atomic_t token ) {
-
-    sessionToken = token;
+    this->sessionToken = token;
+    if ( !cxxtools::Directory::exists( "/tmp/tntwebwizard/" ) ) {
+        cxxtools::Directory::create( "/tmp/tntwebwizard/" );
+    }
+    if ( !cxxtools::Directory::exists( getSesstonPath() ) ) {
+        cxxtools::Directory::create( getSesstonPath() );
+    }
 }
 
 
 UserSession::~UserSession ( ) {
-
     // clean up tmp dir with sessionToken;
+//     if ( cxxtools::Directory::exists( getSesstonPath() ) ) {
+//         cxxtools::Directory tmpsessiondir( getSesstonPath() );
+//         tmpsessiondir.remove ();
+//     }
+
+    if ( cxxtools::Directory::exists( getSesstonPath() ) ) {
+        std::ostringstream syscommand;
+        syscommand << "rm -r " << getSesstonPath();
+        system( syscommand.str().c_str() );
+    }
 }
 
 std::string UserSession::getSesstonPath() {
     std::ostringstream tmpPath;
 
-    tmpPath << "/tmp/";
+    tmpPath << "/tmp/tntwebwizard/";
     tmpPath << this->sessionToken;
     return tmpPath.str();
 }

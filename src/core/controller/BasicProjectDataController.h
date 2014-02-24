@@ -54,7 +54,6 @@ public:
     );
 
     std::string feedback;
-    UserSession& userSession;
 
 private:
 
@@ -62,6 +61,7 @@ private:
      * Class with project data.
      */
     Tww::Core::ProjectData& projectData;
+    UserSession& userSession;
 
 };
 

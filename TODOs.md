@@ -11,6 +11,8 @@
 * REST (json,xml)
 * Exception class
 * Logging
+* add getter and setter
+* Arg, Read and extract commandline parameters from argc/argv.
 
 
 
