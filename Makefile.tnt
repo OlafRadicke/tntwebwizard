@@ -4,6 +4,7 @@
     "cppFiles": [
         "./src/main.cpp",
         "./src/core/controller/BasicProjectDataController.cpp",
+        "./src/core/controller/CreateApplicationCoreController.cpp",
         "./src/core/model/Config.cpp",
         "./src/core/model/MakefileData.cpp",
         "./src/core/model/ProjectData.cpp",
@@ -16,6 +17,7 @@
     "ecppFlags": "-I./src",
     "hFiles": [
         "./src/core/controller/BasicProjectDataController.h",
+        "./src/core/controller/CreateApplicationCoreController.h",
         "./src/core/model/Config.h",
         "./src/core/model/MakefileData.h",
         "./src/core/model/ProjectData.h",
@@ -27,6 +29,7 @@
     "ecppFiles": [
         "./src/core/view/core_home.ecpp",
         "./src/core/view/core_basicprojectdata.ecpp",
+        "./src/core/view/core_createapplicationcore.ecpp",
         "./src/core/view/core_part_head.eccp",
         "./src/core/view/core_part_menu.eccp",
         "./src/core/view/core_part_title.eccp"

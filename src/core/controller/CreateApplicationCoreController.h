@@ -18,8 +18,8 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CORE_BASICPROJECTDATACONTROLLER_H
-#define CORE_BASICPROJECTDATACONTROLLER_H
+#ifndef CORE_CREATEAPPLICATIONCORECONTROLLER_H
+#define CORE_CREATEAPPLICATIONCORECONTROLLER_H
 
 #include <core/model/MakefileData.h>
 #include <core/model/ProjectData.h>
@@ -34,14 +34,14 @@ namespace Tww {
 namespace Core {
 
 /**
-* @class BasicProjectDataController This class is the controller of the
-* Site basic_project_data.
+* @class CreateApplicationCoreController This class is the controller of
+* the Site core_createapplicationcore.
 */
-class BasicProjectDataController {
+class CreateApplicationCoreController {
 
 public:
 
-    BasicProjectDataController(
+    CreateApplicationCoreController(
         Tww::Core::UserSession& _userSession,
         Tww::Core::ProjectData& _projectData,
         Tww::Core::MakefileData& _makefileData
@@ -75,12 +75,6 @@ private:
      * Session information.
      */
     Tww::Core::UserSession& userSession;
-
-
-    /**
-     * Assume a licence from a template.
-     */
-    void assumeLicence( const std::string& _licence_template );
 
 };
 

@@ -13,8 +13,9 @@
 * Logging
 * add getter and setter
 * Arg, Read and extract commandline parameters from argc/argv.
+* Doxygen support
 
-
+* zip -r name_of_your_directory.zip ./*
 
     <& core_part_head qparam >
 vs.

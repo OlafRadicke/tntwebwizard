@@ -74,7 +74,7 @@ public:
       : configRead(false),
         m_appIp(""),
         m_appPort(8008),
-        m_domainName( "peruschim.domain" ),
+        m_domainName( "tntwebwizard.domain" ),
         m_sessionTimeout( 1000 )
     { }
 

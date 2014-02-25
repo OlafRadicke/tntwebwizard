@@ -102,11 +102,18 @@ void initcomponent ( tnt::Tntnet &app ) {
         "core/basicprojectdata"
     );
 
-//     RouteReverse::URLData urlData_2;
-//     urlData_2.componentName      = "core_basicprojectdata";
-//     urlData_2.urlRegEx             = "^/core/basicprojectdata$";
-//     urlData_2.reverseRoute       = "core/basicprojectdata";
-//     RouteReverse::Manager::addRoute( urlData_2, app );
+
+    //
+
+    app.mapUrl(
+        "^/core/createapplicationcore$",
+        "core_createapplicationcore"
+    );
+
+    RouteReverse::Manager::add(
+        "core_createapplicationcore",
+        "core/createapplicationcore"
+    );
 
     // ready get info...
 
