@@ -18,10 +18,11 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #include <core/controller/BasicProjectDataController.h>
-#include <core/model/UserSession.h>
+
+#include <core/model/MakefileData.h>
 #include <core/model/ProjectData.h>
+#include <core/model/UserSession.h>
 
 #include <tnt/httprequest.h>
 #include <tnt/httpreply.h>
@@ -55,27 +56,35 @@ void BasicProjectDataController::worker (
     bool form_save =
         qparam.arg<bool>("form_save");
 
-    std::stringstream filename;
-    filename << this->userSession.getSesstonPath() << "/tntwebwizard.pro";
+    std::stringstream file_projectdata;
+    file_projectdata << this->userSession.getSesstonPath() << "/tntwebwizard.pro";
+    std::stringstream file_makefile;
+    file_makefile << this->userSession.getSesstonPath() << "/Makefile.tnt";
 
     log_debug("form_save: " << form_save );
     log_debug("form_projectname: " << form_projectname );
     log_debug("form_assume_licence: " << form_assume_licence );
     log_debug("form_licence_template: " << form_licence_template );
 
+    // save button pressed
     if ( form_save ) {
         this->projectData.setProjectName( form_projectname );
         this->projectData.setSourceCodeHeader( form_sourcecodeheader );
-        this->projectData.write( filename.str() );
+        this->projectData.write( file_projectdata.str() );
+        this->makefileData.setBinName( form_binaryfilename );
+        this->makefileData.write( file_makefile.str() );
     } else {
+        // assume licence button pressed
         if ( form_assume_licence ) {
             this->projectData.setProjectName( form_projectname );
             log_debug("add licence: " << form_licence_template );
             assumeLicence( form_licence_template );
+        // page (first) load
         } else {
             // read project configuration...
-            log_debug("filename: " << filename.str() );
-            this->projectData.read( filename.str() );
+            log_debug("file_projectdata: " << file_projectdata.str() );
+            this->projectData.read( file_projectdata.str() );
+            this->makefileData.read( file_makefile.str() );
         }
     }
 }

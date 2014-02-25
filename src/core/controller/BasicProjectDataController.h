@@ -21,8 +21,9 @@
 #ifndef CORE_BASICPROJECTDATACONTROLLER_H
 #define CORE_BASICPROJECTDATACONTROLLER_H
 
-#include <core/model/UserSession.h>
+#include <core/model/MakefileData.h>
 #include <core/model/ProjectData.h>
+#include <core/model/UserSession.h>
 
 #include <tnt/httprequest.h>
 #include <tnt/httpreply.h>
@@ -41,10 +42,12 @@ public:
 
     BasicProjectDataController(
         Tww::Core::UserSession& _userSession,
-        Tww::Core::ProjectData& _projectData
+        Tww::Core::ProjectData& _projectData,
+        Tww::Core::MakefileData& _makefileData
     ):
-        userSession( _userSession ),
-        projectData( _projectData )
+        makefileData( _makefileData ),
+        projectData( _projectData ),
+        userSession( _userSession )
         {};
 
     void worker (
@@ -58,6 +61,11 @@ public:
 private:
 
     /**
+     * Represent the makefile data.
+     */
+    Tww::Core::MakefileData& makefileData;
+
+    /**
      * Class with project data.
      */
     Tww::Core::ProjectData& projectData;
@@ -65,7 +73,8 @@ private:
     /**
      * Session information.
      */
-    UserSession& userSession;
+    Tww::Core::UserSession& userSession;
+
 
     /**
      * Assume a licence from a template.

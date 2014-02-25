@@ -17,14 +17,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <%session
     include="core/model/UserSession.h"
-    include="core/model/ProjectData.h" >
+    include="core/model/ProjectData.h"
+    include="core/model/MakefileData.h" >
         Tww::Core::UserSession userSession( request.getSerial() );
         Tww::Core::ProjectData projectData();
+        Tww::Core::MakefileData makefileData();
 </%session>
 <%request
     include="core/controller/BasicProjectDataController.h">
         Tww::Core::BasicProjectDataController
-            basicProjectDataController( userSession, projectData );
+            basicProjectDataController(
+                userSession,
+                projectData,
+                makefileData
+            );
 </%request>
 <%pre>
     #include <routereverse/manager/Manager.h>
@@ -79,7 +85,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     type="text"
                     size="30"
                     maxlength="30"
-                    value="<$ projectData.getProjectName() $>">
+                    value="<$ makefileData.getBinName() $>">
                 <br>
                 <label from="licence_template">Licence template:</label>
                 <select

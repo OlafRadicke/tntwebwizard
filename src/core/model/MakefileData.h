@@ -54,26 +54,19 @@ public:
 
     MakefileData(){ }
 
-    // === G ===
-
-    /**
-     * Get a export of user quote data in json format.
-     * @arg userID Id of a user.
-     * @return A json document.
-     */
-    std::string getJson( );
-
-    /**
-     * Get version of tntmake program.
-     */
-    const int getTntmakeVersion() const
-    { return this->tntmakeVersion; }
+    // === G ===z
 
     /**
      * Get name of binary file.
      */
     const std::string& getBinName() const
     { return this->binName; }
+
+    /**
+     * Get the build directory.
+     */
+    const std::string& getBuildDir() const
+    { return this->buildDir; }
 
     /**
      * Get name of c++ compiler.
@@ -86,12 +79,6 @@ public:
      */
     const std::vector<std::string>& getCppFiles() const
     { return this->cppFiles; }
-
-    /**
-     * Get list of *.h files.
-     */
-    const std::string& getHFiles() const
-    { return this->hFiles; }
 
     /**
      * Get c++ compiler flags.
@@ -112,28 +99,41 @@ public:
     { return this->ecppCompiler; }
 
     /**
+     * Get list of *.ecpp files.
+     */
+    const std::vector<std::string>& getEcppFiles() const
+    { return this->ecppFiles; }
+
+    /**
      * Get ecpp compiler flags.
      */
     const std::string& getEcppFlags() const
     { return this->ecppFlags; }
 
     /**
-     * Get list of *.ecpp files.
+     * Get list of *.h files.
      */
-    const std::string& getEcppFiles() const
-    { return this->ecppFiles; }
+    const std::vector<std::string>& getHFiles() const
+    { return this->hFiles; }
+
+    /**
+     * Get a export of user quote data in json format.
+     * @arg userID Id of a user.
+     * @return A json document.
+     */
+    std::string getJson( );
+
+    /**
+     * Get version of tntmake program.
+     */
+    const int getTntmakeVersion() const
+    { return this->tntmakeVersion; }
 
     /**
      * Get list of static contend files.
      */
-    const std::string& getResourcesFiles() const
+    const std::vector<std::string>& getResourcesFiles() const
     { return this->resourcesFiles; }
-
-    /**
-     * Get the build directory.
-     */
-    const std::string& getBuildDir() const
-    { return this->buildDir; }
 
     // === R ===
 
@@ -150,6 +150,14 @@ public:
      */
     void setBinName( std::string _binName )
     { this->binName = _binName; }
+
+    // === W ===
+
+    /**
+     * Write makefile in tntmake json form.
+     * @pram _filename set the file name of the makefile
+     */
+    void write( const std::string _filename );
 
 
 private:
@@ -178,7 +186,7 @@ private:
     /**
     * List of *.h fils.
     */
-    std::string hFiles;
+    std::vector<std::string> hFiles;
 
     /**
     * c++ compiler flags.
@@ -203,12 +211,12 @@ private:
     /**
     * List of *.ecpp files.
     */
-    std::string ecppFiles;
+    std::vector<std::string> ecppFiles;
 
     /**
     * List of static contend files.
     */
-    std::string resourcesFiles;
+    std::vector<std::string> resourcesFiles;
 
     /**
     * The build directory.

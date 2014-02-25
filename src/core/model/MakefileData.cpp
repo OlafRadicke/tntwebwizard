@@ -35,31 +35,7 @@ namespace Core {
 log_define("Core.MakefileData")
 
 
-void MakefileData::read(const std::string& filename)
-{
-    std::string fname;
-
-    if (!filename.empty())
-    {
-        fname = filename;
-    }
-    if (cxxtools::FileInfo::exists("Makefile.tnt"))
-    {
-        fname = "Makefile.tnt";
-    }
-
-
-    std::ifstream in(fname.c_str());
-    if (!in) {
-        std::ostringstream errorText;
-        errorText << "failed to open configuration file \"";
-        errorText  << fname << '"';
-//         log_debug( "failed to open configuration file \"" << fname << '"' );
-        throw Core::TntWebWizardException( errorText.str() );
-    }
-    cxxtools::JsonDeserializer deserializer(in);
-    deserializer.deserialize(*this);
-}
+// === G ===
 
 std::string MakefileData::getJson( ) {
     std::string json_text;
@@ -83,6 +59,7 @@ std::string MakefileData::getJson( ) {
     return json_text;
 }
 
+// === O ==
 
 void operator>>= (const cxxtools::SerializationInfo& si, MakefileData& makefileData )
 {
@@ -114,6 +91,44 @@ void operator<<= ( cxxtools::SerializationInfo& si, const MakefileData& makefile
     si.addMember("ecppFiles") <<= makefileData.getEcppFiles();
     si.addMember("resourcesFiles") <<= makefileData.getResourcesFiles();
     si.addMember("buildDir") <<= makefileData.getBuildDir();
+}
+
+// === R ===
+
+void MakefileData::read( const std::string& filename )
+{
+
+    if ( cxxtools::FileInfo::exists( filename ) )
+    {
+        std::ifstream in( filename.c_str() );
+        if (!in) {
+            std::ostringstream errorText;
+            errorText << "failed to open configuration file \"";
+            errorText  << filename << '"';
+    //         log_debug( "failed to open configuration file \"" << fname << '"' );
+            throw Core::TntWebWizardException( errorText.str() );
+        }
+        cxxtools::JsonDeserializer deserializer(in);
+        deserializer.deserialize(*this);
+    }
+}
+
+// === W ===
+
+void MakefileData::write( const std::string filename )
+{
+    // writ config in file...
+
+//     std::ofstream out( filename.c_str() );
+//     cxxtools::xml::XmlSerializer serializer(out);
+//     serializer.serialize( *this, "projectdata");
+//     log_debug( "Project configuration data is writed in " << filename );
+
+    std::ofstream fileout( filename.c_str() );
+    cxxtools::JsonSerializer serializer( fileout );
+    serializer.beautify(true);   // this makes it just nice to read
+    serializer.serialize( *this ).finish();
+    log_debug( "Makefile data is writed in " << filename );
 }
 
 
