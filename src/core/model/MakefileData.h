@@ -135,6 +135,12 @@ public:
     const std::vector<std::string>& getResourcesFiles() const
     { return this->resourcesFiles; }
 
+    /**
+     * Get ath to resources root directory. "./src" for example.
+     */
+    const std::string& getResourcesRoot() const
+    { return this->resourcesRoot; }
+
     // === R ===
 
     /**
@@ -217,6 +223,11 @@ private:
     * List of static contend files.
     */
     std::vector<std::string> resourcesFiles;
+
+    /**
+     * Path to resources root directory. "./src" for example.
+     */
+    std::string resourcesRoot;
 
     /**
     * The build directory.

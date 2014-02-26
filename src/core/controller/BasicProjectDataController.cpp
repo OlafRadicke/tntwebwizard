@@ -47,12 +47,14 @@ void BasicProjectDataController::worker (
         qparam.arg<std::string>("form_projectname");
     std::string  form_binaryfilename =
         qparam.arg<std::string>("form_binaryfilename");
-    std::string form_sourcecodeheader =
-        qparam.arg<std::string>("form_sourcecodeheader");
     std::string form_licence_template =
         qparam.arg<std::string>("form_licence_template");
     bool form_assume_licence =
         qparam.arg<bool>("form_assume_licence");
+    std::string form_sourcecodeheader =
+        qparam.arg<std::string>("form_sourcecodeheader");
+    bool form_doxygen_templates =
+        qparam.arg<bool>("form_doxygen_templates");
     bool form_save =
         qparam.arg<bool>("form_save");
 
@@ -70,6 +72,7 @@ void BasicProjectDataController::worker (
     if ( form_save ) {
         this->projectData.setProjectName( form_projectname );
         this->projectData.setSourceCodeHeader( form_sourcecodeheader );
+        this->projectData.setDoxygenTemplates( form_doxygen_templates );
         this->projectData.write( file_projectdata.str() );
         this->makefileData.setBinName( form_binaryfilename );
         this->makefileData.write( file_makefile.str() );

@@ -55,7 +55,8 @@ public:
 
     ProjectData():
         wizardVersion( 1 ),
-        projectName("newproject")
+        projectName("newproject"),
+        doxygenTemplates(true)
     { }
 
     // === G ===
@@ -90,6 +91,14 @@ public:
     const int getWizardVersion() const
     { return this->wizardVersion; }
 
+    // === I ===
+
+    /**
+     * If that "true" than use doxygen comments.
+     */
+    const bool isDoxygenTemplates( ) const
+    { return this->doxygenTemplates; };
+
     // === R ===
 
     /**
@@ -98,6 +107,13 @@ public:
     void read(const std::string& filename);
 
     // === S ===
+
+    /**
+     * Set if use doxygen.
+     * @arg _yesOrNo "true" is using doxygen.
+     */
+    void setDoxygenTemplates( bool _yesOrNo )
+    { this->doxygenTemplates = _yesOrNo; };
 
     /**
      * Set project name.
@@ -136,6 +152,11 @@ private:
      * The header template with the licence and author.
      */
     std::string sourceCodeHeader;
+
+    /**
+     * If that "true" than use doxygen comments.
+     */
+    bool doxygenTemplates;
 
 
 };

@@ -87,6 +87,7 @@ void operator>>= (const cxxtools::SerializationInfo& si, ProjectData& projektDat
     si.getMember("wizard_version") >>= projektData.wizardVersion;
     si.getMember("project_name") >>= projektData.projectName;
     si.getMember("source_code_header") >>= projektData.sourceCodeHeader;
+    si.getMember("doxygen_templates") >>= projektData.doxygenTemplates;
 }
 
 void operator<<= ( cxxtools::SerializationInfo& si, const ProjectData& projektData )
@@ -94,6 +95,7 @@ void operator<<= ( cxxtools::SerializationInfo& si, const ProjectData& projektDa
     si.addMember("wizard_version") <<= projektData.getWizardVersion();
     si.addMember("project_name") <<= projektData.getProjectName();
     si.addMember("source_code_header") <<= projektData.getSourceCodeHeader();
+    si.addMember("doxygen_templates") <<= projektData.isDoxygenTemplates();
 }
 
 // === R ===

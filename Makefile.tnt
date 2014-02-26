@@ -34,6 +34,7 @@
         "./src/core/view/core_part_menu.eccp",
         "./src/core/view/core_part_title.eccp"
     ],
+    "resourcesRoot": "./src/",
     "resourcesFiles": [
         "core/resources/favicon.ico",
         "core/resources/normalize.css",

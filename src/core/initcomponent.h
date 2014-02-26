@@ -90,8 +90,6 @@ void initcomponent ( tnt::Tntnet &app ) {
     // ############################ SITES ##########################
 
     // basic_project_data
-
-
     app.mapUrl(
         "^/core/basicprojectdata$",
         "core_basicprojectdata"
@@ -103,8 +101,7 @@ void initcomponent ( tnt::Tntnet &app ) {
     );
 
 
-    //
-
+    //core_createapplicationcore
     app.mapUrl(
         "^/core/createapplicationcore$",
         "core_createapplicationcore"

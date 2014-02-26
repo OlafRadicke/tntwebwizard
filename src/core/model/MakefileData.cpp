@@ -74,6 +74,7 @@ void operator>>= (const cxxtools::SerializationInfo& si, MakefileData& makefileD
     si.getMember("ecppFlags") >>= makefileData.ecppFlags;
     si.getMember("ecppFiles") >>= makefileData.ecppFiles;
     si.getMember("resourcesFiles") >>= makefileData.resourcesFiles;
+    si.getMember("resourcesRoot") >>= makefileData.resourcesRoot;
     si.getMember("buildDir") >>= makefileData.buildDir;
 }
 
@@ -90,6 +91,7 @@ void operator<<= ( cxxtools::SerializationInfo& si, const MakefileData& makefile
     si.addMember("ecppFlags") <<= makefileData.getEcppFlags();
     si.addMember("ecppFiles") <<= makefileData.getEcppFiles();
     si.addMember("resourcesFiles") <<= makefileData.getResourcesFiles();
+    si.addMember("resourcesRoot") <<= makefileData.getResourcesRoot();
     si.addMember("buildDir") <<= makefileData.getBuildDir();
 }
 

@@ -108,7 +108,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     rows="15"
                     cols="80"><$ projectData.getSourceCodeHeader()  $>
                 </textarea>
-
+                <br>
+                <label from="doxygen_templates">Doxygen templates:</label>
+                <input
+                        type="checkbox"
+                        id="doxygen_templates"
+                        value="true"
+                        name="form_doxygen_templates"
+%     if ( projectData.isDoxygenTemplates() ) {
+                        checked ></p>
+%     } else {
+                        ></p>
+%     }
 
                 <br>
                 <button

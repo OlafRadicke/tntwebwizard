@@ -67,6 +67,11 @@ void CreateApplicationCoreController::worker (
         // read project configuration...
         this->projectData.read( file_projectdata.str() );
         this->makefileData.read( file_makefile.str() );
+        if ( this->projectData.getSourceCodeHeader() == "getSourceCodeHeader()" ) {
+            this->feedback = "The licence template for the source code header is \
+            not set. Go to the menu point \"Basic project data\" make the basic \
+            configuration please.";
+        }
     }
 }
 
