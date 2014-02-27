@@ -27,9 +27,11 @@
 #include <iostream>
 #include <cxxtools/log.h>
 
-log_define("SessionForm.Controller")
+log_define("FormToken.Controller")
 
-namespace SessionForm
+
+namespace Tww {
+namespace FormToken
 {
     class Controller : public tnt::Component
     {
@@ -40,13 +42,13 @@ namespace SessionForm
             tnt::QueryParams& qparam
         );
     };
-} // end namespace SessionForm
+} // end namespace FormToken
 
 
-static tnt::ComponentFactoryImpl<SessionForm::Controller> factory("SessionForm::Controller");
+static tnt::ComponentFactoryImpl<FormToken::Controller> factory("formtoken_controller");
 
 
-unsigned SessionForm::Controller::operator() (
+unsigned FormToken::Controller::operator() (
     tnt::HttpRequest& request,
     tnt::HttpReply& reply,
     tnt::QueryParams& qparam
@@ -60,11 +62,12 @@ unsigned SessionForm::Controller::operator() (
         log_debug( "Value of SESSIONFORM_AVAILABLE_TOKEN: " << SESSIONFORM_AVAILABLE_TOKEN );
 
         if ( SESSIONFORM_TOKEN != SESSIONFORM_AVAILABLE_TOKEN ) {
-            return reply.redirect ( "/SessionForm/NoAvailabeTokenView" );
+            return reply.redirect ( "/FormToken/NoAvailabeTokenView" );
         }
     } else {
         log_debug( "No SESSIONFORM_TOKEN exist"  );
     };
 
     return DECLINED;
-}
+} // namespace FormToken
+} // namespace Tww

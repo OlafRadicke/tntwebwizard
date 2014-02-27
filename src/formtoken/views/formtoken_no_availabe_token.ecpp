@@ -16,25 +16,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #>
 
 
-
-<%session
-    scope="shared"
-    include="Core/models/UserSession.h" >
-        UserSession userSession;
-</%session>
-
-
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>PERUSCHHIM - Neuen Account anlegen</title>
+    <title>FORM TOKEN ERROR</title>
     <meta charset = "UTF-8" />
-    <& "style" &>
 </head>
 <body>
-    <%include>Core/views/parts/user-session.ecpp.html</%include>
-    <%include>Core/views/parts/head.ecpp.html</%include>
-
     <div class="centerbox">
         <h1>Invalid form token</h1>
         <div class="feedback-box">
@@ -57,6 +45,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </ul>
         </div>
     </div>
-<%include>Core/views/parts/foot.ecpp.html</%include>
 </body>
 </html>
+

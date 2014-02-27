@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2013 Olaf Radicke <briefkasten@olaf-radicke.de>
+* Copyright (C) 2014 Olaf Radicke <briefkasten@olaf-radicke.de>
 *
 *
 * This program is free software: you can redistribute it and/or modify
@@ -16,8 +16,8 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CORE_INITCOMPONENT_H
-#define CORE_INITCOMPONENT_H
+#ifndef FORMTOKEN_INITCOMPONENT_H
+#define FORMTOKEN_INITCOMPONENT_H
 
 #include <string>
 #include <cxxtools/log.h>
@@ -26,92 +26,39 @@
 #include <RouteReverse/manager/Manager.h>
 
 
-namespace Core
+namespace Tww {
+namespace FormToken
 {
 
-    log_define("Core.initcomponent")
+    log_define("FormToken.initcomponent")
 
 /**
- * This function prepare the component "Core". specifically the routing.
+ * This function prepare the component "FormToken". specifically the routing.
  * @arg app a reference of the application server.
  */
 void initcomponent ( tnt::Tntnet &app ) {
-    RouteReverse::URLData urlData;
 
-    // LogIn
+    // controller rout for SessionForm token check.
+    app.mapUrl( "^/(.*)", "formtoken_controller" );
+    // controller rout for SessionForm token check.
+    app.mapUrl( "^/FormToken/NoAvailabeToken$", "formtoken_no_availabe_token" );
 
-    urlData.componentName = "LogIn";
-    urlData.reverseRoute = "LogIn";
-    RouteReverse::Manager::addRoute( urlData, app );
+    // error page
+    app.mapUrl(
+        "^/FormToken/NoAvailabeToken$",
+        "formtoken_no_availabe_token"
+    );
 
-    // logout
-
-    RouteReverse::URLData urlData2;
-    urlData2.componentName = "logout";
-    urlData2.reverseRoute = "logout";
-    RouteReverse::Manager::addRoute( urlData2, app );
-
-    // rss.xml
-
-    RouteReverse::URLData urlData3;
-    urlData3.urlRegEx           = "^/rss.xml";
-    urlData3.componentName      = "RSSfeedView";
-    urlData3.reverseRoute       = "rss.xml";
-    RouteReverse::Manager::addRoute( urlData3, app );
-
-    // feed-icon.png
-
-    RouteReverse::URLData urlData4;
-    urlData4.componentName      = "resources";
-    urlData4.urlRegEx           = "^/Core/feed-icon.png$";
-    urlData4.componentPathInfo  = "Core/resources/feed-icon.png";
-    RouteReverse::Manager::addRoute( urlData4, app );
-
-    RouteReverse::URLData urlData4_1;
-    urlData4_1.componentName      = "Core/feed-icon.png";
-    urlData4_1.reverseRoute       = "Core/feed-icon.png";
-    RouteReverse::Manager::addRoute( urlData4_1, app );
-
-    // SwitchToHandheldVersion
-
-    RouteReverse::URLData urlData5_1;
-    urlData5_1.urlRegEx           = "^SwitchToHandheldVersion$";
-    urlData5_1.componentName      = "SwitchToHandheldVersionView";
-    RouteReverse::Manager::addRoute( urlData5_1, app );
-
-    RouteReverse::URLData urlData5_2;
-    urlData5_2.urlRegEx           = "^SwitchToHandheldVersion$";
-    urlData5_2.componentName      = "SwitchToHandheldVersionController";
-    RouteReverse::Manager::addRoute( urlData5_2, app );
-
-    RouteReverse::URLData urlData5_3;
-    urlData5_3.reverseRoute       = "SwitchToHandheldVersion";
-    urlData5_3.componentName      = "SwitchToHandheldVersion";
-    RouteReverse::Manager::addRoute( urlData5_3, app );
-    
-    // NewAccount
-    
-    app.mapUrl("^NewAccount$", "NewAccountView");
-    app.mapUrl("^NewAccount$", "NewAccountController");
-    
-    RouteReverse::URLData urlData6;
-    urlData5_3.reverseRoute       = "NewAccount";
-    urlData5_3.componentName      = "NewAccount";
-    RouteReverse::Manager::addRoute( urlData5_3, app );
-    
-    
-    // ready get info...
-
-    log_debug( RouteReverse::Manager::getAllReversesRoutes() );
-    
-    
-    
-
+    RouteReverse::Manager::add(
+        "formtoken_no_availabe_token",
+        "core/basicprojectdata"
+    );
 }
 
 
 
 } // END namespace RouteReverse
+} // namespace Tww
 
 
 #endif // CORE_INITCOMPONENT_H

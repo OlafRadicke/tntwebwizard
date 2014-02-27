@@ -75,11 +75,8 @@ int main ( int argc, char* argv[] )
         // default route for /
         app.mapUrl( "^/$", "core_home" );
 
-        // controller rout for SessionForm token check.
-        app.mapUrl( "^/(.*)", "SessionForm::Controller" );
-        // controller rout for SessionForm token check.
-        app.mapUrl( "^/SessionForm/NoAvailabeToken", "NoAvailabeTokenView" );
-
+        // init comonent parts
+        Tww::FormToken::initcomponent( app );
         Tww::RouteReverse::initcomponent( app );
         Tww::Core::initcomponent( app );
 
