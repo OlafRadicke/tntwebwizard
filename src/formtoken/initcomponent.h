@@ -22,11 +22,20 @@
 #include <string>
 #include <cxxtools/log.h>
 #include <tnt/tntnet.h>
-#include <RouteReverse/models/URLData.h>
-#include <RouteReverse/manager/Manager.h>
+#include <routereverse/manager/Manager.h>
+
+
 
 
 namespace Tww {
+/**
+ * @namespace FormToken
+ *
+ * This is the namespace for module formetoken. This module support form tokens.
+ * This tokens is use in context of csrf  (cross site request forgery).
+ *
+ *
+ */
 namespace FormToken
 {
 

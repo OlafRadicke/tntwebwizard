@@ -99,6 +99,14 @@ public:
     const bool isDoxygenTemplates( ) const
     { return this->doxygenTemplates; };
 
+
+    /**
+     * If that "true" than make forms with tokens.
+     * That is for csrf "cross site request forgery".
+     */
+    const bool isFormToken( ) const
+    { return this->formToken; };
+
     // === R ===
 
     /**
@@ -109,11 +117,19 @@ public:
     // === S ===
 
     /**
-     * Set if use doxygen.
+     * that set is doxygen use or not.
      * @arg _yesOrNo "true" is using doxygen.
      */
     void setDoxygenTemplates( bool _yesOrNo )
     { this->doxygenTemplates = _yesOrNo; };
+
+
+    /**
+     * that set is form token use or not.
+     * The token is for csrf "cross site request forgery".
+     */
+    void setFormToken( bool _yesOrNo )
+    { this->formToken = _yesOrNo; };
 
     /**
      * Set project name.
@@ -158,7 +174,11 @@ private:
      */
     bool doxygenTemplates;
 
-
+    /**
+     * If that "true" than make forms with tokens.
+     * That is for csrf "cross site request forgery".
+     */
+    bool formToken;
 };
 
 } // namespace Core

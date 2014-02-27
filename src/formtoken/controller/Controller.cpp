@@ -23,9 +23,8 @@
 #include <tnt/httprequest.h>
 #include <tnt/httpreply.h>
 
-#include <Core/manager/QuoteRegister.h>
-#include <iostream>
 #include <cxxtools/log.h>
+#include <iostream>
 
 log_define("FormToken.Controller")
 

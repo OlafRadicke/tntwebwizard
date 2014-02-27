@@ -121,6 +121,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         ></p>
 %     }
 
+                <label from="csrf_token">Forms with csrf(cross site request forgery) token:</label>
+                <input
+                        type="checkbox"
+                        id="csrf_token"
+                        value="true"
+                        name="form_csrf_token"
+%     if ( projectData.isFormToken() ) {
+                        checked ></p>
+%     } else {
+                        ></p>
+%     }
+
                 <br>
                 <button
                     name="form_save"

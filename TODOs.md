@@ -6,7 +6,7 @@
 * ACL
 * user session
 * route reverse
-* Form token support (no forme reload) csrf (Cross Site Request Forgery)
+* Form token support (no forme reload) csrf (cross site request forgery)
 * config heandler
 * REST (json,xml)
 * Exception class

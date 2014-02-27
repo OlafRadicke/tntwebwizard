@@ -9,6 +9,8 @@
         "./src/core/model/MakefileData.cpp",
         "./src/core/model/ProjectData.cpp",
         "./src/core/model/UserSession.cpp",
+        "./src/formtoken/controller/Controller.cpp",
+        "./src/formtoken/manager/Manager.cpp",
         "./src/routereverse/manager/Manager.cpp"
     ],
     "cppFlags": "-c -Wall -pedantic  -I ./src  ",
@@ -23,6 +25,7 @@
         "./src/core/model/ProjectData.h",
         "./src/core/model/UserSession.h",
         "./src/routereverse/initcomponent.h",
+        "./src/formtoken/manager/Manager.h",
         "./src/routereverse/manager/Manager.h",
         "./src/routereverse/model/URLData.h"
     ],
@@ -32,7 +35,8 @@
         "./src/core/view/core_createapplicationcore.ecpp",
         "./src/core/view/core_part_head.eccp",
         "./src/core/view/core_part_menu.eccp",
-        "./src/core/view/core_part_title.eccp"
+        "./src/core/view/core_part_title.eccp",
+        "./src/formtoken/views/formtoken_no_availabe_token.ecpp"
     ],
     "resourcesRoot": "./src/",
     "resourcesFiles": [

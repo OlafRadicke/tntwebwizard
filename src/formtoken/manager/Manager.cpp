@@ -17,23 +17,22 @@
 */
 
 
-
-#include <string>
-#include <unistd.h>
-
-#include <cxxtools/log.h>
+#include <formtoken/manager/Manager.h>
 
 #include <tnt/component.h>
 #include <tnt/httprequest.h>
 
-#include <SessionForm/manager/Manager.h>
-#include <Core/models/OString.h>
+#include <cxxtools/log.h>
 
-namespace SessionForm
+#include <string>
+#include <unistd.h>
+
+namespace Tww {
+namespace FormToken
 {
 
 
-log_define("SessionForm.Manager")
+log_define("FormToken.Manager")
 
 // G --------------------------------------------------------------------------
 
@@ -41,15 +40,19 @@ log_define("SessionForm.Manager")
 std::string  Manager::getFormToken( tnt::HttpRequest& request )
 {
     TNT_SESSION_SHARED_VAR( std::string, SESSIONFORM_AVAILABLE_TOKEN, () );
-    std::string token = genRandomToken(16);
-    token += ":" + OString::IntToStr( request.getSerial() );
-    std::string formTokenInput = "<input \n\
-            type=\"hidden\" \n\
-            name=\"SESSIONFORM_TOKEN\" \n\
-            value=\"";
-    formTokenInput += token + "\" >";
-    SESSIONFORM_AVAILABLE_TOKEN = token;
-    return formTokenInput;
+    std::ostringstream tokenStream;
+    std::ostringstream inputTagStream;
+
+    tokenStream << genRandomToken(16) << "-" << request.getSerial();
+    inputTagStream << "<input \n"
+        << "      type=\"hidden\" \n"
+        << "      name=\"SESSIONFORM_TOKEN\" \n"
+        << "      value=\""
+        << tokenStream.str()
+        << "\n \" >";
+
+    SESSIONFORM_AVAILABLE_TOKEN = tokenStream.str();
+    return inputTagStream.str();
 }
 
 std::string Manager::genRandomToken ( const int len) {
@@ -68,7 +71,8 @@ std::string Manager::genRandomToken ( const int len) {
 }
 
 
-} // END namespace SessionForm
+} // END namespace FormToken
+} // end namespace Tww
 
 
 

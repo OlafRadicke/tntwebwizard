@@ -16,16 +16,16 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef SESSIONFORM_MANAGER_H
-#define SESSIONFORM_MANAGER_H
-
-
-#include <string>
+#ifndef FORMTOKEN_MANAGER_H
+#define FORMTOKEN_MANAGER_H
 
 #include <tnt/component.h>
 #include <tnt/httprequest.h>
 
-namespace SessionForm
+#include <string>
+
+namespace Tww {
+namespace FormToken
 {
 
 /**
@@ -58,8 +58,8 @@ private:
 };
 
 
-} // END namespace SessionForm
 
-
+} // END namespace FormToken
+} // end namespace Tww
 #endif // SESSIONFORM_MANAGER_H
 

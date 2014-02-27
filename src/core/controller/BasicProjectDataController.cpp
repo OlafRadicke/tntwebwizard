@@ -55,6 +55,8 @@ void BasicProjectDataController::worker (
         qparam.arg<std::string>("form_sourcecodeheader");
     bool form_doxygen_templates =
         qparam.arg<bool>("form_doxygen_templates");
+    bool form_csrf_token =
+        qparam.arg<bool>("form_csrf_token");
     bool form_save =
         qparam.arg<bool>("form_save");
 
@@ -70,10 +72,14 @@ void BasicProjectDataController::worker (
 
     // save button pressed
     if ( form_save ) {
+        // project data
         this->projectData.setProjectName( form_projectname );
         this->projectData.setSourceCodeHeader( form_sourcecodeheader );
         this->projectData.setDoxygenTemplates( form_doxygen_templates );
+        this->projectData.setFormToken( form_csrf_token );
         this->projectData.write( file_projectdata.str() );
+        
+        // makefile data
         this->makefileData.setBinName( form_binaryfilename );
         this->makefileData.write( file_makefile.str() );
     } else {

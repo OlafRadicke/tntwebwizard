@@ -19,6 +19,7 @@
 
 #include <core/model/Config.h>
 #include <core/initcomponent.h>
+#include <formtoken/initcomponent.h>
 #include <routereverse/initcomponent.h>
 
 #include <tnt/tntnet.h>
