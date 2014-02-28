@@ -56,37 +56,6 @@ void Manager::add( std::string targetID, std::string reverseRoute ) {
 
 }
 
-
-void Manager::addRoute( const URLData &urlData, tnt::Tntnet &app ) {
-
-    if ( urlData.urlRegEx != "" && urlData.componentName != "" ) {
-        if ( urlData.componentPathInfo != "" ) {
-            app.mapUrl( urlData.urlRegEx, urlData.componentName )
-            .setPathInfo( urlData.componentPathInfo );
-        } else {
-            app.mapUrl( urlData.urlRegEx, urlData.componentName );
-        }
-    }
-
-    if ( urlData.reverseRoute != "") {
-        if ( Manager::reverseMAP.count( urlData.componentName ) > 0 ) {
-            std::ostringstream errorText;
-            errorText << "[" << __FILE__ << " "
-                <<  __LINE__  << "] "
-                << " the url " << urlData.componentName
-                << " is all ready set as reverse route!";
-            log_debug( errorText );
-            throw RouteReverseException( errorText.str() );
-        }
-        Manager::reverseMAP[ urlData.componentName ] = urlData.reverseRoute;
-        log_debug( "List of know reverse routes: \n" <<
-            RouteReverse::Manager::getAllReversesRoutes() );
-    }
-}
-
-
-
-
 // G --------------------------------------------------------------------------
 
 std::string Manager::getAllReversesRoutes(){

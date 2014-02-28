@@ -33,8 +33,6 @@ namespace Tww {
  *
  * This is the namespace for module formetoken. This module support form tokens.
  * This tokens is use in context of csrf  (cross site request forgery).
- *
- *
  */
 namespace FormToken
 {

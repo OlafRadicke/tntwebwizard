@@ -19,7 +19,6 @@
 #ifndef CORE_INITCOMPONENT_H
 #define CORE_INITCOMPONENT_H
 
-#include <routereverse/model/URLData.h>
 #include <routereverse/manager/Manager.h>
 
 #include <string>
@@ -37,7 +36,6 @@ namespace Core {
  * @arg app a reference of the application server.
  */
 void initcomponent ( tnt::Tntnet &app ) {
-    RouteReverse::URLData urlData;
 
     // ######################## RESOURCES ############################
 

@@ -26,8 +26,7 @@
         "./src/core/model/UserSession.h",
         "./src/routereverse/initcomponent.h",
         "./src/formtoken/manager/Manager.h",
-        "./src/routereverse/manager/Manager.h",
-        "./src/routereverse/model/URLData.h"
+        "./src/routereverse/manager/Manager.h"
     ],
     "ecppFiles": [
         "./src/core/view/core_home.ecpp",

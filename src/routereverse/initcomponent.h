@@ -19,14 +19,16 @@
 #ifndef ROUTEREVERSE_INITCOMPONENT_H
 #define ROUTEREVERSE_INITCOMPONENT_H
 
-
-#include <string>
-#include <map>
 #include <tnt/tntnet.h>
-#include <routereverse/model/URLData.h>
-#include <routereverse/manager/Manager.h>
 
 namespace Tww {
+/**
+ * @namespace RouteReverse
+ *
+ * This is the namespace for module route reverse. This module support a way to
+ * centralisation the handling with back links (to components). This module
+ * generated a relative path or a absolute path if you like.
+ */
 namespace RouteReverse {
 
 /**
