@@ -61,9 +61,9 @@ void BasicProjectDataController::worker (
         qparam.arg<bool>("form_save");
 
     std::stringstream file_projectdata;
-    file_projectdata << this->userSession.getSesstonPath() << "/tntwebwizard.pro";
+    file_projectdata << this->userSession.getSessionPath() << "/tntwebwizard.pro";
     std::stringstream file_makefile;
-    file_makefile << this->userSession.getSesstonPath() << "/Makefile.tnt";
+    file_makefile << this->userSession.getSessionPath() << "/Makefile.tnt";
 
     log_debug("form_save: " << form_save );
     log_debug("form_projectname: " << form_projectname );
@@ -78,7 +78,7 @@ void BasicProjectDataController::worker (
         this->projectData.setDoxygenTemplates( form_doxygen_templates );
         this->projectData.setFormToken( form_csrf_token );
         this->projectData.write( file_projectdata.str() );
-        
+
         // makefile data
         this->makefileData.setBinName( form_binaryfilename );
         this->makefileData.write( file_makefile.str() );

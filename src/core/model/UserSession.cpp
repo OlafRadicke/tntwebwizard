@@ -37,27 +37,21 @@ UserSession::UserSession ( cxxtools::atomic_t token ) {
     if ( !cxxtools::Directory::exists( "/tmp/tntwebwizard/" ) ) {
         cxxtools::Directory::create( "/tmp/tntwebwizard/" );
     }
-    if ( !cxxtools::Directory::exists( getSesstonPath() ) ) {
-        cxxtools::Directory::create( getSesstonPath() );
+    if ( !cxxtools::Directory::exists( this->getSessionPath() ) ) {
+        cxxtools::Directory::create( this->getSessionPath() );
     }
 }
 
 
 UserSession::~UserSession ( ) {
-    // clean up tmp dir with sessionToken;
-//     if ( cxxtools::Directory::exists( getSesstonPath() ) ) {
-//         cxxtools::Directory tmpsessiondir( getSesstonPath() );
-//         tmpsessiondir.remove ();
-//     }
-
-    if ( cxxtools::Directory::exists( getSesstonPath() ) ) {
+    if ( cxxtools::Directory::exists( this->getSessionPath() ) ) {
         std::ostringstream syscommand;
-        syscommand << "rm -r " << getSesstonPath();
+        syscommand << "rm -r " << this->getSessionPath();
         system( syscommand.str().c_str() );
     }
 }
 
-std::string UserSession::getSesstonPath() {
+std::string UserSession::getSessionPath() {
     std::ostringstream tmpPath;
 
     tmpPath << "/tmp/tntwebwizard/";

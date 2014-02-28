@@ -43,7 +43,7 @@ public:
     /**
      * Get back the path to a tmp directory.
      **/
-    std::string getSesstonPath();
+    std::string getSessionPath();
 
 
 

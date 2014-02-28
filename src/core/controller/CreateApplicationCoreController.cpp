@@ -53,9 +53,10 @@ void CreateApplicationCoreController::worker (
         qparam.arg<bool>("form_create");
 
     std::stringstream file_projectdata;
-    file_projectdata << this->userSession.getSesstonPath() << "/tntwebwizard.pro";
+    file_projectdata << this->userSession.getSessionPath()
+        << "/tntwebwizard.pro";
     std::stringstream file_makefile;
-    file_makefile << this->userSession.getSesstonPath() << "/Makefile.tnt";
+    file_makefile << this->userSession.getSessionPath() << "/Makefile.tnt";
 
     log_debug("form_create: " << form_create );
 

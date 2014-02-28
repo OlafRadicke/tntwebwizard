@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2013-2014 Tommi Maekitalo, Olaf Radicke
+* Copyright (C) 2013 Olaf Radicke <briefkasten@olaf-radicke.de>
 *
 *
 * This program is free software: you can redistribute it and/or modify
@@ -16,50 +16,47 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef FORMTOKEN_MANAGER_H
-#define FORMTOKEN_MANAGER_H
+
+#include <core/manager/WebApplicationCoreManager.h>
 
 #include <tnt/component.h>
 #include <tnt/httprequest.h>
 
+#include <cxxtools/fileinfo.h>
+#include <cxxtools/directory.h>
+#include <cxxtools/log.h>
+
 #include <string>
+#include <unistd.h>
 
 namespace Tww {
-namespace FormToken
+namespace Core
 {
 
-/**
- * This class support methods too prevent reloads of html-forms requests.
- */
-class Manager
-{
-public:
 
+log_define("Core.WebApplicationCoreManager")
 
 // G --------------------------------------------------------------------------
 
-    /**
-    * Get back a hidden input form tag, with a token id as value. The input tag
-    * name is SESSIONFORM_TOKEN.
-     * @para request
-    * @return a hidden input form tag, with a token id.
-    */
-    static std::string  getFormToken( tnt::HttpRequest& request );
+bool WebApplicationCoreManager::isApplicationCoreExist(){
 
-private:
+    std::string sourceDir = this->userSession.getSessionPath() + "/src";
 
-    /**
-     * Generated a random string as html form token.
-     * @para len teh length of sting.
-     * @return a random string
-     */
-    static std::string genRandomToken ( const int len) ;
+    if ( !cxxtools::Directory::exists( sourceDir ) ) {
+        log_debug( "[isApplicationCoreExist] /src no exist.");
+        return false;
+    };
 
-};
+    if ( !cxxtools::FileInfo::exists( sourceDir + "/src/main.cpp" ) ) {
+        log_debug( "[isApplicationCoreExist] /src/main.cpp no exist.");
+        return false;
+    };
+}
 
 
-
-} // END namespace FormToken
+} // END namespace Core
 } // end namespace Tww
-#endif // SESSIONFORM_MANAGER_H
+
+
+
 

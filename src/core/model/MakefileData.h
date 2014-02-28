@@ -157,6 +157,7 @@ public:
     void setBinName( std::string _binName )
     { this->binName = _binName; }
 
+
     // === W ===
 
     /**
@@ -228,6 +229,7 @@ private:
      * Path to resources root directory. "./src" for example.
      */
     std::string resourcesRoot;
+
 
     /**
     * The build directory.

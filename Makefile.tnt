@@ -5,6 +5,7 @@
         "./src/main.cpp",
         "./src/core/controller/BasicProjectDataController.cpp",
         "./src/core/controller/CreateApplicationCoreController.cpp",
+        "./src/core/manager/WebApplicationCoreManager.cpp",
         "./src/core/model/Config.cpp",
         "./src/core/model/MakefileData.cpp",
         "./src/core/model/ProjectData.cpp",
@@ -20,6 +21,7 @@
     "hFiles": [
         "./src/core/controller/BasicProjectDataController.h",
         "./src/core/controller/CreateApplicationCoreController.h",
+        "./src/core/manager/WebApplicationCoreManager.h",
         "./src/core/model/Config.h",
         "./src/core/model/MakefileData.h",
         "./src/core/model/ProjectData.h",
