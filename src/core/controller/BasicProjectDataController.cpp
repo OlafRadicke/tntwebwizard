@@ -55,8 +55,17 @@ void BasicProjectDataController::worker (
         qparam.arg<std::string>("form_sourcecodeheader");
     bool form_doxygen_templates =
         qparam.arg<bool>("form_doxygen_templates");
+    bool form_cxxtools_loging =
+        qparam.arg<bool>("form_cxxtools_loging");
+    bool form_route_revers =
+        qparam.arg<bool>("form_route_revers");
+
+
     bool form_csrf_token =
         qparam.arg<bool>("form_csrf_token");
+
+/*    cxxtoolsLoging
+    setRouteRevers( */
     bool form_save =
         qparam.arg<bool>("form_save");
 
@@ -77,6 +86,8 @@ void BasicProjectDataController::worker (
         this->projectData.setSourceCodeHeader( form_sourcecodeheader );
         this->projectData.setDoxygenTemplates( form_doxygen_templates );
         this->projectData.setFormToken( form_csrf_token );
+        this->projectData.setCxxtoolsLoging( form_cxxtools_loging );
+        this->projectData.setRouteRevers( form_route_revers );
         this->projectData.write( file_projectdata.str() );
 
         // makefile data

@@ -25,9 +25,7 @@ namespace Tww {
 /**
  * @namespace RouteReverse
  *
- * This is the namespace for module route reverse. This module support a way to
- * centralisation the handling with back links (to components). This module
- * generated a relative path or a absolute path if you like.
+ * This is the namespace for module route reverse. 
  */
 namespace RouteReverse {
 

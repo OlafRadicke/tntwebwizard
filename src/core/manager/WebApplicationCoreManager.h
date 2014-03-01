@@ -79,6 +79,11 @@ private:
      * Session information.
      */
     Tww::Core::UserSession& userSession;
+
+    /**
+     * Create the "src/main.cpp" file.
+     */
+    void creatMain_cpp();
 };
 
 

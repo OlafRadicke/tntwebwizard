@@ -84,18 +84,25 @@ std::string ProjectData::getXml( ) {
 
 void operator>>= (const cxxtools::SerializationInfo& si, ProjectData& projektData )
 {
-    si.getMember("wizard_version") >>= projektData.wizardVersion;
-    si.getMember("project_name") >>= projektData.projectName;
+    si.getMember("wizard_version")     >>= projektData.wizardVersion;
+    si.getMember("project_name")       >>= projektData.projectName;
     si.getMember("source_code_header") >>= projektData.sourceCodeHeader;
-    si.getMember("doxygen_templates") >>= projektData.doxygenTemplates;
+    si.getMember("doxygen_templates")  >>= projektData.doxygenTemplates;
+    si.getMember("form_token")         >>= projektData.formToken;
+    si.getMember("route_revers")       >>= projektData.routeRevers;
+    si.getMember("cxxtools_loging")    >>= projektData.cxxtoolsLoging;
+
 }
 
 void operator<<= ( cxxtools::SerializationInfo& si, const ProjectData& projektData )
 {
-    si.addMember("wizard_version") <<= projektData.getWizardVersion();
-    si.addMember("project_name") <<= projektData.getProjectName();
-    si.addMember("source_code_header") <<= projektData.getSourceCodeHeader();
-    si.addMember("doxygen_templates") <<= projektData.isDoxygenTemplates();
+    si.addMember("wizard_version")     <<= projektData.getWizardVersion( );
+    si.addMember("project_name")       <<= projektData.getProjectName( );
+    si.addMember("source_code_header") <<= projektData.getSourceCodeHeader( );
+    si.addMember("doxygen_templates")  <<= projektData.isDoxygenTemplates( );
+    si.addMember("form_token")         <<= projektData.isFormToken( );
+    si.addMember("route_revers")       <<= projektData.isRouteRevers( );
+    si.addMember("cxxtools_loging")    <<= projektData.isCxxtoolsLoging( );
 }
 
 // === R ===

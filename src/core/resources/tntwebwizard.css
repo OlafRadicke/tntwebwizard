@@ -299,7 +299,28 @@ label {
 }
 
 select {
+    float: left;
     display: block;
+
+
+    border: 0 !important;.  /*Removes border*/
+    -webkit-appearance: none;  /*Removes default chrome and safari style*/
+    -moz-appearance: none;  /*Removes default style Firefox*/
+
+    margin-top: 5px;
+    margin-right: 5px;
+    padding: 7px 13px;
+    line-height: 100%;
+    vertical-align: middle;
+    text-align: center;
+
+/*    font-size: 14px;
+    text-shadow: 0 1px rgba(0, 0, 0, 0.3)*/;
+    color: #0076ff;
+    background-color: white;
+    cursor: pointer;
+    font-weight: bold;
+
 }
 
 input {
@@ -310,6 +331,46 @@ textarea{
     display: block;
 }
 
+
+/* --------------- button -------------------------- */
+
 button {
     display: block;
+/*     display:inline-block; */
+
+    margin-top: 5px;
+    margin-right: 5px;
+    padding: 7px 13px;
+    line-height: 100%;
+    vertical-align: middle;
+    text-align: center;
+
+    font-size: 14px;
+    text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+/*     text-shadow: 0 1px rgba(0, 0, 0, 0.4); */
+    color: #0076ff;
+    background-color: #CCDDFF;
+    cursor: pointer;
+    font-weight: bold;
+
+    transition: background 0.1s ease-in-out;
+    -webkit-transition: background 0.1s ease-in-out;
+    -moz-transition: background 0.1s ease-in-out;
+    -ms-transition: background 0.1s ease-in-out;
+    -o-transition: background 0.1s ease-in-out;
+
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
 }
+button:active {
+    padding-top: 15px;
+        margin-bottom: -1px;
+}
+.demo-pricing, button:hover, button:active {
+    outline: 0 none;
+    text-decoration: none;
+    color: #0076ff;
+}
+
+

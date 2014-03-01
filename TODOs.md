@@ -14,10 +14,8 @@
 * add getter and setter
 * Arg, Read and extract commandline parameters from argc/argv.
 * Doxygen support
+* Unit-Test support
 
 * zip -r name_of_your_directory.zip ./*
 
-    <& core_part_head qparam >
-vs.
-
-<%include>filename</%include>
+* project config view update.

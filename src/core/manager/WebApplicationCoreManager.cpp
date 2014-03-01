@@ -26,8 +26,10 @@
 #include <cxxtools/directory.h>
 #include <cxxtools/log.h>
 
+
+#include <ostream>
 #include <string>
-#include <unistd.h>
+// #include <unistd.h>
 
 namespace Tww {
 namespace Core
@@ -35,6 +37,37 @@ namespace Core
 
 
 log_define("Core.WebApplicationCoreManager")
+
+// C -------------------------------------------------------------------------
+
+void WebApplicationCoreManager::creatMain_cpp(){
+    std::ostringstream fileContent;
+    fileContent
+        << this->projectData.getSourceCodeHeader()
+        << "#include <core/model/Config.h> \n"
+        << "#include <core/initcomponent.h> \n"
+    ;
+
+    if ( this->projectData.isFormToken( ) ) {
+        fileContent << "#include <formtoken/initcomponent.h> \n";
+    }
+
+    if ( this->projectData.isRouteRevers( ) ) {
+        fileContent << "#include <routereverse/initcomponent.h> \n";
+    }
+
+    fileContent
+        << "#include <tnt/tntnet.h> \n"
+        << "#include <tnt/configurator.h> \n"
+    ;
+
+    if (  this->projectData.isCxxtoolsLoging( ) ){
+        fileContent << "#include <cxxtools/log.h> \n";
+    }
+
+
+
+}
 
 // G --------------------------------------------------------------------------
 

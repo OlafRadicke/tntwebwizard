@@ -56,7 +56,9 @@ public:
     ProjectData():
         wizardVersion( 1 ),
         projectName("newproject"),
-        doxygenTemplates(true)
+        doxygenTemplates(true),
+        formToken(true),
+        routeRevers(true)
     { }
 
     // === G ===
@@ -94,11 +96,16 @@ public:
     // === I ===
 
     /**
+     * Swith on and off generating code with cxxtools loging support.
+     */
+    const bool isCxxtoolsLoging( ) const
+    { return this->cxxtoolsLoging; };
+
+    /**
      * If that "true" than use doxygen comments.
      */
     const bool isDoxygenTemplates( ) const
     { return this->doxygenTemplates; };
-
 
     /**
      * If that "true" than make forms with tokens.
@@ -106,6 +113,13 @@ public:
      */
     const bool isFormToken( ) const
     { return this->formToken; };
+
+    /**
+     * If that "true" than it use the module "routereverse".
+     * \see subpage_route_reverse
+     */
+    const bool isRouteRevers( ) const
+    { return this->routeRevers; };
 
     // === R ===
 
@@ -117,12 +131,17 @@ public:
     // === S ===
 
     /**
+     * Swith on and off generating code with cxxtools loging support.
+     */
+    void setCxxtoolsLoging( bool _yesOrNo )
+    { this->cxxtoolsLoging = _yesOrNo; };
+
+    /**
      * that set is doxygen use or not.
      * @arg _yesOrNo "true" is using doxygen.
      */
     void setDoxygenTemplates( bool _yesOrNo )
     { this->doxygenTemplates = _yesOrNo; };
-
 
     /**
      * that set is form token use or not.
@@ -136,6 +155,12 @@ public:
      */
     void setProjectName( std::string _projectName )
     { this->projectName = _projectName; };
+
+    /**
+     * Swith on and off generating code with revers route support.
+     */
+    void setRouteRevers( bool _yesOrNo )
+    { this->routeRevers = _yesOrNo; };
 
     /**
      * Set the header template with the licence and author.
@@ -179,6 +204,16 @@ private:
      * That is for csrf "cross site request forgery".
      */
     bool formToken;
+
+    /**
+     * If that "true" than it is generating code with cxxtools loging support.
+     */
+    bool cxxtoolsLoging;
+
+    /**
+     * If that "true" than it is generating code with reverse routing support.
+     */
+    bool routeRevers;
 };
 
 } // namespace Core

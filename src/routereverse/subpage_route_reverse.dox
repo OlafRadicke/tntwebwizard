@@ -1,18 +1,17 @@
 /** ***************************************************************************
 *******************************************************************************
 
-\mainpage Code docomentation of tntwebwizard
+\page subpage_route_reverse  The form token module
 
-tableofcontents
+This module support a way to
+centralisation the handling with back links (to components). This module
+generated a relative path or a absolute path if you like.
+
+\section route_reverse_overview overview
 
 
-\section intro_sec Introduction
+ etc...
 
-Introduction.
-
- - \subpage subpage_form_token The form token module
-
- - \subpage subpage_route_reverse
 
 *******************************************************************************
 ***************************************************************************** */

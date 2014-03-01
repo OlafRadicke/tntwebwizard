@@ -121,6 +121,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         ></p>
 %     }
 
+                <br>
                 <label from="csrf_token">Forms with csrf(cross site request forgery) token:</label>
                 <input
                         type="checkbox"
@@ -132,6 +133,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %     } else {
                         ></p>
 %     }
+
+                <br>
+                <label from="cxxtools_loging">Cxxtools loging support:</label>
+                <input
+                        type="checkbox"
+                        id="cxxtools_loging"
+                        value="true"
+                        name="form_cxxtools_loging"
+%     if ( projectData.isCxxtoolsLoging() ) {
+                        checked ></p>
+%     } else {
+                        ></p>
+%     }
+
+                <br>
+                <label from="route_revers">Route revers support:</label>
+                <input
+                        type="checkbox"
+                        id="route_revers"
+                        value="true"
+                        name="form_route_revers"
+%     if ( projectData.isRouteRevers() ) {
+                        checked ></p>
+%     } else {
+                        ></p>
+%     }
+
+
 
                 <br>
                 <button
