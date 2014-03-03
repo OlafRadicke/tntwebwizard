@@ -59,6 +59,8 @@ void CreateApplicationCoreController::worker (
     std::stringstream file_makefile;
     file_makefile << this->userSession.getSessionPath() << "/Makefile.tnt";
 
+    log_debug("form_cli_support: " << form_cli_support );
+    log_debug("config_format: " << config_format );
     log_debug("form_create: " << form_create );
 
     // save button pressed
@@ -68,6 +70,7 @@ void CreateApplicationCoreController::worker (
             this->projectData,
             this->makefileData
         );
+        log_debug("webappManager.createApplicationCore()" );
         webappManager.createApplicationCore();
     } else {
         // read project configuration...

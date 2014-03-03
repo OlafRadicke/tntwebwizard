@@ -43,8 +43,8 @@ log_define("Core.WebApplicationCoreManager")
 // C -------------------------------------------------------------------------
 
 void WebApplicationCoreManager::createApplicationCore(){
-    if ( cxxtools::FileInfo::exists( this->getMainCppPath() ) )
-    {
+    if ( cxxtools::FileInfo::exists( this->getMainCppPath() ) ) {
+        log_debug("createApplicationCore()" );
         std::ostringstream errorText;
         errorText
             << "The file "
@@ -64,6 +64,7 @@ void WebApplicationCoreManager::createApplicationCore(){
 
 
 void WebApplicationCoreManager::createMain_cpp(){
+        log_debug("createMain_cpp()" );
 
     std::ostringstream fileContent;
     fileContent
@@ -124,6 +125,7 @@ void WebApplicationCoreManager::createMain_cpp(){
         << "}\n"
     ;
 
+    log_debug("fileContent: \n"  << fileContent.str() );
     std::ofstream maincpp_file( this->getMainCppPath().c_str() );
     maincpp_file << fileContent.str() ;
     maincpp_file.close();

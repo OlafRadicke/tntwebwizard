@@ -93,6 +93,7 @@ void BasicProjectDataController::worker (
         // makefile data
         this->makefileData.setBinName( form_binaryfilename );
         this->makefileData.write( file_makefile.str() );
+        this->feedback="The basic project date is saved.";
     } else {
         // assume licence button pressed
         if ( form_assume_licence ) {

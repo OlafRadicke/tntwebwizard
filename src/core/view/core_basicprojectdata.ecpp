@@ -57,8 +57,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <div id="content">
 
-        <h2>BASIC PROJECT DATA</h2>
-        <br />
+        <fieldset>
+            <legend>BASIC PROJECT DATA</legend>
 % if ( basicProjectDataController.feedback != "" ) {
 
             <div class="feedback-box">
@@ -66,112 +66,142 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </div>
 
 % }
-        <div class="centerbox">
-
             <form method="post">
-                <label from="projectname">Project name:</label>
-                <input
-                    id="projectname"
-                    name="form_projectname"
-                    type="text"
-                    size="30"
-                    maxlength="30"
-                    value="<$ projectData.getProjectName() $>">
-                <br>
-                <label from="binaryfilename">Binary file name:</label>
-                <input
-                    id="binaryfilename"
-                    name="form_binaryfilename"
-                    type="text"
-                    size="30"
-                    maxlength="30"
-                    value="<$ makefileData.getBinName() $>">
-                <br>
-                <label from="licence_template">Licence template:</label>
-                <select
-                    id="licence_template"
-                    name="form_licence_template">
-                    <option value="GPL3">GPL3</option>
-                    <option value="AGPL3">AGPL3</option>
-                    <option value="Apache">Apache</option>
-                    <option value="MIT">MIT</option>
-                    <option value="BSD2">BSD2</option>
-                </select> <button
-                    name="form_assume_licence"
-                    type="submit"
-                    value="form_assume_licence" >Assume licence template</button>
-                <br>
-                <label from="sourcecodeheader">Source code header:</label>
-                <textarea
-                    id="sourcecodeheader"
-                    name="form_sourcecodeheader"
-                    rows="15"
-                    cols="80"><$ projectData.getSourceCodeHeader()  $>
-                </textarea>
-                <br>
-                <label from="doxygen_templates">Doxygen templates:</label>
-                <input
+                <div class="form_labels">
+                    <label from="projectname">Project name:</label>
+                </div>
+                <div class="form_inputs">
+                    <input
+                        id="projectname"
+                        name="form_projectname"
+                        type="text"
+                        size="30"
+                        maxlength="30"
+                        value="<$ projectData.getProjectName() $>">
+                </div>
+
+                <div class="form_labels">
+                    <label from="binaryfilename">Binary file name:</label>
+                </div>
+                <div class="form_inputs">
+                    <input
+                        id="binaryfilename"
+                        name="form_binaryfilename"
+                        type="text"
+                        size="30"
+                        maxlength="30"
+                        value="<$ makefileData.getBinName() $>">
+                </div>
+
+                <div class="form_labels">
+                    <label from="licence_template">Source code header:</label>
+                </div>
+                <div class="form_inputs">
+                    <select
+                        id="licence_template"
+                        name="form_licence_template">
+                        <option value="GPL3">GPL3</option>
+                        <option value="AGPL3">AGPL3</option>
+                        <option value="Apache">Apache</option>
+                        <option value="MIT">MIT</option>
+                        <option value="BSD2">BSD2</option>
+                    </select> <button
+                        name="form_assume_licence"
+                        type="submit"
+                        value="form_assume_licence" >Assume licence template</button>
+                </div>
+
+                <div class="form_labels">
+                    <label from="sourcecodeheader"></label>
+                </div>
+                <div class="form_inputs">
+                    <textarea
+                        id="sourcecodeheader"
+                        name="form_sourcecodeheader"
+                        rows="15"
+                        cols="80"><$ projectData.getSourceCodeHeader()  $>
+                    </textarea>
+                </div>
+
+                <div class="form_labels">
+                    <label from="doxygen_templates">Doxygen templates:</label>
+                </div>
+                <div class="form_inputs">
+                    <input
                         type="checkbox"
                         id="doxygen_templates"
                         value="true"
                         name="form_doxygen_templates"
 %     if ( projectData.isDoxygenTemplates() ) {
-                        checked ></p>
+                        checked >
 %     } else {
-                        ></p>
+                        >
 %     }
+                </div>
 
-                <br>
-                <label from="csrf_token">Forms with csrf(cross site request forgery) token:</label>
-                <input
+                <div class="form_labels">
+                    <label from="csrf_token">Forms with csrf(cross site request forgery) token:</label>
+                </div>
+                <div class="form_inputs">
+                    <input
                         type="checkbox"
                         id="csrf_token"
                         value="true"
                         name="form_csrf_token"
 %     if ( projectData.isFormToken() ) {
-                        checked ></p>
+                        checked >
 %     } else {
-                        ></p>
+                        >
 %     }
+                </div>
 
-                <br>
-                <label from="cxxtools_loging">Cxxtools loging support:</label>
-                <input
+                <div class="form_labels">
+                    <label from="cxxtools_loging">Cxxtools loging support:</label>
+                </div>
+                <div class="form_inputs">
+                    <input
                         type="checkbox"
                         id="cxxtools_loging"
                         value="true"
                         name="form_cxxtools_loging"
 %     if ( projectData.isCxxtoolsLoging() ) {
-                        checked ></p>
+                        checked >
 %     } else {
-                        ></p>
+                        >
 %     }
+                </div>
 
-                <br>
-                <label from="route_revers">Route revers support:</label>
-                <input
+                <div class="form_labels">
+                    <label from="route_revers">Route revers support:</label>
+                </div>
+                <div class="form_inputs">
+                    <input
                         type="checkbox"
                         id="route_revers"
                         value="true"
                         name="form_route_revers"
 %     if ( projectData.isRouteRevers() ) {
-                        checked ></p>
+                        checked >
 %     } else {
-                        ></p>
+                        >
 %     }
+                </div>
 
-
-
-                <br>
-                <button
-                    name="form_save"
-                    type="submit"
-                    value="form_save" >Save</button>
+                <div class="form_labels">
+                    <label></label>
+                </div>
+                <div class="form_inputs">
+                    <button
+                        name="form_save"
+                        type="submit"
+                        value="form_save" >Save</button>
+                </div>
             </form>
-        </div>
-
-        <h2>XML code</h2>
-        <$ projectData.getXml( ) $>
+        </fieldset>
+        <fieldset>
+            <legend>Generated XML</legend>
+            <$ projectData.getXml( ) $>
+        </fieldset>
     </div>
 
 </body>

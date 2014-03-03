@@ -24,9 +24,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         Tww::Core::MakefileData makefileData();
 </%session>
 <%request
-    include="core/controller/BasicProjectDataController.h">
-        Tww::Core::BasicProjectDataController
-            basicProjectDataController(
+    include="core/controller/CreateApplicationCoreController.h">
+        Tww::Core::CreateApplicationCoreController
+            createApplicationCoreController(
                 userSession,
                 projectData,
                 makefileData
@@ -37,7 +37,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 </%pre>
 <%cpp>
 
-    basicProjectDataController.worker(
+    createApplicationCoreController.worker(
         request,
         reply,
         qparam
@@ -59,10 +59,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <h2>CREATE APPLICATION CORE</h2>
         <br />
-% if ( basicProjectDataController.feedback != "" ) {
+% if ( createApplicationCoreController.feedback != "" ) {
 
         <div class="feedback-box">
-            <b><$ basicProjectDataController.feedback $> </b>
+            <b><$ createApplicationCoreController.feedback $> </b>
         </div>
 
 % }
@@ -70,33 +70,46 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         Here you can crate a new application core with a first page.
 
         <form method="post">
+            <fieldset>
+                <legend>General</legend>
+                <div class="form_labels">
+                    <label from="cli_support">CLI support:</label>
+                </div>
+                <div class="form_inputs">
+                    <select
+                        id="cli_support"
+                        name="form_cli_support">
+                        <option value="yes">YES</option>
+                        <option value="no">NO</option>
+                    </select>
+                </div>
+            </fieldset>
 
-            <h3>General</h3>
 
-                <label from="cli_support">CLI support:</label>
-                <select
-                    id="cli_support"
-                    name="form_cli_support">
-                    <option value="yes">YES</option>
-                    <option value="no">NO</option>
-                </select>
-            </br>
-            </br>
-            <h3>Configuration class</h3>
+            <fieldset>
+                <legend>Configuration class</legend>
 
-                <label from="config_format">Configuration format:</label>
-                <select
-                    id="config_format"
-                    name="config_format">
-                    <option value="json">JSON</option>
-                    <option value="xml">XML</option>
-                </select>
-            </br>
-            </br>
-            <button
-                name="form_save"
-                type="submit"
-                value="form_create" >Create</button>
+                <div class="form_labels">
+                    <label from="config_format">Configuration format:</label>
+                </div>
+                <div class="form_inputs">
+                    <select
+                        id="config_format"
+                        name="config_format">
+                        <option value="json">JSON</option>
+                        <option value="xml">XML</option>
+                    </select>
+                </div>
+                <br>
+                <div class="form_labels">
+                    <label></label>
+                </div>
+                <div class="form_inputs">
+                    <button
+                        name="form_save"
+                        type="submit"
+                        value="form_create" >Create</button>
+                </div>
         </form>
 
     </div>
