@@ -80,7 +80,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <option value="yes">YES</option>
                     <option value="no">NO</option>
                 </select>
-
+            </br>
+            </br>
             <h3>Configuration class</h3>
 
                 <label from="config_format">Configuration format:</label>
@@ -90,7 +91,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <option value="json">JSON</option>
                     <option value="xml">XML</option>
                 </select>
-
+            </br>
+            </br>
             <button
                 name="form_save"
                 type="submit"

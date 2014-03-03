@@ -37,7 +37,21 @@ namespace Core {
  */
 void initcomponent ( tnt::Tntnet &app ) {
 
+
+    // special pages
+    // 1 to 1 rout
+    app.mapUrl( "^/(.*)$", "$1" );
+    
+    // default route for /
+    app.mapUrl( "^/$", "core_home" );
+
     // ######################## RESOURCES ############################
+
+    // configure generic static stuff
+    app.mapUrl(
+        "^/Core/resources/(.*)",
+        "resources"
+    ).setPathInfo("core/resources/$1");
 
     // /core/favicon.ico
 

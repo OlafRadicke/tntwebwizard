@@ -18,6 +18,7 @@
 
 
 #include <core/manager/WebApplicationCoreManager.h>
+#include <core/model/TntWebWizardException.h>
 
 #include <tnt/component.h>
 #include <tnt/httprequest.h>
@@ -28,6 +29,7 @@
 
 
 #include <ostream>
+#include <fstream>
 #include <string>
 // #include <unistd.h>
 
@@ -40,48 +42,119 @@ log_define("Core.WebApplicationCoreManager")
 
 // C -------------------------------------------------------------------------
 
-void WebApplicationCoreManager::creatMain_cpp(){
+void WebApplicationCoreManager::createApplicationCore(){
+    if ( cxxtools::FileInfo::exists( this->getMainCppPath() ) )
+    {
+        std::ostringstream errorText;
+        errorText
+            << "The file "
+            << this->getMainCppPath()
+            << " is all ready exist!"
+            << "I can not create this file. Abort..."
+        ;
+        throw Core::TntWebWizardException( errorText.str() );
+    }
+
+    if ( !cxxtools::Directory::exists( this->getSourceDir() ) ) {
+        cxxtools::Directory::create( this->getSourceDir() );
+    }
+    this->createMain_cpp();
+
+}
+
+
+void WebApplicationCoreManager::createMain_cpp(){
+
     std::ostringstream fileContent;
     fileContent
         << this->projectData.getSourceCodeHeader()
-        << "#include <core/model/Config.h> \n"
-        << "#include <core/initcomponent.h> \n"
+        << "#include <core/model/Config.h>\n"
+        << "#include <core/initcomponent.h>\n"
     ;
-
     if ( this->projectData.isFormToken( ) ) {
-        fileContent << "#include <formtoken/initcomponent.h> \n";
+        fileContent << "#include <formtoken/initcomponent.h>\n";
     }
-
     if ( this->projectData.isRouteRevers( ) ) {
-        fileContent << "#include <routereverse/initcomponent.h> \n";
+        fileContent << "#include <routereverse/initcomponent.h>\n";
     }
-
     fileContent
-        << "#include <tnt/tntnet.h> \n"
-        << "#include <tnt/configurator.h> \n"
+        << "#include <tnt/tntnet.h>\n"
+        << "#include <tnt/configurator.h>\n"
+    ;
+    if (  this->projectData.isCxxtoolsLoging( ) ){
+        fileContent << "#include <cxxtools/log.h>\n\n"
+        << "log_define(\"main\");\n";
+    }
+    fileContent
+        <<  "int main ( int argc, char* argv[] )\n"
+        <<  "{ \n"
+        <<  "   Core::Config& config = Core::Config::it();\n"
+        <<  "   config.read();\n"
+    ;
+    if (  this->projectData.isCxxtoolsLoging( ) ){
+        fileContent <<  "   log_init( config.logging() );\n\n";
+    }
+    fileContent
+        <<  "   // Init Application Server\n"
+        <<  "   tnt::Tntnet app;\n"
+        <<  "   tnt::Configurator tntConfigurator( app );\n"
+        <<  "   tntConfigurator.setSessionTimeout ( config.sessionTimeout() );\n"
+        <<  "   app.listen( config.appIp(), config.appPort() );\n\n"
+        <<  "   // init comonent parts\n"
+        <<  "   Core::initcomponent( app );\n"
+    ;
+    if ( this->projectData.isFormToken( ) ) {
+        fileContent << "   FormToken::initcomponent( app );\n";
+    }
+    if ( this->projectData.isRouteRevers( ) ) {
+        fileContent << "   RouteReverse::initcomponent( app );\n\n";
+    }
+    fileContent
+        << "    std::cout \n"
+        << "        << \"" << this->projectData.getProjectName() << " is started and run on http://\""
+        << "        << config.appIp() << \":\" \n"
+        << "        << config.appPort() << \"/\" << std::endl\n"
+        << "    ;\n"
+        << "    log_info( \"starting " << this->projectData.getProjectName() << "\");\n"
+        << "    log_info( \" " << this->projectData.getProjectName()
+        << " is started and run on http://\" <<  config.appIp() << \":\" "
+        << " <<  config.appPort() << \"/\"); \n\n"
+        << "    app.run(); \n\n"
+        << "    return 0;\n"
+        << "}\n"
     ;
 
-    if (  this->projectData.isCxxtoolsLoging( ) ){
-        fileContent << "#include <cxxtools/log.h> \n";
-    }
+    std::ofstream maincpp_file( this->getMainCppPath().c_str() );
+    maincpp_file << fileContent.str() ;
+    maincpp_file.close();
 
-
+    this->makefileData.read( this->getMakefilePath() );
+    this->makefileData.addCppFiles( this->getMainCppPath() );
+    this->makefileData.write( this->getMakefilePath() );
 
 }
 
 // G --------------------------------------------------------------------------
 
+const std::string& WebApplicationCoreManager::getMainCppPath( ){
+    return this->userSession.getSessionPath() + "/src/main.cpp";
+}
+
+const std::string& WebApplicationCoreManager::getMakefilePath(){
+    return this->userSession.getSessionPath() + "/Makefile.tnt";
+}
+
+const std::string& WebApplicationCoreManager::getSourceDir(){
+    return this->userSession.getSessionPath() + "/src";
+}
+
+// I --------------------------------------------------------------------------
 bool WebApplicationCoreManager::isApplicationCoreExist(){
 
-    std::string sourceDir = this->userSession.getSessionPath() + "/src";
-
-    if ( !cxxtools::Directory::exists( sourceDir ) ) {
-        log_debug( "[isApplicationCoreExist] /src no exist.");
+    if ( !cxxtools::FileInfo::exists( this->getMainCppPath() ) ) {
         return false;
     };
-
-    if ( !cxxtools::FileInfo::exists( sourceDir + "/src/main.cpp" ) ) {
-        log_debug( "[isApplicationCoreExist] /src/main.cpp no exist.");
+    if ( !cxxtools::FileInfo::exists( this->getMainCppPath() ) ) {
         return false;
     };
 }

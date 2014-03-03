@@ -23,6 +23,7 @@
 #include <core/model/MakefileData.h>
 #include <core/model/ProjectData.h>
 #include <core/model/UserSession.h>
+#include <core/manager/WebApplicationCoreManager.h>
 
 #include <tnt/httprequest.h>
 #include <tnt/httpreply.h>
@@ -62,8 +63,12 @@ void CreateApplicationCoreController::worker (
 
     // save button pressed
     if ( form_create ) {
-        this->projectData.write( file_projectdata.str() );
-        this->makefileData.write( file_makefile.str() );
+        WebApplicationCoreManager webappManager(
+            this->userSession,
+            this->projectData,
+            this->makefileData
+        );
+        webappManager.createApplicationCore();
     } else {
         // read project configuration...
         this->projectData.read( file_projectdata.str() );

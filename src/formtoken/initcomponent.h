@@ -44,6 +44,9 @@ namespace FormToken
  * @arg app a reference of the application server.
  */
 void initcomponent ( tnt::Tntnet &app ) {
+    
+    /* initialize random seed: */
+    srand (time(NULL));
 
     // controller rout for SessionForm token check.
     app.mapUrl( "^/(.*)", "formtoken_controller" );

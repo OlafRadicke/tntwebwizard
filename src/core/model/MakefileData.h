@@ -54,7 +54,15 @@ public:
 
     MakefileData(){ }
 
-    // === G ===z
+    // === A ===
+
+    /**
+     * Add a file name in the list of *.cpp files.
+     */
+    void addCppFiles( const std::string& _newFile )
+    { this->cppFiles.push_back( _newFile ); }
+
+    // === G ===
 
     /**
      * Get name of binary file.

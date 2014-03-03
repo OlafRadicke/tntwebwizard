@@ -83,7 +83,22 @@ private:
     /**
      * Create the "src/main.cpp" file.
      */
-    void creatMain_cpp();
+    void createMain_cpp();
+
+    /**
+     * Get the path of main.cpp file.
+     */
+    const std::string& getMainCppPath();
+
+    /**
+     * Get the path of Makefile.tnt file.
+     */
+    const std::string& getMakefilePath();
+
+    /**
+     * Get the path of source code directory.
+     */
+    const std::string& getSourceDir();
 };
 
 

@@ -31,7 +31,7 @@
 #include <string>
 #include <stdlib.h>
 
-// namespace Tww
+
 
 log_define("main")
 
@@ -39,43 +39,21 @@ int main ( int argc, char* argv[] )
 {
     try
     {
-        /* initialize random seed: */
-        srand (time(NULL));
 
         Tww::Core::Config& config = Tww::Core::Config::it();
         config.read();
 
         log_init( config.logging() );
 
-        // clean up tmp directory
-//         if ( cxxtools::Directory::exists( "/tmp/tntwebwizard/" ) ) {
-//             cxxtools::Directory tmpsessiondir( "/tmp/tntwebwizard/" );
-//             tmpsessiondir.remove();
-//             log_info("Remove old tmp directory");
-//         }
         if ( cxxtools::Directory::exists( "/tmp/tntwebwizard/" ) ) {
             system("rm -r /tmp/tntwebwizard/");
         }
-
-
 
         // Init Application Server
         tnt::Tntnet app;
         tnt::Configurator tntConfigurator( app );
         tntConfigurator.setSessionTimeout ( config.sessionTimeout() );
         app.listen( config.appIp(), config.appPort() );
-
-        // configure static stuff
-        app.mapUrl("^/Core/resources/(.*)", "resources")
-           .setPathInfo("Core/resources/$1");
-        app.mapUrl("^/Core/favicon.ico$", "resources")
-           .setPathInfo("Core/resources/favicon.ico");
-
-        // special pages
-        // 1 to 1 rout
-        app.mapUrl( "^/(.*)$", "$1" );
-        // default route for /
-        app.mapUrl( "^/$", "core_home" );
 
         // init comonent parts
         Tww::FormToken::initcomponent( app );
