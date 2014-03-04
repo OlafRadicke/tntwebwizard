@@ -34,6 +34,13 @@ namespace Core {
 
 log_define("Core.MakefileData")
 
+// === A ===
+
+void MakefileData::addCppFiles( std::string _newFile ){
+    log_debug( "addCppFiles: " << _newFile );
+    this->cppFiles.push_back( _newFile );
+    log_debug( "addCppFiles ready" );
+}
 
 // === G ===
 
@@ -99,9 +106,11 @@ void operator<<= ( cxxtools::SerializationInfo& si, const MakefileData& makefile
 
 void MakefileData::read( const std::string& filename )
 {
+    log_debug( "read() filename " << filename );
 
     if ( cxxtools::FileInfo::exists( filename ) )
     {
+        log_debug( "file is exist!" );
         std::ifstream in( filename.c_str() );
         if (!in) {
             std::ostringstream errorText;
@@ -112,7 +121,9 @@ void MakefileData::read( const std::string& filename )
         }
         cxxtools::JsonDeserializer deserializer(in);
         deserializer.deserialize(*this);
+        return;
     }
+    log_debug( "file is _NOT_ exist!" );
 }
 
 // === W ===

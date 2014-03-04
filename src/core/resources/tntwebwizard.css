@@ -377,3 +377,17 @@ p.block{
     display:block;
 }
 
+/* -------- feedback box -------------------------- */
+
+div.feedback-box{
+    background-color: #FFF34B;
+    text-align: center;
+    border-style: solid;
+    border-color: #C3C3C3;
+    width: 85% ;
+    padding: 20px;
+    margin: 5px auto 5px auto;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}

@@ -43,12 +43,13 @@ log_define("Core.WebApplicationCoreManager")
 // C -------------------------------------------------------------------------
 
 void WebApplicationCoreManager::createApplicationCore(){
-    if ( cxxtools::FileInfo::exists( this->getMainCppPath() ) ) {
-        log_debug("createApplicationCore()" );
+    log_debug("createApplicationCore()" );
+    std::string mainCppPath = this->getMainCppPath();
+    if ( cxxtools::FileInfo::exists( mainCppPath ) ) {
         std::ostringstream errorText;
         errorText
             << "The file "
-            << this->getMainCppPath()
+            << mainCppPath
             << " is all ready exist!"
             << "I can not create this file. Abort..."
         ;
@@ -126,27 +127,48 @@ void WebApplicationCoreManager::createMain_cpp(){
     ;
 
     log_debug("fileContent: \n"  << fileContent.str() );
+    log_debug( __LINE__ << " write in: \n"  << this->getMainCppPath().c_str() );
     std::ofstream maincpp_file( this->getMainCppPath().c_str() );
     maincpp_file << fileContent.str() ;
     maincpp_file.close();
+    log_debug(
+        __LINE__
+        << " ready with writing file : \n"
+        << this->getMainCppPath().c_str()
+    );
 
-    this->makefileData.read( this->getMakefilePath() );
-    this->makefileData.addCppFiles( this->getMainCppPath() );
+    std::string makefilePath = this->getMakefilePath();
+    log_debug( __LINE__ << " read file : \n"  << makefilePath );
+    this->makefileData.read( makefilePath );
+    std::string mainCppPath = this->getMainCppPath();
+    log_debug( __LINE__ << " add path of: " << mainCppPath );
+    this->makefileData.addCppFiles( mainCppPath );
+    log_debug( __LINE__ << " write file : \n"  << this->getMakefilePath() );
     this->makefileData.write( this->getMakefilePath() );
+    log_debug( __LINE__ << " ready with writing file : \n"  << this->getMakefilePath() );
 
 }
 
 // G --------------------------------------------------------------------------
 
-const std::string& WebApplicationCoreManager::getMainCppPath( ){
+std::string WebApplicationCoreManager::getMainCppPath( ){
     return this->userSession.getSessionPath() + "/src/main.cpp";
 }
 
-const std::string& WebApplicationCoreManager::getMakefilePath(){
-    return this->userSession.getSessionPath() + "/Makefile.tnt";
+std::string WebApplicationCoreManager::getMakefilePath(){
+    log_debug( __LINE__ << " getMakefilePath()\n" );
+    log_debug(
+        __LINE__
+        << " this->userSession.getSessionPath()\n"
+        << this->userSession.getSessionPath()
+    );
+    std::string complied_path = this->userSession.getSessionPath() + "/Makefile.tnt";
+    log_debug( __LINE__ << " complied_path: \n" << complied_path );
+
+    return complied_path;
 }
 
-const std::string& WebApplicationCoreManager::getSourceDir(){
+std::string WebApplicationCoreManager::getSourceDir(){
     return this->userSession.getSessionPath() + "/src";
 }
 

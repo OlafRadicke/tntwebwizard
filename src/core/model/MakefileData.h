@@ -52,15 +52,18 @@ class MakefileData {
 
 public:
 
-    MakefileData(){ }
+    MakefileData():
+        cppFiles(),
+        hFiles(),
+        ecppFiles(),
+        resourcesFiles(){};
 
     // === A ===
 
     /**
      * Add a file name in the list of *.cpp files.
      */
-    void addCppFiles( const std::string& _newFile )
-    { this->cppFiles.push_back( _newFile ); }
+    void addCppFiles( std::string _newFile );
 
     // === G ===
 
@@ -68,61 +71,61 @@ public:
      * Get name of binary file.
      */
     const std::string& getBinName() const
-    { return this->binName; }
+    { return this->binName; };
 
     /**
      * Get the build directory.
      */
     const std::string& getBuildDir() const
-    { return this->buildDir; }
+    { return this->buildDir; };
 
     /**
      * Get name of c++ compiler.
      */
     const std::string& getCppCompiler() const
-    { return this->cppCompiler; }
+    { return this->cppCompiler; };
 
     /**
      * Get list of *.cpp files.
      */
     const std::vector<std::string>& getCppFiles() const
-    { return this->cppFiles; }
+    { return this->cppFiles; };
 
     /**
      * Get c++ compiler flags.
      */
     const std::string& getCppFlags() const
-    { return this->cppFlags; }
+    { return this->cppFlags; };
 
     /**
      * Get c++ linker flags.
      */
     const std::string& getCppLinkerFlags() const
-    { return this->cppLinkerFlags; }
+    { return this->cppLinkerFlags; };
 
     /**
      * Get ecpp compiler (name).
      */
     const std::string& getEcppCompiler() const
-    { return this->ecppCompiler; }
+    { return this->ecppCompiler; };
 
     /**
      * Get list of *.ecpp files.
      */
     const std::vector<std::string>& getEcppFiles() const
-    { return this->ecppFiles; }
+    { return this->ecppFiles; };
 
     /**
      * Get ecpp compiler flags.
      */
     const std::string& getEcppFlags() const
-    { return this->ecppFlags; }
+    { return this->ecppFlags; };
 
     /**
      * Get list of *.h files.
      */
     const std::vector<std::string>& getHFiles() const
-    { return this->hFiles; }
+    { return this->hFiles; };
 
     /**
      * Get a export of user quote data in json format.
@@ -141,13 +144,13 @@ public:
      * Get list of static contend files.
      */
     const std::vector<std::string>& getResourcesFiles() const
-    { return this->resourcesFiles; }
+    { return this->resourcesFiles; };
 
     /**
      * Get ath to resources root directory. "./src" for example.
      */
     const std::string& getResourcesRoot() const
-    { return this->resourcesRoot; }
+    { return this->resourcesRoot; };
 
     // === R ===
 
@@ -163,7 +166,7 @@ public:
      * Set project name.
      */
     void setBinName( std::string _binName )
-    { this->binName = _binName; }
+    { this->binName = _binName; };
 
 
     // === W ===

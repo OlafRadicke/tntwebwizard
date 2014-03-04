@@ -36,72 +36,79 @@ namespace Core {
 
 log_define("Core.BasicProjectDataController")
 
+void BasicProjectDataController::formDataAssume ( tnt::QueryParams& qparam ){
+    // query parameters
+
+    // project data
+    this->projectData.setProjectName(
+        qparam.arg<std::string>("form_projectname")
+    );
+    this->projectData.setSourceCodeHeader(
+        qparam.arg<std::string>("form_sourcecodeheader")
+    );
+    this->projectData.setDoxygenTemplates(
+        qparam.arg<bool>("form_doxygen_templates")
+    );
+    this->projectData.setFormToken(
+        qparam.arg<bool>("form_csrf_token")
+    );
+    this->projectData.setCxxtoolsLoging(
+        qparam.arg<bool>("form_cxxtools_loging")
+    );
+    this->projectData.setRouteRevers(
+        qparam.arg<bool>("form_route_revers")
+    );
+
+    // makefile data
+    this->makefileData.setBinName(
+        qparam.arg<std::string>("form_binaryfilename")
+    );
+}
+
 
 void BasicProjectDataController::worker (
     tnt::HttpRequest& request,
     tnt::HttpReply& reply,
     tnt::QueryParams& qparam
 ){
-    // define the query parameters
-    std::string  form_projectname =
-        qparam.arg<std::string>("form_projectname");
-    std::string  form_binaryfilename =
-        qparam.arg<std::string>("form_binaryfilename");
+    // query parameters
+
     std::string form_licence_template =
         qparam.arg<std::string>("form_licence_template");
     bool form_assume_licence =
         qparam.arg<bool>("form_assume_licence");
-    std::string form_sourcecodeheader =
-        qparam.arg<std::string>("form_sourcecodeheader");
-    bool form_doxygen_templates =
-        qparam.arg<bool>("form_doxygen_templates");
-    bool form_cxxtools_loging =
-        qparam.arg<bool>("form_cxxtools_loging");
-    bool form_route_revers =
-        qparam.arg<bool>("form_route_revers");
-
-
-    bool form_csrf_token =
-        qparam.arg<bool>("form_csrf_token");
-
-/*    cxxtoolsLoging
-    setRouteRevers( */
-    bool form_save =
-        qparam.arg<bool>("form_save");
+    bool form_save_button =
+        qparam.arg<bool>("form_save_button");
 
     std::stringstream file_projectdata;
     file_projectdata << this->userSession.getSessionPath() << "/tntwebwizard.pro";
     std::stringstream file_makefile;
     file_makefile << this->userSession.getSessionPath() << "/Makefile.tnt";
 
-    log_debug("form_save: " << form_save );
-    log_debug("form_projectname: " << form_projectname );
+    log_debug("file_projectdata: " << file_projectdata.str() );
+    log_debug("file_makefile: " << file_makefile.str() );
+    log_debug("form_save_button: " << form_save_button );
     log_debug("form_assume_licence: " << form_assume_licence );
     log_debug("form_licence_template: " << form_licence_template );
 
     // save button pressed
-    if ( form_save ) {
-        // project data
-        this->projectData.setProjectName( form_projectname );
-        this->projectData.setSourceCodeHeader( form_sourcecodeheader );
-        this->projectData.setDoxygenTemplates( form_doxygen_templates );
-        this->projectData.setFormToken( form_csrf_token );
-        this->projectData.setCxxtoolsLoging( form_cxxtools_loging );
-        this->projectData.setRouteRevers( form_route_revers );
+    if ( form_save_button ) {
+        log_debug( "## " << __LINE__ << " ##" );
+        this->formDataAssume ( qparam );
         this->projectData.write( file_projectdata.str() );
-
-        // makefile data
-        this->makefileData.setBinName( form_binaryfilename );
         this->makefileData.write( file_makefile.str() );
         this->feedback="The basic project date is saved.";
     } else {
+        log_debug( "## " << __LINE__ << " ##" );
         // assume licence button pressed
         if ( form_assume_licence ) {
-            this->projectData.setProjectName( form_projectname );
+            log_debug( "## " << __LINE__ << " ##" );
+            this->formDataAssume ( qparam );
             log_debug("add licence: " << form_licence_template );
-            assumeLicence( form_licence_template );
+            this->assumeLicence( form_licence_template );
         // page (first) load
         } else {
+            log_debug( "## " << __LINE__ << " ##" );
             // read project configuration...
             log_debug("file_projectdata: " << file_projectdata.str() );
             this->projectData.read( file_projectdata.str() );

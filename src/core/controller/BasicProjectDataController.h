@@ -82,6 +82,12 @@ private:
      */
     void assumeLicence( const std::string& _licence_template );
 
+    /**
+     * This function read web form entires and assume in the
+     * property makefileData and projectData but without saving.
+     */
+    void formDataAssume ( tnt::QueryParams& qparam );
+
 };
 
 

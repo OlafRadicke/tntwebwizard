@@ -51,7 +51,7 @@ void CreateApplicationCoreController::worker (
     std::string config_format =
         qparam.arg<std::string>("config_format");
     bool form_create =
-        qparam.arg<bool>("form_create");
+        qparam.arg<bool>("form_create_button");
 
     std::stringstream file_projectdata;
     file_projectdata << this->userSession.getSessionPath()
@@ -71,7 +71,19 @@ void CreateApplicationCoreController::worker (
             this->makefileData
         );
         log_debug("webappManager.createApplicationCore()" );
+
+        if( webappManager.isApplicationCoreExist() ) {
+            this->feedback = "This step is all ready done. You can't do this on more!";
+            log_debug( __LINE__ );
+            return;
+        }
+        if( this->makefileData.getBinName() != "" ) {
+            this->feedback = "The binary file name is not set! Go back to step (1.).";
+            return;
+        }
         webappManager.createApplicationCore();
+        this->feedback = "Okay! Project core is created now!";
+        return;
     } else {
         // read project configuration...
         this->projectData.read( file_projectdata.str() );

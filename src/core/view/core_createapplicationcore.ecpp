@@ -106,9 +106,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </div>
                 <div class="form_inputs">
                     <button
-                        name="form_save"
+                        name="form_create_button"
                         type="submit"
-                        value="form_create" >Create</button>
+                        value="form_create_button" >Create</button>
                 </div>
         </form>
 
