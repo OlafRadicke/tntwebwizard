@@ -41,7 +41,7 @@ void initcomponent ( tnt::Tntnet &app ) {
     // special pages
     // 1 to 1 rout
     app.mapUrl( "^/(.*)$", "$1" );
-    
+
     // default route for /
     app.mapUrl( "^/$", "core_home" );
 
@@ -122,6 +122,17 @@ void initcomponent ( tnt::Tntnet &app ) {
     RouteReverse::Manager::add(
         "core_createapplicationcore",
         "core/createapplicationcore"
+    );
+
+    // core_download_zip.ecpp
+    app.mapUrl(
+        "^/core/download_zip$",
+        "core_download_zip"
+    );
+
+    RouteReverse::Manager::add(
+        "core_download_zip",
+        "core/download_zip"
     );
 
     // ready get info...
