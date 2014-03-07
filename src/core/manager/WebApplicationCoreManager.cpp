@@ -175,7 +175,7 @@ std::string WebApplicationCoreManager::getSourceDir(){
 // I --------------------------------------------------------------------------
 bool WebApplicationCoreManager::isApplicationCoreExist(){
 
-    if ( !cxxtools::FileInfo::exists( this->getMainCppPath() ) ) {
+    if ( !cxxtools::Directory::exists( this->getSourceDir() ) ) {
         return false;
     };
     if ( !cxxtools::FileInfo::exists( this->getMainCppPath() ) ) {

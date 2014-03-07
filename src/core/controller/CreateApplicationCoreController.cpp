@@ -22,6 +22,7 @@
 
 #include <core/model/MakefileData.h>
 #include <core/model/ProjectData.h>
+#include <core/model/TntWebWizardException.h>
 #include <core/model/UserSession.h>
 #include <core/manager/WebApplicationCoreManager.h>
 
@@ -54,49 +55,82 @@ void CreateApplicationCoreController::worker (
         qparam.arg<bool>("form_create_button");
 
     std::stringstream file_projectdata;
-    file_projectdata << this->userSession.getSessionPath()
-        << "/tntwebwizard.pro";
+    file_projectdata
+        << this->userSession.getSessionPath()
+        << "/tntwebwizard.pro"
+    ;
     std::stringstream file_makefile;
-    file_makefile << this->userSession.getSessionPath() << "/Makefile.tnt";
+    file_makefile
+        << this->userSession.getSessionPath()
+        << "/Makefile.tnt"
+    ;
 
+    log_debug("file_projectdata: " << file_projectdata.str() );
+    log_debug("file_makefile: " << file_makefile.str() );
     log_debug("form_cli_support: " << form_cli_support );
     log_debug("config_format: " << config_format );
     log_debug("form_create: " << form_create );
 
     // save button pressed
     if ( form_create ) {
+        log_debug("webappManager.createApplicationCore()" );
         WebApplicationCoreManager webappManager(
             this->userSession,
             this->projectData,
             this->makefileData
         );
-        log_debug("webappManager.createApplicationCore()" );
+        if ( !this->preChecksOk( webappManager ) ) return;
 
-        if( webappManager.isApplicationCoreExist() ) {
-            this->feedback = "This step is all ready done. You can't do this on more!";
-            log_debug( __LINE__ );
-            return;
+        try {
+            webappManager.createApplicationCore();
+        } catch ( Core::TntWebWizardException& tww_exception ) {
+            this->feedback = "Mistake! Project core is NOT created! \n";
+            this->feedback += tww_exception.what();
+            this->warning = true;
         }
-        if( this->makefileData.getBinName() != "" ) {
-            this->feedback = "The binary file name is not set! Go back to step (1.).";
-            return;
-        }
-        webappManager.createApplicationCore();
         this->feedback = "Okay! Project core is created now!";
+        this->warning = false;
         return;
     } else {
+        log_debug("Read project data and makefile..." );
         // read project configuration...
         this->projectData.read( file_projectdata.str() );
         this->makefileData.read( file_makefile.str() );
-        if ( this->projectData.getSourceCodeHeader() == "getSourceCodeHeader()" ) {
-            this->feedback = "The licence template for the source code header is \
-            not set. Go to the menu point \"Basic project data\" make the basic \
-            configuration please.";
-        }
+
+        WebApplicationCoreManager webappManager(
+            this->userSession,
+            this->projectData,
+            this->makefileData
+        );
+        this->preChecksOk( webappManager );
+        return;
     }
 }
 
+bool CreateApplicationCoreController::preChecksOk (
+    WebApplicationCoreManager& webappManager
+) {
+    if( webappManager.isApplicationCoreExist() ) {
+        this->feedback = "This step is all ready done. You can't do this on more!";
+        this->warning = true;
+        log_debug( __LINE__ );
+        return false;
+    }
+    if( this->makefileData.getBinName() == "" ) {
+        this->feedback = "The binary file name is not set! Go back to step (1.).";
+        this->warning = true;
+        return false;
+    }
 
+    if ( this->projectData.getSourceCodeHeader() == "getSourceCodeHeader()" ) {
+        this->feedback = "The licence template for the source code header is \
+        not set. Go to the menu point \"Basic project data\" make the basic \
+        configuration please.";
+        this->warning = true;
+        return false;
+    }
+    return true;
+}
 
 } // namespace core
 } // namespace Tww

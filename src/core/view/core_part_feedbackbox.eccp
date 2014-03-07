@@ -1,0 +1,10 @@
+% if ( controller.feedback != "" ) {
+%     if ( controller.warning == true ) {
+        <div class="warning_feedback_box">
+%     } else {
+        <div class="feedback_box">
+%     }
+            <b><$ controller.feedback $> </b>
+        </div>
+
+% }

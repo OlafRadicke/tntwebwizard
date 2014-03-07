@@ -58,6 +58,7 @@ public:
         projectName("newproject"),
         doxygenTemplates(true),
         formToken(true),
+        cxxtoolsLoging(true),
         routeRevers(true)
     { }
 

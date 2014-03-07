@@ -116,7 +116,6 @@ void MakefileData::read( const std::string& filename )
             std::ostringstream errorText;
             errorText << "failed to open configuration file \"";
             errorText  << filename << '"';
-    //         log_debug( "failed to open configuration file \"" << fname << '"' );
             throw Core::TntWebWizardException( errorText.str() );
         }
         cxxtools::JsonDeserializer deserializer(in);

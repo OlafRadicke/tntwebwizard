@@ -46,6 +46,7 @@ public:
         Tww::Core::ProjectData& _projectData,
         Tww::Core::MakefileData& _makefileData
     ):
+        warning(false),
         makefileData( _makefileData ),
         projectData( _projectData ),
         userSession( _userSession )
@@ -58,6 +59,11 @@ public:
     );
 
     std::string feedback;
+
+    /**
+     * If this set true than the feeback text get a warning css stile.
+     */
+    bool warning;
 
 private:
 

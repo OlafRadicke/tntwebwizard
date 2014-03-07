@@ -16,6 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #>
 
 <%session
+    scope="shared"
     include="core/model/UserSession.h"
     include="core/model/ProjectData.h"
     include="core/model/MakefileData.h" >
@@ -26,7 +27,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <%request
     include="core/controller/BasicProjectDataController.h">
         Tww::Core::BasicProjectDataController
-            basicProjectDataController(
+            controller(
                 userSession,
                 projectData,
                 makefileData
@@ -37,7 +38,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 </%pre>
 <%cpp>
 
-    basicProjectDataController.worker(
+    controller.worker(
         request,
         reply,
         qparam
@@ -57,15 +58,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <div id="content">
 
+        <%include>core/view/core_part_feedbackbox.eccp</%include>
         <fieldset>
             <legend>BASIC PROJECT DATA</legend>
-% if ( basicProjectDataController.feedback != "" ) {
-
-            <div class="feedback-box">
-                <b><$ basicProjectDataController.feedback $> </b>
-            </div>
-
-% }
             <form method="post">
                 <div class="form_labels">
                     <label from="projectname">Project name:</label>

@@ -126,13 +126,13 @@ void initcomponent ( tnt::Tntnet &app ) {
 
     // core_download_zip.ecpp
     app.mapUrl(
-        "^/core/download_zip$",
-        "core_download_zip"
+        "^/core/download.zip$",
+        "core_downloadzip"
     );
 
     RouteReverse::Manager::add(
-        "core_download_zip",
-        "core/download_zip"
+        "core_downloadzip",
+        "core/download.zip"
     );
 
     // ready get info...

@@ -98,6 +98,8 @@ void BasicProjectDataController::worker (
         this->projectData.write( file_projectdata.str() );
         this->makefileData.write( file_makefile.str() );
         this->feedback="The basic project date is saved.";
+        this->warning = false;
+        return;
     } else {
         log_debug( "## " << __LINE__ << " ##" );
         // assume licence button pressed

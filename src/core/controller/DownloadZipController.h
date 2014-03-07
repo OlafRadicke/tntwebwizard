@@ -1,6 +1,6 @@
 /**
 * @author Olaf Radicke <briefkasten@olaf-rdicke.de>
-* @date 2013-2014
+* @date 2014
 * @copyright
 * Copyright (C) 2013  Olaf Radicke <briefkasten@olaf-rdicke.de>
 *
@@ -18,8 +18,8 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CORE_CREATEAPPLICATIONCORECONTROLLER_H
-#define CORE_CREATEAPPLICATIONCORECONTROLLER_H
+#ifndef CORE_DOWNLOADZIPCONTROLLER_H
+#define CORE_DOWNLOADZIPCONTROLLER_H
 
 #include <core/model/MakefileData.h>
 #include <core/model/ProjectData.h>
@@ -33,39 +33,39 @@
 namespace Tww {
 namespace Core {
 
-class WebApplicationCoreManager;
-
 /**
-* @class CreateApplicationCoreController This class is the controller of
-* the Site core_createapplicationcore.
+* @class DownloadZipController This class is the controller of
+* the Site core_download_zip.
 */
-class CreateApplicationCoreController {
+class DownloadZipController {
 
 public:
 
-    CreateApplicationCoreController(
+    DownloadZipController(
         Tww::Core::UserSession& _userSession,
         Tww::Core::ProjectData& _projectData,
         Tww::Core::MakefileData& _makefileData
     ):
-        warning(false),
         makefileData( _makefileData ),
         projectData( _projectData ),
         userSession( _userSession )
         {};
 
+    /**
+     * This function started generating zip file. In the zip file is
+     * the complied generated project (files). If no project files
+     * created than the zip is empties.
+     */
     void worker (
         tnt::HttpRequest& request,
         tnt::HttpReply& reply,
         tnt::QueryParams& qparam
     );
 
-    std::string feedback;
-
     /**
-     * If this set true than the feeback text get a warning css stile.
+     * Get the path to the generated zip file.
      */
-    bool warning;
+    std::string getZipPath(){ return this->zipPath; };
 
 private:
 
@@ -85,14 +85,14 @@ private:
     Tww::Core::UserSession& userSession;
 
     /**
-     * Some plausibility data checks before start working.
+     * The path and name of a generated zip file.
      */
-    bool preChecksOk ( WebApplicationCoreManager& webappManager );
+    std::string zipPath;
 
 };
 
 
-} // namespace core
+} // namespace Core
 } // namespace Tww
 
 #endif

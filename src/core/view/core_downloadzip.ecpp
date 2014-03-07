@@ -16,6 +16,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #>
 
 <%session
+    scope="shared"
+    include="fstream"
+    include="core/model/TntWebWizardException.h"
     include="core/model/UserSession.h"
     include="core/model/ProjectData.h"
     include="core/model/MakefileData.h" >
@@ -24,9 +27,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         Tww::Core::MakefileData makefileData();
 </%session>
 <%request
-    include="core/controller/CreateApplicationCoreController.h">
-        Tww::Core::CreateApplicationCoreController
-            createApplicationCoreController(
+    include="core/controller/DownloadZipController.h">
+        Tww::Core::DownloadZipController
+            downloadZipController(
                 userSession,
                 projectData,
                 makefileData
@@ -34,40 +37,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 </%request>
 <%pre>
     #include <routereverse/manager/Manager.h>
+    #include <fstream>
+    #include <tnt/mimedb.h>
 </%pre>
 <%cpp>
 
-    createApplicationCoreController.worker(
+    downloadZipController.worker(
         request,
         reply,
         qparam
     );
 
+    std::ifstream in( downloadZipController.getZipPath().c_str() );
+    if (!in) {
+        std::ostringstream errorText;
+        errorText
+            << "Can not read file \""
+            << downloadZipController.getZipPath()
+            << "\". Abort..."
+        ;
+        throw Tww::Core::TntWebWizardException( errorText.str() );
+    }
+
+    tnt::MimeDb mimeDb("/etc/mime.types");
+    reply.setContentType(
+        mimeDb.getMimetype(
+            downloadZipController.getZipPath()
+        )
+    );
+
+    reply.out() << in.rdbuf();  // send the content of the ifstream to the page
 </%cpp>
-<!DOCTYPE HTML>
-<html>
-<head>
-    <title>TNT-WEB-WIZARD - download zip file</title>
-    <& core_part_head qparam >
-</head>
-<body>
-
-    <& core_part_title qparam >
-    <& core_part_menu qparam >
-
-    <div id="content">
-
-        <h2>CREATE APPLICATION CORE</h2>
-        <br />
-% if ( createApplicationCoreController.feedback != "" ) {
-
-        <div class="feedback-box">
-            <b><$ createApplicationCoreController.feedback $> </b>
-        </div>
-
-% }
-
-    </div>
-
-</body>
-</html>

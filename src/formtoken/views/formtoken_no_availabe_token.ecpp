@@ -25,7 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <body>
     <div class="centerbox">
         <h1>Invalid form token</h1>
-        <div class="feedback-box">
+        <div class="feedback_box">
             <b>
                 if you see this message than it can be...
             </b>

@@ -16,7 +16,7 @@
         );
     std::string href_download_zip =
         Tww::RouteReverse::Manager::getLinkTo(
-            "download_zip",
+            "core_downloadzip",
             request
         );
 
@@ -28,7 +28,7 @@
             <li><a href="/">Home</a></li>
             <li><a href="<$ href_core_basicprojectdata $>">(1.) Basic project data</a></li>
             <li><a href="<$ href_core_createapplicationcore $>">(2.)Create project core</a></li>
-            <li><a href="href_download_zip">Download</a></li>
+            <li><a href="<$ href_download_zip $>">Download</a></li>
             <li><a href="">Project browser</a></li>
             <li><a href="">New Project</a></li>
             <li><a href="">New component</a></li>

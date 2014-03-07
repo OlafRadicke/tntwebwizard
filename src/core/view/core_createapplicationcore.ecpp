@@ -16,6 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #>
 
 <%session
+    scope="shared"
     include="core/model/UserSession.h"
     include="core/model/ProjectData.h"
     include="core/model/MakefileData.h" >
@@ -26,7 +27,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <%request
     include="core/controller/CreateApplicationCoreController.h">
         Tww::Core::CreateApplicationCoreController
-            createApplicationCoreController(
+            controller(
                 userSession,
                 projectData,
                 makefileData
@@ -37,7 +38,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 </%pre>
 <%cpp>
 
-    createApplicationCoreController.worker(
+    controller.worker(
         request,
         reply,
         qparam
@@ -59,13 +60,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <h2>CREATE APPLICATION CORE</h2>
         <br />
-% if ( createApplicationCoreController.feedback != "" ) {
 
-        <div class="feedback-box">
-            <b><$ createApplicationCoreController.feedback $> </b>
-        </div>
-
-% }
+        <%include>core/view/core_part_feedbackbox.eccp</%include>
 
         Here you can crate a new application core with a first page.
 
@@ -110,8 +106,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         type="submit"
                         value="form_create_button" >Create</button>
                 </div>
+            </fieldset>
         </form>
-
     </div>
 
 </body>
