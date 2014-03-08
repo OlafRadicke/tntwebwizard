@@ -69,7 +69,10 @@ void WebApplicationCoreManager::createMain_cpp(){
 
     std::ostringstream fileContent;
     fileContent
+        << "/* ***************************************************************************\n"
         << this->projectData.getSourceCodeHeader()
+        << "\n"
+        << "*************************************************************************** */ \n"
         << "#include <core/model/Config.h>\n"
         << "#include <core/initcomponent.h>\n"
     ;
