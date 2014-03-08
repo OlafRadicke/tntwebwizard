@@ -68,6 +68,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <form method="post">
             <fieldset>
                 <legend>General</legend>
+
                 <div class="form_labels">
                     <label from="cli_support">CLI support:</label>
                 </div>
@@ -75,8 +76,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <select
                         id="cli_support"
                         name="form_cli_support">
-                        <option value="yes">YES</option>
+% if ( projectData.isCliSupport( ) ) {
+                        <option selected value="yes">YES</option>
                         <option value="no">NO</option>
+% } else {
+                        <option value="yes">YES</option>
+                        <option selected value="no">NO</option>
+%}
                     </select>
                 </div>
             </fieldset>

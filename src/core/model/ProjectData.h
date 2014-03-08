@@ -59,7 +59,8 @@ public:
         doxygenTemplates(true),
         formToken(true),
         cxxtoolsLoging(true),
-        routeRevers(true)
+        routeRevers(true),
+        cliSupport(false)
     { }
 
     // === G ===
@@ -97,7 +98,14 @@ public:
     // === I ===
 
     /**
-     * Swith on and off generating code with cxxtools loging support.
+     * If that "true" than it is generating code with cxxtools command line
+     * interface (cli).
+     */
+    const bool isCliSupport( ) const
+    { return this->cliSupport; };
+
+    /**
+     * If that "true" than it is generating code with cxxtools loging support.
      */
     const bool isCxxtoolsLoging( ) const
     { return this->cxxtoolsLoging; };
@@ -132,7 +140,14 @@ public:
     // === S ===
 
     /**
-     * Swith on and off generating code with cxxtools loging support.
+     * If that "true" than it is generating code with cxxtools command line
+     * interface (cli).
+     */
+    void setCliSupport( bool _yesOrNo )
+    { this->cliSupport = _yesOrNo; };
+
+    /**
+     * Switch on and off generating code with cxxtools loging support.
      */
     void setCxxtoolsLoging( bool _yesOrNo )
     { this->cxxtoolsLoging = _yesOrNo; };
@@ -215,6 +230,12 @@ private:
      * If that "true" than it is generating code with reverse routing support.
      */
     bool routeRevers;
+
+    /**
+     * If that "true" than it is generating a main function code with
+     * cxxtools argument parsing support.
+     */
+    bool cliSupport;
 };
 
 } // namespace Core

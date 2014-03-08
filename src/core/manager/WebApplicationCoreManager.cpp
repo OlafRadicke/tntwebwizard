@@ -79,50 +79,85 @@ void WebApplicationCoreManager::createMain_cpp(){
     if ( this->projectData.isRouteRevers( ) ) {
         fileContent << "#include <routereverse/initcomponent.h>\n";
     }
+    fileContent << "\n";
+    // ***** tnt lib part *****
     fileContent
         << "#include <tnt/tntnet.h>\n"
         << "#include <tnt/configurator.h>\n"
     ;
+    fileContent << "\n";
+    // ***** cxxtools lib part *****
     if (  this->projectData.isCxxtoolsLoging( ) ){
-        fileContent << "#include <cxxtools/log.h>\n\n"
-        << "log_define(\"main\");\n";
+        fileContent << "#include <cxxtools/log.h>\n"
+        << "\t log_define(\"main\");\n";
     }
+    if (  this->projectData.isCliSupport( ) ){
+        fileContent << "#include <cxxtools/arg.h>.\n";
+    }
+    fileContent << "\n";
+    // ***** std lib part *****
+    fileContent << "#include  <iostream.h> \n";
+    fileContent << "\n";
+
     fileContent
         <<  "int main ( int argc, char* argv[] )\n"
         <<  "{ \n"
-        <<  "   Core::Config& config = Core::Config::it();\n"
-        <<  "   config.read();\n"
     ;
+    if (  this->projectData.isCliSupport( ) ){
+        fileContent
+            << "\t cxxtools::Arg<bool> arg_verbose(argc, argv, 'v');\n"
+            << "\t cxxtools::Arg<std::string> arg_config(argc, argv, 'c', \"\");\n"
+            << "\t if (verbose)\n"
+            << "\t\t std::cout << \"verbose option is set\" << std::endl;\n"
+            << "\t if ( verbose && arg_config != \"\")\n"
+            << "\t\t std::cout << \"us config:\" << arg_config.getValue() << std::endl;\n"
+        ;
+    }
+
+    fileContent <<  "\t Core::Config& config = Core::Config::it();\n";
+    if (  this->projectData.isCliSupport( ) ){
+        fileContent
+            <<  "\t if ( arg_config.getValue() != \"\" ) {\n"
+            <<  "\t\t config.read( arg_config.getValue() );\n"
+            <<  "\t } else {\n"
+            <<  "\t\t config.read();\n"
+            <<  "\t }\n"
+        ;
+    } else {
+        fileContent <<  "\t config.read();\n";
+    }
     if (  this->projectData.isCxxtoolsLoging( ) ){
-        fileContent <<  "   log_init( config.logging() );\n\n";
+        fileContent <<  "\t log_init( config.logging() );\n\n";
     }
     fileContent
-        <<  "   // Init Application Server\n"
-        <<  "   tnt::Tntnet app;\n"
-        <<  "   tnt::Configurator tntConfigurator( app );\n"
-        <<  "   tntConfigurator.setSessionTimeout ( config.sessionTimeout() );\n"
-        <<  "   app.listen( config.appIp(), config.appPort() );\n\n"
-        <<  "   // init comonent parts\n"
-        <<  "   Core::initcomponent( app );\n"
+        <<  "\t // Init Application Server\n"
+        <<  "\t tnt::Tntnet app;\n"
+        <<  "\t tnt::Configurator tntConfigurator( app );\n"
+        <<  "\t tntConfigurator.setSessionTimeout ( config.sessionTimeout() );\n"
+        <<  "\t app.listen( config.appIp(), config.appPort() );\n\n"
+        <<  "\t // init comonent parts\n"
+        <<  "\t Core::initcomponent( app );\n"
     ;
     if ( this->projectData.isFormToken( ) ) {
-        fileContent << "   FormToken::initcomponent( app );\n";
+        fileContent << "\t FormToken::initcomponent( app );\n";
     }
     if ( this->projectData.isRouteRevers( ) ) {
-        fileContent << "   RouteReverse::initcomponent( app );\n\n";
+        fileContent << "\t RouteReverse::initcomponent( app );\n\n";
     }
     fileContent
-        << "    std::cout \n"
-        << "        << \"" << this->projectData.getProjectName() << " is started and run on http://\""
-        << "        << config.appIp() << \":\" \n"
-        << "        << config.appPort() << \"/\" << std::endl\n"
-        << "    ;\n"
-        << "    log_info( \"starting " << this->projectData.getProjectName() << "\");\n"
-        << "    log_info( \" " << this->projectData.getProjectName()
+        << "\t std::cout \n"
+        << "\t\t << \""
+        << this->projectData.getProjectName()
+        << " is started and run on http://\" \n"
+        << "\t\t << config.appIp() << \":\" \n"
+        << "\t\t << config.appPort() << \"/\" << std::endl\n"
+        << "\t ;\n"
+        << "\t log_info( \"starting " << this->projectData.getProjectName() << "\");\n"
+        << "\t log_info( \" " << this->projectData.getProjectName()
         << " is started and run on http://\" <<  config.appIp() << \":\" "
-        << " <<  config.appPort() << \"/\"); \n\n"
-        << "    app.run(); \n\n"
-        << "    return 0;\n"
+        << "<<  config.appPort() << \"/\"); \n\n"
+        << "\t app.run(); \n\n"
+        << "\t return 0;\n"
         << "}\n"
     ;
 

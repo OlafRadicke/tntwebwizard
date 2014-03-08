@@ -47,8 +47,8 @@ void CreateApplicationCoreController::worker (
     // define the query parameters
 
 
-    std::string form_cli_support =
-        qparam.arg<std::string>("form_cli_support");
+    bool form_cli_support =
+        qparam.arg<bool>("form_cli_support");
     std::string config_format =
         qparam.arg<std::string>("config_format");
     bool form_create =
@@ -74,6 +74,8 @@ void CreateApplicationCoreController::worker (
     // save button pressed
     if ( form_create ) {
         log_debug("webappManager.createApplicationCore()" );
+
+        this->projectData.setCliSupport( form_cli_support );
         WebApplicationCoreManager webappManager(
             this->userSession,
             this->projectData,
