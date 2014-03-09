@@ -99,7 +99,7 @@ void WebApplicationCoreManager::createMain_cpp(){
         << this->projectData.getSourceCodeHeader()
         << "\n"
         << "*************************************************************************** */ \n"
-        << "#include <core/model/Config.h>\n"
+        << "#include <core/model/config.h>\n"
         << "#include <core/initcomponent.h>\n"
     ;
     if ( this->projectData.isFormToken( ) ) {
