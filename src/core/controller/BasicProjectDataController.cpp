@@ -55,8 +55,8 @@ void BasicProjectDataController::formDataAssume ( tnt::QueryParams& qparam ){
     this->projectData.setCxxtoolsLoging(
         qparam.arg<bool>("form_cxxtools_loging")
     );
-    this->projectData.setRouteRevers(
-        qparam.arg<bool>("form_route_revers")
+    this->projectData.setRouteReverse(
+        qparam.arg<bool>("form_route_reverse")
     );
 
     // makefile data

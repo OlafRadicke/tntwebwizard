@@ -49,8 +49,8 @@ void CreateApplicationCoreController::worker (
 
     bool form_cli_support =
         qparam.arg<bool>("form_cli_support");
-    std::string config_format =
-        qparam.arg<std::string>("config_format");
+    std::string form_config_format =
+        qparam.arg<std::string>("form_config_format");
     bool form_create =
         qparam.arg<bool>("form_create_button");
 
@@ -68,7 +68,7 @@ void CreateApplicationCoreController::worker (
     log_debug("file_projectdata: " << file_projectdata.str() );
     log_debug("file_makefile: " << file_makefile.str() );
     log_debug("form_cli_support: " << form_cli_support );
-    log_debug("config_format: " << config_format );
+    log_debug("form_config_format: " << form_config_format );
     log_debug("form_create: " << form_create );
 
     // save button pressed

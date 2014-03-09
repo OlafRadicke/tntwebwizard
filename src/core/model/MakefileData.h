@@ -65,6 +65,11 @@ public:
      */
     void addCppFiles( std::string _newFile );
 
+    /**
+     * Add a file name in the list of *.h files.
+     */
+    void addHFiles( std::string _newFile );
+
     // === G ===
 
     /**

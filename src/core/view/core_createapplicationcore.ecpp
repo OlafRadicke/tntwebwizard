@@ -97,8 +97,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <div class="form_inputs">
                     <select
                         id="config_format"
-                        name="config_format">
-                        <option value="json">JSON</option>
+                        name="form_config_format">
+                        <option selected value="json">JSON</option>
                         <option value="xml">XML</option>
                     </select>
                 </div>

@@ -51,6 +51,22 @@ public:
         userSession( _userSession )
         {};
 
+
+    /**
+     * remove the the temporary zip file.
+     */
+    void cleanUp();
+
+    /**
+     * This function remove the (old) generated zip file.
+     */
+    void downloadZipController();
+
+    /**
+     * Get the path to the generated zip file.
+     */
+    std::string getZipPath(){ return this->zipPath; };
+
     /**
      * This function started generating zip file. In the zip file is
      * the complied generated project (files). If no project files
@@ -61,11 +77,6 @@ public:
         tnt::HttpReply& reply,
         tnt::QueryParams& qparam
     );
-
-    /**
-     * Get the path to the generated zip file.
-     */
-    std::string getZipPath(){ return this->zipPath; };
 
 private:
 

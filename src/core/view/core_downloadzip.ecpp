@@ -67,4 +67,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     );
 
     reply.out() << in.rdbuf();  // send the content of the ifstream to the page
+    downloadZipController.cleanUp();
 </%cpp>

@@ -167,15 +167,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </div>
 
                 <div class="form_labels">
-                    <label from="route_revers">Route revers support:</label>
+                    <label from="route_reverse">Route revers support:</label>
                 </div>
                 <div class="form_inputs">
                     <input
                         type="checkbox"
-                        id="route_revers"
+                        id="route_reverse"
                         value="true"
-                        name="form_route_revers"
-%     if ( projectData.isRouteRevers() ) {
+                        name="form_route_reverse"
+%     if ( projectData.isRouteReverse() ) {
                         checked >
 %     } else {
                         >

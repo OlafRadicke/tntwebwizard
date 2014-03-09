@@ -80,23 +80,54 @@ private:
      */
     Tww::Core::UserSession& userSession;
 
+    // ========= member functions =========
     /**
      * Create the "src/main.cpp" file.
      */
     void createMain_cpp();
 
     /**
-     * Get the path of main.cpp file.
+     * Create the "src/core/model/config.cpp" file.
+     */
+    void createConfig_cpp();
+
+    /**
+     * Create the "src/core/model/config.h" file.
+     */
+    void createConfig_h();
+
+    /**
+     * Create the Directory Structure of core part:
+     * src/core/model/
+     * src/core/manager
+     * src/core/controler
+     * src/core/resources
+     * src/core/view
+     */
+    void createCoreDirectoryStructure();
+
+    /**
+     * Get the temporary path of "src/core/model/config.cpp" file.
+     */
+    std::string getConfigCppPath();
+
+    /**
+     * Get the temporary path of "src/core/model/config.h" file.
+     */
+    std::string getConfigHPath();
+
+    /**
+     * Get the temporary path of "src/main.cpp file.
      */
     std::string getMainCppPath();
 
     /**
-     * Get the path of Makefile.tnt file.
+     * Get the temporary path of Makefile.tnt file.
      */
     std::string getMakefilePath();
 
     /**
-     * Get the path of source code directory.
+     * Get the temporary path of source code directory.
      */
     std::string getSourceDir();
 };

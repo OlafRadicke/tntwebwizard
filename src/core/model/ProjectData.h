@@ -59,23 +59,25 @@ public:
         doxygenTemplates(true),
         formToken(true),
         cxxtoolsLoging(true),
-        routeRevers(true),
-        cliSupport(false)
+        routeReverse(true),
+        cliSupport(false),
+        configFormat("json")
     { }
 
     // === G ===
+
+    /**
+     * Get the format of configuration file. It can be "xml" or "json".
+     */
+    std::string getConfigFormat( ){
+        return this->configFormat;
+    };
 
     /**
      * Get a export of user projekt data in json format.
      * @return A json document.
      */
     std::string getJson( );
-
-    /**
-     * Get a export of user projekt data in xml format.
-     * @return A xml document.
-     */
-    std::string getXml();
 
     /**
      * Get project name.
@@ -94,6 +96,12 @@ public:
      */
     const int getWizardVersion() const
     { return this->wizardVersion; }
+
+    /**
+     * Get a export of user projekt data in xml format.
+     * @return A xml document.
+     */
+    std::string getXml();
 
     // === I ===
 
@@ -127,8 +135,8 @@ public:
      * If that "true" than it use the module "routereverse".
      * \see subpage_route_reverse
      */
-    const bool isRouteRevers( ) const
-    { return this->routeRevers; };
+    const bool isRouteReverse( ) const
+    { return this->routeReverse; };
 
     // === R ===
 
@@ -143,46 +151,60 @@ public:
      * If that "true" than it is generating code with cxxtools command line
      * interface (cli).
      */
-    void setCliSupport( bool _yesOrNo )
-    { this->cliSupport = _yesOrNo; };
+    void setCliSupport( bool _yesOrNo ){
+        this->cliSupport = _yesOrNo;
+    };
+
+    /**
+     * It set the format of configuration file. It can be "xml" or "json".
+     */
+    void setConfigFormat( std::string _configFormat ) {
+        this->configFormat = _configFormat;
+    };
 
     /**
      * Switch on and off generating code with cxxtools loging support.
      */
-    void setCxxtoolsLoging( bool _yesOrNo )
-    { this->cxxtoolsLoging = _yesOrNo; };
+    void setCxxtoolsLoging( bool _yesOrNo ) {
+        this->cxxtoolsLoging = _yesOrNo;
+    };
 
     /**
      * that set is doxygen use or not.
      * @arg _yesOrNo "true" is using doxygen.
      */
-    void setDoxygenTemplates( bool _yesOrNo )
-    { this->doxygenTemplates = _yesOrNo; };
+    void setDoxygenTemplates( bool _yesOrNo ) {
+        this->doxygenTemplates = _yesOrNo;
+    };
 
     /**
      * that set is form token use or not.
      * The token is for csrf "cross site request forgery".
      */
-    void setFormToken( bool _yesOrNo )
-    { this->formToken = _yesOrNo; };
+    void setFormToken( bool _yesOrNo ) {
+        this->formToken = _yesOrNo;
+    };
 
     /**
      * Set project name.
      */
-    void setProjectName( std::string _projectName )
-    { this->projectName = _projectName; };
+    void setProjectName( std::string _projectName ) {
+        this->projectName = _projectName;
+    };
 
     /**
-     * Swith on and off generating code with revers route support.
+     * Switch on and off generating code with reverse route support.
      */
-    void setRouteRevers( bool _yesOrNo )
-    { this->routeRevers = _yesOrNo; };
+    void setRouteReverse( bool _yesOrNo ) {
+        this->routeReverse = _yesOrNo;
+    };
 
     /**
      * Set the header template with the licence and author.
      */
-    void setSourceCodeHeader( std::string _sourceCodeHeader )
-    { this->sourceCodeHeader = _sourceCodeHeader ; };
+    void setSourceCodeHeader( std::string _sourceCodeHeader ) {
+        this->sourceCodeHeader = _sourceCodeHeader ;
+    };
 
     // === W ===
 
@@ -229,13 +251,15 @@ private:
     /**
      * If that "true" than it is generating code with reverse routing support.
      */
-    bool routeRevers;
+    bool routeReverse;
 
     /**
      * If that "true" than it is generating a main function code with
      * cxxtools argument parsing support.
      */
     bool cliSupport;
+
+    std::string configFormat;
 };
 
 } // namespace Core

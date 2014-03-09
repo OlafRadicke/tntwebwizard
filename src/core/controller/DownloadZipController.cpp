@@ -29,6 +29,7 @@
 #include <tnt/httprequest.h>
 #include <tnt/httpreply.h>
 
+#include <cxxtools/file.h>
 #include <cxxtools/directory.h>
 #include <cxxtools/log.h>
 
@@ -114,7 +115,13 @@ void DownloadZipController::worker (
 
 }
 
+void DownloadZipController::cleanUp() {
 
+    if ( cxxtools::File::exists( this->zipPath ) ){
+        cxxtools::File oldZipFile( this->zipPath );
+        oldZipFile.remove ();
+    }
+}
 
 } // namespace core
 } // namespace Tww

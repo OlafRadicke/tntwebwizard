@@ -42,6 +42,12 @@ void MakefileData::addCppFiles( std::string _newFile ){
     log_debug( "addCppFiles ready" );
 }
 
+void MakefileData::addHFiles( std::string _newFile ){
+    log_debug( "addHFiles: " << _newFile );
+    this->hFiles.push_back( _newFile );
+    log_debug( "addCppFiles ready" );
+}
+
 // === G ===
 
 std::string MakefileData::getJson( ) {
