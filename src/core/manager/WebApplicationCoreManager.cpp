@@ -60,6 +60,8 @@ void WebApplicationCoreManager::createApplicationCore(){
     this->createMain_cpp();
     this->createConfig_h();
     this->createConfig_cpp();
+    this->createInitcomponent_h();
+    this->createMainCSS();
 }
 
 
@@ -370,7 +372,7 @@ void WebApplicationCoreManager::createConfig_cpp(){
 }
 
 void WebApplicationCoreManager::createConfig_h(){
-    log_debug("createConfig_cpp()" );
+    log_debug("createConfig_h()" );
 
     std::ostringstream fileContent;
     fileContent
@@ -533,8 +535,196 @@ void WebApplicationCoreManager::createConfig_h(){
     log_debug( __LINE__ << " ready with writing file : \n"  << this->getMakefilePath() );
 }
 
+void WebApplicationCoreManager::createInitcomponent_h(){
+    log_debug("createInitcomponent_h()" );
+
+    std::ostringstream fileContent;
+    fileContent
+        << "/* ***************************************************************************\n"
+        << this->projectData.getSourceCodeHeader()
+        << "\n"
+        << "*************************************************************************** */ \n"
+        << "\n"
+        << "#ifndef CORE_INITCOMPONENT_H\n"
+        << "#define CORE_INITCOMPONENT_H\n"
+    ;
+    if ( this->projectData.isRouteReverse( ) ) {
+        fileContent
+            << "#include <routereverse/manager/Manager.h>\n"
+        ;
+    };
+    fileContent
+        << "#include <string>\n"
+    ;
+    if ( this->projectData.isCxxtoolsLoging( ) ){
+        fileContent
+            << "#include <cxxtools/log.h>\n"
+        ;
+    }
+    fileContent
+        << "#include <tnt/tntnet.h>\n"
+        << "\n"
+        << "namespace Core {\n"
+        << "\n"
+        << "log_define(\"Core.initcomponent\")\n"
+        << "\n"
+    ;
+    if ( this->projectData.isDoxygenTemplates( ) ){
+        fileContent
+            << "/**\n"
+            << " * This function prepare the component \"Core\". Specifically the routing.\n"
+            << " * @arg app a reference of the application server.\n"
+            << " */\n"
+        ;
+    }
+    fileContent
+        << "void initcomponent ( tnt::Tntnet &app ) {\n"
+        << "\n"
+        << "\t // special pages\n"
+        << "\t // 1:1 rout\n"
+        << "\t app.mapUrl( \"^/(.*)$\", \"$1\" );\n"
+        << "\n"
+        << "\t // default route for / \n"
+        << "\t app.mapUrl( \"^/$\", \"core_home\" );\n"
+        << "\n"
+        << "\t // ######################## RESOURCES ############################\n"
+        << "\n"
+        << "\t // configure generic static stuff\n"
+        << "\t app.mapUrl(\n"
+        << "\t\t \"^/Core/resources/(.*)\",\n"
+        << "\t\t \"resources\"\n"
+        << "\t ).setPathInfo(\"core/resources/$1\");\n"
+        << "\n"
+        << "\t // /core/favicon.ico\n"
+        << "\t app.mapUrl(\n"
+        << "\t\t \"^/core/favicon.ico$\",\n"
+        << "\t\t \"resources\"\n"
+        << "\t ).setPathInfo(\"core/resources/favicon.ico\");\n"
+        << "\n"
+    ;
+    if ( this->projectData.isRouteReverse( ) ) {
+        fileContent
+            << "\t RouteReverse::Manager::add(\n"
+            << "\t\t \"core_favicon_ico\",\n"
+            << "\t\t \"core/favicon.ico\"\n"
+            << "\t );\n"
+        ;
+    }
+    fileContent
+        << "\t // /core/resources/normalize.css\n"
+        << "\n"
+        << "\t app.mapUrl(\"^/core/normalize.css$\", \"resources\")\n"
+        << "\t\t .setPathInfo(\"core/resources/normalize.css\");\n"
+        << "\n"
+    ;
+    if ( this->projectData.isRouteReverse( ) ) {
+        fileContent
+            << "\t RouteReverse::Manager::add(\n"
+            << "\t\t \"core_normalize_css\",\n"
+            << "\t\t \"core/normalize.css\"\n"
+            << "\t );\n"
+            << "\n"
+        ;
+    }
+    fileContent
+        << "\t // /core/resources/" << this->makefileData.getBinName() << ".css\n"
+        << "\t app.mapUrl(\n"
+        << "\t\t \"^/core/" << this->makefileData.getBinName() << ".css$\",\n"
+        << "\t\t \"resources\"\n"
+        << "\t ).setPathInfo( \"core/resources/" << this->makefileData.getBinName() << ".css\" );\n"
+        << "\n"
+    ;
+    if ( this->projectData.isRouteReverse( ) ) {
+        fileContent
+            << "\t RouteReverse::Manager::add(\n"
+            << "\t\t \"core_" << this->makefileData.getBinName() << "_css\",\n"
+            << "\t\t \"core/" << this->makefileData.getBinName() << ".css\"\n"
+            << "\t );\n"
+        ;
+    }
+    fileContent
+        << "\n"
+        << "\t // ######################### OTHER SITES ##########################\n"
+        << "\n"
+        << "\t // ##################### END OF ROUTING RULES #####################\n"
+        << "\n"
+    ;
+    if ( this->projectData.isCxxtoolsLoging( ) ){
+        fileContent
+            << "\t log_debug( RouteReverse::Manager::getAllReversesRoutes() );\n"
+        ;
+    }
+    fileContent
+        << "\n"
+        << "}\n"
+        << "\n"
+        << "} // END namespace Core\n"
+        << "\n"
+        << "#endif // CORE_INITCOMPONENT_H\n"
+    ;
 
 
+    log_debug("fileContent: \n"  << fileContent.str() );
+    log_debug( __LINE__ << " write in: \n"  << this->getInitcomponentHPath().c_str() );
+    std::ofstream initcomph_file( this->getInitcomponentHPath().c_str() );
+    initcomph_file << fileContent.str() ;
+    initcomph_file.close();
+    log_debug(
+        __LINE__
+        << " ready with writing file : \n"
+        << this->getInitcomponentHPath().c_str()
+    );
+
+    // Add new file in Makefile.tnt configuration.
+    log_debug( __LINE__ << " read file : \n"  << this->getMakefilePath() );
+    this->makefileData.read( this->getMakefilePath() );
+
+    log_debug( __LINE__ << " add path of: " << this->getInitcomponentHPath() );
+    this->makefileData.addHFiles( this->getInitcomponentHPath() );
+
+    log_debug( __LINE__ << " write file : \n"  << this->getMakefilePath() );
+    this->makefileData.write( this->getMakefilePath() );
+    log_debug( __LINE__ << " ready with writing file : \n"  << this->getMakefilePath() );
+
+}
+
+void WebApplicationCoreManager::createMainCSS(){
+    log_debug("createMainCSS()" );
+
+    std::ostringstream fileContent;
+    fileContent
+        << "\n"
+        << "html {\n"
+        << "\t color: #0076ff;\n"
+        << "\t background-color: #CCDDFF;\n"
+        << "}\n"
+        << "\n"
+    ;
+
+
+    log_debug("fileContent: \n"  << fileContent.str() );
+    log_debug( __LINE__ << " write in: \n"  << this->getCSSPath().c_str() );
+    std::ofstream css_file( this->getCSSPath().c_str() );
+    css_file << fileContent.str() ;
+    css_file.close();
+    log_debug(
+        __LINE__
+        << " ready with writing file : \n"
+        << this->getCSSPath().c_str()
+    );
+
+    // Add new file in Makefile.tnt configuration.
+    log_debug( __LINE__ << " read file : \n"  << this->getMakefilePath() );
+    this->makefileData.read( this->getMakefilePath() );
+
+    log_debug( __LINE__ << " add path of: " << this->getCSSPath() );
+    this->makefileData.addResourcesFiles( this->getCSSPath() );
+
+    log_debug( __LINE__ << " write file : \n"  << this->getMakefilePath() );
+    this->makefileData.write( this->getMakefilePath() );
+    log_debug( __LINE__ << " ready with writing file : \n"  << this->getMakefilePath() );
+
+}
 
 // G --------------------------------------------------------------------------
 
@@ -544,6 +734,21 @@ std::string WebApplicationCoreManager::getConfigCppPath(){
 
 std::string WebApplicationCoreManager::getConfigHPath(){
     return this->userSession.getSessionPath() + "/src/core/model/config.h";
+}
+
+std::string WebApplicationCoreManager::getCSSPath(){
+    std::ostringstream completPath;
+    completPath
+        << this->userSession.getSessionPath()
+        << "/src/core/resources/"
+        << this->makefileData.getBinName()
+        << ".css"
+    ;
+    return completPath.str();
+}
+
+std::string WebApplicationCoreManager::getInitcomponentHPath(){
+    return this->userSession.getSessionPath() + "/src/core/initcomponent.h";
 }
 
 std::string WebApplicationCoreManager::getMainCppPath( ){

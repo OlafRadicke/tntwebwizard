@@ -48,6 +48,13 @@ void MakefileData::addHFiles( std::string _newFile ){
     log_debug( "addCppFiles ready" );
 }
 
+
+void MakefileData::addResourcesFiles( std::string _newFile ){
+    log_debug( "addHFiles: " << _newFile );
+    this->resourcesFiles.push_back( _newFile );
+    log_debug( "addCppFiles ready" );
+}
+
 // === G ===
 
 std::string MakefileData::getJson( ) {

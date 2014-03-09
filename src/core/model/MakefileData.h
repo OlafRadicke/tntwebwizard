@@ -70,6 +70,11 @@ public:
      */
     void addHFiles( std::string _newFile );
 
+    /**
+     * Add a file name in the list resources files.
+     */
+    void addResourcesFiles( std::string _newFile );
+
     // === G ===
 
     /**

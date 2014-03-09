@@ -80,7 +80,7 @@ private:
      */
     Tww::Core::UserSession& userSession;
 
-    // ========= member functions =========
+    // ========= private member functions =========
     /**
      * Create the "src/main.cpp" file.
      */
@@ -107,6 +107,16 @@ private:
     void createCoreDirectoryStructure();
 
     /**
+     * Create the "src/core/resources/[project name].css" file.
+     */
+     void createMainCSS();
+
+    /**
+     * Create the "src/core/initcomponent.h" file.
+     */
+    void createInitcomponent_h();
+
+    /**
      * Get the temporary path of "src/core/model/config.cpp" file.
      */
     std::string getConfigCppPath();
@@ -115,6 +125,16 @@ private:
      * Get the temporary path of "src/core/model/config.h" file.
      */
     std::string getConfigHPath();
+
+    /**
+     * Get the temporary path of "src/core/resources/[project name].css" file.
+     */
+    std::string getCSSPath();
+
+    /**
+     * Get the temporary path of "src/core/initcomponent.h" file.
+     */
+    std::string getInitcomponentHPath();
 
     /**
      * Get the temporary path of "src/main.cpp file.

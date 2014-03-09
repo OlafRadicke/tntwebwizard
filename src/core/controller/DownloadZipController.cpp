@@ -101,7 +101,7 @@ void DownloadZipController::worker (
         errorText
             << "Failed to open project directory \""
             << sysCommand.str()
-            << '". It is sure, do you have create a Project?'
+            << "\". It is sure, do you have create a Project?"
         ;
         throw Core::TntWebWizardException( errorText.str() );
     }

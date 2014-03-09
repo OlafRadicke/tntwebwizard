@@ -4,9 +4,6 @@
 #ifndef CORE_TNTWEBWIZARDEXCEPTION_H
 #define CORE_TNTWEBWIZARDEXCEPTION_H
 
-
-
-
 namespace Tww {
 namespace Core {
 
