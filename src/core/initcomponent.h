@@ -99,17 +99,97 @@ void initcomponent ( tnt::Tntnet &app ) {
         "core/tntwebwizard.css"
     );
 
+    // ======= module FormToken =======
+
+
+//   "core/resources/tntnet.png",
+//   "core/resources/tntwebwizard.css",
+//   "formtoken/controller/controller.cpp",
+//   "formtoken/initcomponent.h",
+//   "formtoken/manager/manager.cpp",
+//   "formtoken/manager/manager.h",
+//   "formtoken/subpage_form_token.dox",
+//   "formtoken/views/formtoken_no_availabe_token.ecpp",
+
     // /formtoken/controller/controller.cpp
 
     app.mapUrl(
-        "^formtoken/controller/controller.cpp$",
+        "^formtoken/controller.cpp$",
         "resources"
     ).setPathInfo( "formtoken/controller/controller.cpp" );
 
     RouteReverse::Manager::add(
         "formtoken_controller_cpp",
-        "formtoken/controller/controller.cpp"
+        "formtoken/controller.cpp"
     );
+
+    // formtoken/initcomponent.h
+
+    app.mapUrl(
+        "^formtoken/initcomponent.h$",
+        "resources"
+    ).setPathInfo( "formtoken/initcomponent.h" );
+
+    RouteReverse::Manager::add(
+        "formtoken_initcomponent_h",
+        "formtoken/initcomponent.h"
+    );
+
+    // formtoken/subpage_form_token.dox
+
+    app.mapUrl(
+        "^formtoken/subpage_form_token.dox$",
+        "resources"
+    ).setPathInfo( "formtoken/subpage_form_token.dox" );
+
+    RouteReverse::Manager::add(
+        "formtoken_subpage_form_token_dox",
+        "formtoken/subpage_form_token.dox"
+    );
+
+    // formtoken/manager/manager.cpp
+
+    app.mapUrl(
+        "^formtoken/manager/manager.cpp$",
+        "resources"
+    ).setPathInfo( "formtoken/manager/manager.cpp" );
+
+    RouteReverse::Manager::add(
+        "formtoken_manager_cpp",
+        "formtoken/manager/manager.cpp"
+    );
+
+    // formtoken/manager/manager.h
+
+    app.mapUrl(
+        "^formtoken/manager.h$",
+        "resources"
+    ).setPathInfo( "formtoken/manager/manager.h" );
+
+    RouteReverse::Manager::add(
+        "formtoken_manager_h",
+        "formtoken/manager.h"
+    );
+
+    // formtoken/views/formtoken_no_availabe_token.ecpp
+
+    app.mapUrl(
+        "^formtoken/views/formtoken_no_availabe_token.ecpp$",
+        "resources"
+    ).setPathInfo( "formtoken/views/formtoken_no_availabe_token.ecpp" );
+
+    RouteReverse::Manager::add(
+        "formtoken_no_availabe_token_ecpp",
+        "formtoken/views/formtoken_no_availabe_token.ecpp"
+    );
+
+
+    // ======= module RouteReverse =======
+
+    // routereverse/initcomponent.h
+    // routereverse/subpage_route_reverse.dox
+    // routereverse/manager/manager.cpp
+    // routereverse/manager/manager.h
 
 
     // ############################ SITES ##########################

@@ -718,70 +718,57 @@ void WebApplicationCoreManager::createModulFormToken(
         throw Core::TntWebWizardException( "Can not do systems command!" );
     }
 
-    // ====== creating src/formtoken/controller/controller.cpp ======
+    // ====== creating files ======
 
-    std::string fileName =
-        this->getSourceDir() + "/formtoken/controller/controller.cpp" ;
-    std::stringstream sysCommand;
-    std::stringstream errorText;
+    const unsigned int PATH = 0;
+    const unsigned int ALIAS = 1;
+    std::string files[6][2] = {
+        "formtoken/controller/controller.cpp","formtoken_controller_cpp",
+        "formtoken/initcomponent.h","formtoken_initcomponent_h",
+        "formtoken/manager/manager.cpp", "formtoken_manager_cpp",
+        "formtoken/manager/manager.h", "formtoken_manager_h",
+        "formtoken/subpage_form_token.dox","formtoken_subpage_form_token_dox",
+        "formtoken/views/formtoken_no_availabe_token.ecpp","formtoken_no_availabe_token_ecpp"
+    };
+    for (unsigned int i = 0 ; i < 6; i++) {
+        std::cout
+            << "##############################################################"
+            << std::endl;
+        std::cout << "path: " << files[i][0] << " alias: " << files[i][1] << std::endl;
+        std::cout
+            << "##############################################################"
+            << std::endl;
 
-    std::string href_file =
-        RouteReverse::Manager::getAbsolutURL(
-            "formtoken_controller_cpp",
-            request
-        );
-    sysCommand
-        << "curl " <<  href_file << " > " <<  fileName << ";"
-    ;
+        std::string fileName = this->getSourceDir() + "/" + files[i][PATH] ;
+        std::stringstream sysCommand;
+        std::stringstream errorText;
 
-    log_debug( "[" << __LINE__ << "] command: " << sysCommand.str() );
-    log_debug( "[" << __LINE__ << "] do command..." );
-    int i=system( sysCommand.str().c_str() );
-    log_debug( "[" << __LINE__ << "]The value returned was: " << i);
-    if ( i != 0 ) {
-        errorText
-            << "Download file is Failed: \""
-            << sysCommand.str()
+        std::string href_file =
+            RouteReverse::Manager::getAbsolutURL(
+                files[i][ALIAS],
+                request
+            );
+        sysCommand
+            << "curl " <<  href_file << " > " <<  fileName << ";"
         ;
-        throw Core::TntWebWizardException( errorText.str() );
-    }
 
-    // Add new file in Makefile.tnt configuration.
-    this->makefileData.read( this->getMakefilePath() );
-    this->makefileData.addCppFile( "./src/formtoken/controller/controller.cpp" );
-    this->makefileData.write( this->getMakefilePath() );
-    fileContent.clear();
+        log_debug( "[" << __LINE__ << "] command: " << sysCommand.str() );
+        int returncode = system( sysCommand.str().c_str() );
+        log_debug( "[" << __LINE__ << "]The value returned was: " << i);
+        if ( returncode ) {
+            errorText
+                << "Download file is Failed: \""
+                << sysCommand.str()
+            ;
+            throw Core::TntWebWizardException( errorText.str() );
+        }
 
-    // ====== creating src/formtoken/manager/manager.cpp ======
-
-
-//     str:string fileName = this->getSourceDir() + "/src/formtoken/manager/manager.cpp" ;
-//     log_debug( __LINE__ << " write in: \n"  << fileName );
-//     writting_file.open( fileName.c_str() );
-//     writting_file << fileContent.str() ;
-//     writting_file.close();
-//
-//     // Add new file in Makefile.tnt configuration.
-//     this->makefileData.read( this->getMakefilePath() );
-//     this->makefileData.addCppFile( "./src/formtoken/manager/manager.cpp" );
-//     this->makefileData.write( this->getMakefilePath() );
-//     fileContent.clear();
-
-
-    // ====== creating src/formtoken/manager/manager.h ======
-
-
-//     str:string fileName = this->getSourceDir() + "/src/formtoken/manager/manager.h" ;
-//     log_debug( __LINE__ << " write in: \n"  << fileName );
-//     writting_file.open( fileName.c_str() );
-//     writting_file << fileContent.str() ;
-//     writting_file.close();
-//
-//     // Add new file in Makefile.tnt configuration.
-//     this->makefileData.read( this->getMakefilePath() );
-//     this->makefileData.addCppFile( "./src/formtoken/manager/manager.h" );
-//     this->makefileData.write( this->getMakefilePath() );
-//     fileContent.clear();
+        // Add new file in Makefile.tnt configuration.
+        this->makefileData.read( this->getMakefilePath() );
+        this->makefileData.addCppFile( "./src/" + files[i][PATH] );
+        this->makefileData.write( this->getMakefilePath() );
+    };
+    std::cout << "##############################################################" << std::endl;
 
 }
 

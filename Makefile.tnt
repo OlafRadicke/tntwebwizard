@@ -48,7 +48,12 @@
         "core/resources/normalize.css",
         "core/resources/tntnet.png",
         "core/resources/tntwebwizard.css",
-        "formtoken/controller/controller.cpp"
+        "formtoken/controller/controller.cpp",
+        "formtoken/initcomponent.h",
+        "formtoken/manager/manager.cpp",
+        "formtoken/manager/manager.h",
+        "formtoken/subpage_form_token.dox",
+        "formtoken/views/formtoken_no_availabe_token.ecpp"
     ],
     "buildDir": "bulid"
 }
