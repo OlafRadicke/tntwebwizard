@@ -34,7 +34,6 @@ log_define("FormToken.Manager")
 
 std::string  Manager::getRawToken( tnt::HttpRequest& request )
 {
-    TNT_SESSION_SHARED_VAR( std::string, SESSIONFORM_AVAILABLE_TOKEN, () );
     std::ostringstream tokenStream;
     tokenStream << genRandomToken(16) << "_" << request.getSerial();
     return tokenStream.str();
