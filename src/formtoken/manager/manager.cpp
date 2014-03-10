@@ -16,8 +16,7 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
-#include <formtoken/manager/Manager.h>
+#include <formtoken/manager/manager.h>
 
 #include <tnt/component.h>
 #include <tnt/httprequest.h>
@@ -27,15 +26,19 @@
 #include <string>
 #include <unistd.h>
 
-namespace Tww {
+
 namespace FormToken
 {
 
-
 log_define("FormToken.Manager")
 
-// G --------------------------------------------------------------------------
-
+std::string  Manager::getRawToken( tnt::HttpRequest& request )
+{
+    TNT_SESSION_SHARED_VAR( std::string, SESSIONFORM_AVAILABLE_TOKEN, () );
+    std::ostringstream tokenStream;
+    tokenStream << genRandomToken(16) << "_" << request.getSerial();
+    return tokenStream.str();
+}
 
 std::string  Manager::getFormToken( tnt::HttpRequest& request )
 {
@@ -43,13 +46,13 @@ std::string  Manager::getFormToken( tnt::HttpRequest& request )
     std::ostringstream tokenStream;
     std::ostringstream inputTagStream;
 
-    tokenStream << genRandomToken(16) << "-" << request.getSerial();
+    tokenStream << genRandomToken(16) << "_" << request.getSerial();
     inputTagStream << "<input \n"
         << "      type=\"hidden\" \n"
         << "      name=\"SESSIONFORM_TOKEN\" \n"
         << "      value=\""
         << tokenStream.str()
-        << "\n \" >";
+        << "\" >";
 
     SESSIONFORM_AVAILABLE_TOKEN = tokenStream.str();
     return inputTagStream.str();
@@ -70,9 +73,7 @@ std::string Manager::genRandomToken ( const int len) {
     return randomString;
 }
 
-
 } // END namespace FormToken
-} // end namespace Tww
 
 
 

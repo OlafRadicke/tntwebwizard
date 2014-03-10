@@ -60,7 +60,7 @@ public:
     /**
      * This function try to create the core of a tntnet based web application.
      */
-    void createApplicationCore();
+    void createApplicationCore( const tnt::HttpRequest& request );
 
 private:
 
@@ -110,6 +110,17 @@ private:
      * Create the "src/core/resources/[project name].css" file.
      */
      void createMainCSS();
+
+
+    /**
+     * Create all directories and files of die module "FormToken";
+     */
+    void createModulFormToken( const tnt::HttpRequest& request );
+
+    /**
+     * Create all directories and files of die module "RouteReverse";
+     */
+    void createModulRouteReverse( const tnt::HttpRequest& request );
 
     /**
      * Create the "src/core/initcomponent.h" file.

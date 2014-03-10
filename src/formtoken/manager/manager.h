@@ -24,7 +24,6 @@
 
 #include <string>
 
-namespace Tww {
 namespace FormToken
 {
 
@@ -34,10 +33,6 @@ namespace FormToken
 class Manager
 {
 public:
-
-
-// G --------------------------------------------------------------------------
-
     /**
     * Get back a hidden input form tag, with a token id as value. The input tag
     * name is SESSIONFORM_TOKEN.
@@ -45,6 +40,12 @@ public:
     * @return a hidden input form tag, with a token id.
     */
     static std::string  getFormToken( tnt::HttpRequest& request );
+
+    /**
+    * Get a pure token without the tag.
+    * @para request
+    */
+    static std::string  getRawToken( tnt::HttpRequest& request );
 
 private:
 
@@ -57,9 +58,6 @@ private:
 
 };
 
-
-
 } // END namespace FormToken
-} // end namespace Tww
 #endif // SESSIONFORM_MANAGER_H
 

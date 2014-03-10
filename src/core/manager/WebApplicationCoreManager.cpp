@@ -19,6 +19,7 @@
 
 #include <core/manager/WebApplicationCoreManager.h>
 #include <core/model/TntWebWizardException.h>
+#include <routereverse/manager/manager.h>
 
 #include <tnt/component.h>
 #include <tnt/httprequest.h>
@@ -42,7 +43,9 @@ log_define("Core.WebApplicationCoreManager")
 
 // C -------------------------------------------------------------------------
 
-void WebApplicationCoreManager::createApplicationCore(){
+void WebApplicationCoreManager::createApplicationCore(
+    const tnt::HttpRequest& request
+){
     log_debug("createApplicationCore()" );
     std::string mainCppPath = this->getMainCppPath();
     if ( cxxtools::FileInfo::exists( mainCppPath ) ) {
@@ -62,6 +65,12 @@ void WebApplicationCoreManager::createApplicationCore(){
     this->createConfig_cpp();
     this->createInitcomponent_h();
     this->createMainCSS();
+    if ( this->projectData.isFormToken( ) ) {
+        this->createModulFormToken( request );
+    }
+    if ( this->projectData.isRouteReverse( ) ) {
+        this->createModulRouteReverse( request );
+    }
 }
 
 
@@ -73,8 +82,8 @@ void WebApplicationCoreManager::createCoreDirectoryStructure(){
     if ( !cxxtools::Directory::exists( this->getSourceDir() + "/core" ) ) {
         cxxtools::Directory::create( this->getSourceDir() + "/core" );
     }
-    if ( !cxxtools::Directory::exists( this->getSourceDir() + "/core/controler" ) ) {
-        cxxtools::Directory::create( this->getSourceDir() + "/core/controler" );
+    if ( !cxxtools::Directory::exists( this->getSourceDir() + "/core/controller" ) ) {
+        cxxtools::Directory::create( this->getSourceDir() + "/core/controller" );
     }
     if ( !cxxtools::Directory::exists( this->getSourceDir() + "/core/manager" ) ) {
         cxxtools::Directory::create( this->getSourceDir() + "/core/manager" );
@@ -204,22 +213,11 @@ void WebApplicationCoreManager::createMain_cpp(){
     std::ofstream maincpp_file( this->getMainCppPath().c_str() );
     maincpp_file << fileContent.str() ;
     maincpp_file.close();
-    log_debug(
-        __LINE__
-        << " ready with writing file : \n"
-        << this->getMainCppPath().c_str()
-    );
 
     // Add new file in Makefile.tnt configuration.
-    std::string makefilePath = this->getMakefilePath();
-    log_debug( __LINE__ << " read file : \n"  << makefilePath );
-    this->makefileData.read( makefilePath );
-    std::string mainCppPath = this->getMainCppPath();
-    log_debug( __LINE__ << " add path of: " << mainCppPath );
-    this->makefileData.addCppFiles( mainCppPath );
-    log_debug( __LINE__ << " write file : \n"  << this->getMakefilePath() );
+    this->makefileData.read( this->getMakefilePath() );
+    this->makefileData.addCppFile( "./src/main.cpp" );
     this->makefileData.write( this->getMakefilePath() );
-    log_debug( __LINE__ << " ready with writing file : \n"  << this->getMakefilePath() );
 
 }
 
@@ -348,27 +346,15 @@ void WebApplicationCoreManager::createConfig_cpp(){
         << "} // namespace core\n"
     ;
 
-    log_debug("fileContent: \n"  << fileContent.str() );
     log_debug( __LINE__ << " write in: \n"  << this->getConfigCppPath().c_str() );
     std::ofstream configcpp_file( this->getConfigCppPath().c_str() );
     configcpp_file << fileContent.str() ;
     configcpp_file.close();
-    log_debug(
-        __LINE__
-        << " ready with writing file : \n"
-        << this->getConfigCppPath().c_str()
-    );
 
     // Add new file in Makefile.tnt configuration.
-    log_debug( __LINE__ << " read file : \n"  << this->getMakefilePath() );
     this->makefileData.read( this->getMakefilePath() );
-
-    log_debug( __LINE__ << " add path of: " << this->getConfigCppPath() );
-    this->makefileData.addCppFiles( this->getConfigCppPath() );
-
-    log_debug( __LINE__ << " write file : \n"  << this->getMakefilePath() );
+    this->makefileData.addCppFile( "./src/core/model/config.cpp" );
     this->makefileData.write( this->getMakefilePath() );
-    log_debug( __LINE__ << " ready with writing file : \n"  << this->getMakefilePath() );
 }
 
 void WebApplicationCoreManager::createConfig_h(){
@@ -512,27 +498,15 @@ void WebApplicationCoreManager::createConfig_h(){
         << "#endif \n"
     ;
 
-    log_debug("fileContent: \n"  << fileContent.str() );
     log_debug( __LINE__ << " write in: \n"  << this->getConfigHPath().c_str() );
     std::ofstream configh_file( this->getConfigHPath().c_str() );
     configh_file << fileContent.str() ;
     configh_file.close();
-    log_debug(
-        __LINE__
-        << " ready with writing file : \n"
-        << this->getConfigHPath().c_str()
-    );
 
     // Add new file in Makefile.tnt configuration.
-    log_debug( __LINE__ << " read file : \n"  << this->getMakefilePath() );
     this->makefileData.read( this->getMakefilePath() );
-
-    log_debug( __LINE__ << " add path of: " << this->getConfigHPath() );
-    this->makefileData.addHFiles( this->getConfigHPath() );
-
-    log_debug( __LINE__ << " write file : \n"  << this->getMakefilePath() );
+    this->makefileData.addCppFile( "./src/core/model/config.h" );
     this->makefileData.write( this->getMakefilePath() );
-    log_debug( __LINE__ << " ready with writing file : \n"  << this->getMakefilePath() );
 }
 
 void WebApplicationCoreManager::createInitcomponent_h(){
@@ -663,28 +637,15 @@ void WebApplicationCoreManager::createInitcomponent_h(){
         << "#endif // CORE_INITCOMPONENT_H\n"
     ;
 
-
-    log_debug("fileContent: \n"  << fileContent.str() );
     log_debug( __LINE__ << " write in: \n"  << this->getInitcomponentHPath().c_str() );
     std::ofstream initcomph_file( this->getInitcomponentHPath().c_str() );
     initcomph_file << fileContent.str() ;
     initcomph_file.close();
-    log_debug(
-        __LINE__
-        << " ready with writing file : \n"
-        << this->getInitcomponentHPath().c_str()
-    );
 
     // Add new file in Makefile.tnt configuration.
-    log_debug( __LINE__ << " read file : \n"  << this->getMakefilePath() );
     this->makefileData.read( this->getMakefilePath() );
-
-    log_debug( __LINE__ << " add path of: " << this->getInitcomponentHPath() );
-    this->makefileData.addHFiles( this->getInitcomponentHPath() );
-
-    log_debug( __LINE__ << " write file : \n"  << this->getMakefilePath() );
+    this->makefileData.addCppFile( "./src/core/initcomponent.h" );
     this->makefileData.write( this->getMakefilePath() );
-    log_debug( __LINE__ << " ready with writing file : \n"  << this->getMakefilePath() );
 
 }
 
@@ -701,28 +662,158 @@ void WebApplicationCoreManager::createMainCSS(){
         << "\n"
     ;
 
-
-    log_debug("fileContent: \n"  << fileContent.str() );
     log_debug( __LINE__ << " write in: \n"  << this->getCSSPath().c_str() );
     std::ofstream css_file( this->getCSSPath().c_str() );
     css_file << fileContent.str() ;
     css_file.close();
-    log_debug(
-        __LINE__
-        << " ready with writing file : \n"
-        << this->getCSSPath().c_str()
-    );
 
     // Add new file in Makefile.tnt configuration.
-    log_debug( __LINE__ << " read file : \n"  << this->getMakefilePath() );
     this->makefileData.read( this->getMakefilePath() );
-
-    log_debug( __LINE__ << " add path of: " << this->getCSSPath() );
-    this->makefileData.addResourcesFiles( this->getCSSPath() );
-
-    log_debug( __LINE__ << " write file : \n"  << this->getMakefilePath() );
+    this->makefileData.addCppFile( "./src/core/resources/" + this->makefileData.getBinName() + ".css" );
     this->makefileData.write( this->getMakefilePath() );
-    log_debug( __LINE__ << " ready with writing file : \n"  << this->getMakefilePath() );
+
+}
+
+
+
+void WebApplicationCoreManager::createModulFormToken(
+    const tnt::HttpRequest& request
+) {
+    log_debug("createModulFormToken()" );
+    std::ofstream writting_file;
+    std::ostringstream fileContent;
+
+    if ( !cxxtools::Directory::exists(
+        this->getSourceDir() + "/formtoken"
+    ) ) {
+        cxxtools::Directory::create( this->getSourceDir() + "/formtoken" );
+    }
+    if ( !cxxtools::Directory::exists(
+        this->getSourceDir() + "/formtoken/controller"
+    ) ) {
+        cxxtools::Directory::create( this->getSourceDir() + "/formtoken/controller" );
+    }
+    if ( !cxxtools::Directory::exists(
+        this->getSourceDir() + "/formtoken/manager"
+    ) ) {
+        cxxtools::Directory::create( this->getSourceDir() + "/formtoken/manager" );
+    }
+    if ( !cxxtools::Directory::exists(
+        this->getSourceDir() + "/formtoken/model"
+    ) ) {
+        cxxtools::Directory::create( this->getSourceDir() + "/formtoken/model" );
+    }
+    if ( !cxxtools::Directory::exists(
+        this->getSourceDir() + "/formtoken/resources"
+    ) ) {
+        cxxtools::Directory::create( this->getSourceDir() + "/formtoken/resources" );
+    }
+    if ( !cxxtools::Directory::exists(
+        this->getSourceDir() + "/formtoken/view"
+    ) ) {
+        cxxtools::Directory::create( this->getSourceDir() + "/formtoken/view" );
+    }
+
+    if ( !system(NULL) ) {
+        throw Core::TntWebWizardException( "Can not do systems command!" );
+    }
+
+    // ====== creating src/formtoken/controller/controller.cpp ======
+
+    std::string fileName =
+        this->getSourceDir() + "/formtoken/controller/controller.cpp" ;
+    std::stringstream sysCommand;
+    std::stringstream errorText;
+
+    std::string href_file =
+        RouteReverse::Manager::getAbsolutURL(
+            "formtoken_controller_cpp",
+            request
+        );
+    sysCommand
+        << "curl " <<  href_file << " > " <<  fileName << ";"
+    ;
+
+    log_debug( "[" << __LINE__ << "] command: " << sysCommand.str() );
+    log_debug( "[" << __LINE__ << "] do command..." );
+    int i=system( sysCommand.str().c_str() );
+    log_debug( "[" << __LINE__ << "]The value returned was: " << i);
+    if ( i != 0 ) {
+        errorText
+            << "Download file is Failed: \""
+            << sysCommand.str()
+        ;
+        throw Core::TntWebWizardException( errorText.str() );
+    }
+
+    // Add new file in Makefile.tnt configuration.
+    this->makefileData.read( this->getMakefilePath() );
+    this->makefileData.addCppFile( "./src/formtoken/controller/controller.cpp" );
+    this->makefileData.write( this->getMakefilePath() );
+    fileContent.clear();
+
+    // ====== creating src/formtoken/manager/manager.cpp ======
+
+
+//     str:string fileName = this->getSourceDir() + "/src/formtoken/manager/manager.cpp" ;
+//     log_debug( __LINE__ << " write in: \n"  << fileName );
+//     writting_file.open( fileName.c_str() );
+//     writting_file << fileContent.str() ;
+//     writting_file.close();
+//
+//     // Add new file in Makefile.tnt configuration.
+//     this->makefileData.read( this->getMakefilePath() );
+//     this->makefileData.addCppFile( "./src/formtoken/manager/manager.cpp" );
+//     this->makefileData.write( this->getMakefilePath() );
+//     fileContent.clear();
+
+
+    // ====== creating src/formtoken/manager/manager.h ======
+
+
+//     str:string fileName = this->getSourceDir() + "/src/formtoken/manager/manager.h" ;
+//     log_debug( __LINE__ << " write in: \n"  << fileName );
+//     writting_file.open( fileName.c_str() );
+//     writting_file << fileContent.str() ;
+//     writting_file.close();
+//
+//     // Add new file in Makefile.tnt configuration.
+//     this->makefileData.read( this->getMakefilePath() );
+//     this->makefileData.addCppFile( "./src/formtoken/manager/manager.h" );
+//     this->makefileData.write( this->getMakefilePath() );
+//     fileContent.clear();
+
+}
+
+void WebApplicationCoreManager::createModulRouteReverse(
+    const tnt::HttpRequest& request
+) {
+    log_debug("createModulFormToken()" );
+    std::ofstream writting_file;
+    std::ostringstream fileContent;
+
+    if ( !cxxtools::Directory::exists( this->getSourceDir() + "/routereverse" ) ) {
+        cxxtools::Directory::create( this->getSourceDir() + "/routereverse" );
+    }
+    if ( !cxxtools::Directory::exists( this->getSourceDir() + "/routereverse/controller" ) ) {
+        cxxtools::Directory::create( this->getSourceDir() + "/routereverse/controller" );
+    }
+    if ( !cxxtools::Directory::exists( this->getSourceDir() + "/routereverse/manager" ) ) {
+        cxxtools::Directory::create( this->getSourceDir() + "/routereverse/manager" );
+    }
+    if ( !cxxtools::Directory::exists( this->getSourceDir() + "/routereverse/model" ) ) {
+        cxxtools::Directory::create( this->getSourceDir() + "/routereverse/model" );
+    }
+    if ( !cxxtools::Directory::exists( this->getSourceDir() + "/routereverse/resources" ) ) {
+        cxxtools::Directory::create( this->getSourceDir() + "/routereverse/resources" );
+    }
+    if ( !cxxtools::Directory::exists( this->getSourceDir() + "/routereverse/view" ) ) {
+        cxxtools::Directory::create( this->getSourceDir() + "/routereverse/view" );
+    }
+
+    if ( !system(NULL) ) {
+        throw Core::TntWebWizardException( "Can not do systems command!" );
+    }
 
 }
 

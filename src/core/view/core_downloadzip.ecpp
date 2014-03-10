@@ -21,8 +21,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     include="core/model/TntWebWizardException.h"
     include="core/model/UserSession.h"
     include="core/model/ProjectData.h"
-    include="core/model/MakefileData.h" >
-        Tww::Core::UserSession userSession( request.getSerial() );
+    include="core/model/MakefileData.h"
+    include="formtoken/manager/manager.h">
+        Tww::Core::UserSession userSession(
+            FormToken::Manager::getRawToken( request )
+        );
         Tww::Core::ProjectData projectData();
         Tww::Core::MakefileData makefileData();
 </%session>
@@ -36,7 +39,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             );
 </%request>
 <%pre>
-    #include <routereverse/manager/Manager.h>
+    #include <routereverse/manager/manager.h>
     #include <fstream>
     #include <tnt/mimedb.h>
 </%pre>

@@ -22,12 +22,11 @@
 #include <string>
 #include <cxxtools/log.h>
 #include <tnt/tntnet.h>
-#include <routereverse/manager/Manager.h>
+#include <routereverse/manager/manager.h>
 
 
 
 
-namespace Tww {
 /**
  * @namespace FormToken
  *
@@ -44,7 +43,7 @@ namespace FormToken
  * @arg app a reference of the application server.
  */
 void initcomponent ( tnt::Tntnet &app ) {
-    
+
     /* initialize random seed: */
     srand (time(NULL));
 
@@ -68,7 +67,6 @@ void initcomponent ( tnt::Tntnet &app ) {
 
 
 } // END namespace RouteReverse
-} // namespace Tww
 
 
 #endif // CORE_INITCOMPONENT_H

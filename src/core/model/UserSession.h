@@ -36,7 +36,7 @@ class UserSession {
 
 public:
 
-    UserSession ( cxxtools::atomic_t token );
+    UserSession ( std::string token );
 
     ~UserSession ( );
 
@@ -52,7 +52,7 @@ private:
     /**
      * Session token
      **/
-    cxxtools::atomic_t  sessionToken;
+    std::string  sessionToken;
 
 };
 

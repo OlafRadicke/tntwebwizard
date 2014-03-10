@@ -1,10 +1,10 @@
 
 <%pre>
-    #include <routereverse/manager/Manager.h>
+    #include <routereverse/manager/manager.h>
 </%pre>
 <%cpp>
 
-    std::string href_tntnet_png = Tww::RouteReverse::Manager::getLinkTo(
+    std::string href_tntnet_png = RouteReverse::Manager::getLinkTo(
         std::string("core_tntnet_png"),
         request
     );

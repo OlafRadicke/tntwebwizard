@@ -1,21 +1,21 @@
 
 <%pre>
-    #include <routereverse/manager/Manager.h>
+    #include <routereverse/manager/manager.h>
 </%pre>
 <%cpp>
 
     std::string href_core_basicprojectdata =
-        Tww::RouteReverse::Manager::getLinkTo(
+        RouteReverse::Manager::getLinkTo(
             "core_basicprojectdata",
             request
         );
     std::string href_core_createapplicationcore =
-        Tww::RouteReverse::Manager::getLinkTo(
+        RouteReverse::Manager::getLinkTo(
             "core_createapplicationcore",
             request
         );
     std::string href_download_zip =
-        Tww::RouteReverse::Manager::getLinkTo(
+        RouteReverse::Manager::getLinkTo(
             "core_downloadzip",
             request
         );

@@ -63,17 +63,17 @@ public:
     /**
      * Add a file name in the list of *.cpp files.
      */
-    void addCppFiles( std::string _newFile );
+    void addCppFile( std::string _newFile );
 
     /**
      * Add a file name in the list of *.h files.
      */
-    void addHFiles( std::string _newFile );
+    void addHFile( std::string _newFile );
 
     /**
      * Add a file name in the list resources files.
      */
-    void addResourcesFiles( std::string _newFile );
+    void addResourcesFile( std::string _newFile );
 
     // === G ===
 

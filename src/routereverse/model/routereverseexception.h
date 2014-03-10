@@ -4,10 +4,6 @@
 #ifndef ROUTEREVERSE_ROUTEREVERSEEXCEPTION_H
 #define ROUTEREVERSE_ROUTEREVERSEEXCEPTION_H
 
-
-
-
-namespace Tww {
 namespace RouteReverse {
 
     /**
@@ -27,6 +23,5 @@ namespace RouteReverse {
     };
 
 } // end namespace RouteReverse
-} // namespace Tww
 
 #endif

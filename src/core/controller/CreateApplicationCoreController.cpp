@@ -84,7 +84,7 @@ void CreateApplicationCoreController::worker (
         if ( !this->preChecksOk( webappManager ) ) return;
 
         try {
-            webappManager.createApplicationCore();
+            webappManager.createApplicationCore( request );
         } catch ( Core::TntWebWizardException& tww_exception ) {
             this->feedback = "Mistake! Project core is NOT created! \n";
             this->feedback += tww_exception.what();

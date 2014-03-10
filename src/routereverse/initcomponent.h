@@ -21,11 +21,10 @@
 
 #include <tnt/tntnet.h>
 
-namespace Tww {
 /**
  * @namespace RouteReverse
  *
- * This is the namespace for module route reverse. 
+ * This is the namespace for module route reverse.
  */
 namespace RouteReverse {
 
@@ -41,7 +40,6 @@ void initcomponent ( tnt::Tntnet &app ) {
 
 
 } // END namespace RouteReverse
-} // namespace Tww
 
 
 #endif // ROUTEREVERSE_INITCOMPONENT_H

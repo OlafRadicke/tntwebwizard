@@ -19,7 +19,7 @@
 #ifndef CORE_INITCOMPONENT_H
 #define CORE_INITCOMPONENT_H
 
-#include <routereverse/manager/Manager.h>
+#include <routereverse/manager/manager.h>
 
 #include <string>
 #include <cxxtools/log.h>
@@ -98,6 +98,19 @@ void initcomponent ( tnt::Tntnet &app ) {
         "core_tntwebwizard_css",
         "core/tntwebwizard.css"
     );
+
+    // /formtoken/controller/controller.cpp
+
+    app.mapUrl(
+        "^formtoken/controller/controller.cpp$",
+        "resources"
+    ).setPathInfo( "formtoken/controller/controller.cpp" );
+
+    RouteReverse::Manager::add(
+        "formtoken_controller_cpp",
+        "formtoken/controller/controller.cpp"
+    );
+
 
     // ############################ SITES ##########################
 

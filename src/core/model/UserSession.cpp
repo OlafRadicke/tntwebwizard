@@ -32,7 +32,7 @@ namespace Core {
 
 log_define("core.models.UserSession")
 
-UserSession::UserSession ( cxxtools::atomic_t token ) {
+UserSession::UserSession ( std::string token ) {
     this->sessionToken = token;
     if ( !cxxtools::Directory::exists( "/tmp/tntwebwizard/" ) ) {
         cxxtools::Directory::create( "/tmp/tntwebwizard/" );

@@ -16,8 +16,8 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <routereverse/manager/Manager.h>
-#include <routereverse/model/RouteReverseException.h>
+#include <routereverse/manager/manager.h>
+#include <routereverse/model/routereverseexception.h>
 
 #include <cxxtools/log.h>
 #include <string>
@@ -27,7 +27,6 @@
 #include <exception>
 
 
-namespace Tww {
 namespace RouteReverse {
 
 
@@ -119,8 +118,7 @@ std::string  Manager::getAbsolutURL(
     return returnURL;
 }
 
-} // END namespace SessionForm
-} // namespace Tww
+} // END namespace RouteReverse
 
 
 

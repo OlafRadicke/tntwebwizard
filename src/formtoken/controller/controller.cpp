@@ -29,11 +29,8 @@
 log_define("FormToken.Controller")
 
 
-namespace Tww {
-namespace FormToken
-{
-    class Controller : public tnt::Component
-    {
+namespace FormToken {
+    class Controller : public tnt::Component {
     public:
         unsigned operator() (
             tnt::HttpRequest& request,
@@ -41,11 +38,10 @@ namespace FormToken
             tnt::QueryParams& qparam
         );
     };
-} // end namespace FormToken
 
+} // namespace FormToken
 
 static tnt::ComponentFactoryImpl<FormToken::Controller> factory("formtoken_controller");
-
 
 unsigned FormToken::Controller::operator() (
     tnt::HttpRequest& request,
@@ -66,7 +62,5 @@ unsigned FormToken::Controller::operator() (
     } else {
         log_debug( "No SESSIONFORM_TOKEN exist"  );
     };
-
     return DECLINED;
-} // namespace FormToken
-} // namespace Tww
+}

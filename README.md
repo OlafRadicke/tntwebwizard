@@ -37,3 +37,8 @@ Contains project data of tntwebwizard tool.
 > /tmp/tntwebwizard/
 
 In this directory will storage tntwebwizard his temporary files and directories.
+
+# runtime dependences
+
+* zip
+* curl

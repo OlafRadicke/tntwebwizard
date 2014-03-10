@@ -24,7 +24,6 @@
 #include <map>
 #include <tnt/tntnet.h>
 
-namespace Tww {
 namespace RouteReverse {
 
 /**
@@ -80,7 +79,6 @@ private:
 
 
 } // END namespace RouteReverse
-} // namespace Tww
 
 
 #endif // ROUTEREVERS_MANAGER_H

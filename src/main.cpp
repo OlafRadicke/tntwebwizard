@@ -56,8 +56,8 @@ int main ( int argc, char* argv[] )
         app.listen( config.appIp(), config.appPort() );
 
         // init comonent parts
-        Tww::FormToken::initcomponent( app );
-        Tww::RouteReverse::initcomponent( app );
+        FormToken::initcomponent( app );
+        RouteReverse::initcomponent( app );
         Tww::Core::initcomponent( app );
 
         std::cout << "tntwebwizard is started and run on http://" << config.appIp()
