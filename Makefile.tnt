@@ -54,7 +54,11 @@
         "formtoken/manager/manager.h",
         "formtoken/subpage_form_token.dox",
         "formtoken/views/formtoken_no_availabe_token.ecpp",
-        "core/resources/modul_formtoken.zip"
+        "routereverse/initcomponent.h",
+        "routereverse/subpage_route_reverse.dox",
+        "routereverse/manager/manager.cpp",
+        "routereverse/manager/manager.h",
+        "routereverse/model/routereverseexception.h"
     ],
     "buildDir": "bulid"
 }

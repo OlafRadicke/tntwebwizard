@@ -59,7 +59,6 @@ void initcomponent ( tnt::Tntnet &app ) {
         "^/core/favicon.ico$",
         "resources"
     ).setPathInfo("core/resources/favicon.ico");
-
     RouteReverse::Manager::add(
         "core_favicon_ico",
         "core/favicon.ico"
@@ -71,7 +70,6 @@ void initcomponent ( tnt::Tntnet &app ) {
         "^/core/tntnet.png$",
         "resources"
     ).setPathInfo("core/resources/tntnet.png");
-
     RouteReverse::Manager::add(
         "core_tntnet_png",
         "core/tntnet.png"
@@ -79,9 +77,10 @@ void initcomponent ( tnt::Tntnet &app ) {
 
     // /core/resources/normalize.css
 
-    app.mapUrl("^/core/normalize.css$", "resources")
-        .setPathInfo("core/resources/normalize.css");
-
+    app.mapUrl(
+        "^/core/normalize.css$",
+        "resources"
+    ).setPathInfo("core/resources/normalize.css");
     RouteReverse::Manager::add(
         "core_normalize_css",
         "core/normalize.css"
@@ -93,7 +92,6 @@ void initcomponent ( tnt::Tntnet &app ) {
         "^/core/tntwebwizard.css$",
         "resources"
     ).setPathInfo( "core/resources/tntwebwizard.css" );
-
     RouteReverse::Manager::add(
         "core_tntwebwizard_css",
         "core/tntwebwizard.css"
@@ -107,19 +105,17 @@ void initcomponent ( tnt::Tntnet &app ) {
         "^/core/modul_formtoken.zip$",
         "resources"
     ).setPathInfo( "core/resources/modul_formtoken.zip" );
-
     RouteReverse::Manager::add(
         "core_modul_formtoken_zip",
         "core/modul_formtoken.zip"
     );
-    
+
     // /formtoken/controller/controller.cpp
 
     app.mapUrl(
         "^/formtoken/controller.cpp$",
         "resources"
     ).setPathInfo( "formtoken/controller/controller.cpp" );
-
     RouteReverse::Manager::add(
         "formtoken_controller_cpp",
         "formtoken/controller.cpp"
@@ -131,7 +127,6 @@ void initcomponent ( tnt::Tntnet &app ) {
         "^/formtoken/initcomponent.h$",
         "resources"
     ).setPathInfo( "formtoken/initcomponent.h" );
-
     RouteReverse::Manager::add(
         "formtoken_initcomponent_h",
         "formtoken/initcomponent.h"
@@ -143,7 +138,6 @@ void initcomponent ( tnt::Tntnet &app ) {
         "^/formtoken/subpage_form_token.dox$",
         "resources"
     ).setPathInfo( "formtoken/subpage_form_token.dox" );
-
     RouteReverse::Manager::add(
         "formtoken_subpage_form_token_dox",
         "formtoken/subpage_form_token.dox"
@@ -155,7 +149,6 @@ void initcomponent ( tnt::Tntnet &app ) {
         "^/formtoken/manager/manager.cpp$",
         "resources"
     ).setPathInfo( "formtoken/manager/manager.cpp" );
-
     RouteReverse::Manager::add(
         "formtoken_manager_cpp",
         "formtoken/manager/manager.cpp"
@@ -167,7 +160,6 @@ void initcomponent ( tnt::Tntnet &app ) {
         "^/formtoken/manager.h$",
         "resources"
     ).setPathInfo( "formtoken/manager/manager.h" );
-
     RouteReverse::Manager::add(
         "formtoken_manager_h",
         "formtoken/manager.h"
@@ -179,7 +171,6 @@ void initcomponent ( tnt::Tntnet &app ) {
         "^/formtoken/views/formtoken_no_availabe_token.ecpp$",
         "resources"
     ).setPathInfo( "formtoken/views/formtoken_no_availabe_token.ecpp" );
-
     RouteReverse::Manager::add(
         "formtoken_no_availabe_token_ecpp",
         "formtoken/views/formtoken_no_availabe_token.ecpp"
@@ -188,10 +179,60 @@ void initcomponent ( tnt::Tntnet &app ) {
 
     // ======= module RouteReverse =======
 
-    // routereverse/initcomponent.h
-    // routereverse/subpage_route_reverse.dox
-    // routereverse/manager/manager.cpp
-    // routereverse/manager/manager.h
+    // "routereverse/initcomponent.h",
+
+    app.mapUrl(
+        "^/routereverse/initcomponent.h$",
+        "resources"
+    ).setPathInfo( "routereverse/initcomponent.h" );
+    RouteReverse::Manager::add(
+        "routereverse_initcomponent_h",
+        "routereverse/initcomponent.h"
+    );
+
+    // "routereverse/subpage_route_reverse.dox",
+
+    app.mapUrl(
+        "^/routereverse/subpage_route_reverse.dox$",
+        "resources"
+    ).setPathInfo( "routereverse/subpage_route_reverse.dox" );
+    RouteReverse::Manager::add(
+        "routereverse_subpage_route_reverse_dox",
+        "routereverse/subpage_route_reverse.dox"
+    );
+
+    // "routereverse/manager/manager.cpp",
+
+    app.mapUrl(
+        "^/routereverse/manager/manager.cpp$",
+        "resources"
+    ).setPathInfo( "routereverse/manager/manager.cpp" );
+    RouteReverse::Manager::add(
+        "routereverse_manager_cpp",
+        "routereverse/manager/manager.cpp"
+    );
+
+    // "routereverse/manager/manager.h",
+
+    app.mapUrl(
+        "^/routereverse/manager/manager.h$",
+        "resources"
+    ).setPathInfo( "routereverse/manager/manager.h" );
+    RouteReverse::Manager::add(
+        "routereverse_manager.h",
+        "routereverse/manager/manager.h"
+    );
+
+    // "routereverse/model/routereverseexception.h"
+
+    app.mapUrl(
+        "^/routereverse/model/routereverseexception.h$",
+        "resources"
+    ).setPathInfo( "routereverse/model/routereverseexception.h" );
+    RouteReverse::Manager::add(
+        "routereverse_routereverseexception.h",
+        "routereverse/model/routereverseexception.h"
+    );
 
 
     // ############################ SITES ##########################

@@ -768,7 +768,6 @@ void WebApplicationCoreManager::createModulFormToken(
         this->makefileData.addCppFile( "./src/" + files[i][PATH] );
         this->makefileData.write( this->getMakefilePath() );
     };
-    std::cout << "##############################################################" << std::endl;
 
 }
 
@@ -801,7 +800,57 @@ void WebApplicationCoreManager::createModulRouteReverse(
     if ( !system(NULL) ) {
         throw Core::TntWebWizardException( "Can not do systems command!" );
     }
+    // ====== creating files ======
 
+
+    const unsigned int PATH = 0;
+    const unsigned int ALIAS = 1;
+    std::string files[5][2] = {
+        "routereverse/initcomponent.h", "routereverse_initcomponent_h",
+        "routereverse/subpage_route_reverse.dox", "routereverse_subpage_route_reverse_dox",
+        "routereverse/manager/manager.cpp", "routereverse_manager_cpp",
+        "routereverse/manager/manager.h", "routereverse_manager.h",
+        "routereverse/model/routereverseexception.h", "routereverse_routereverseexception.h"
+    };
+
+    for (unsigned int i = 0 ; i < 5; i++) {
+        std::cout
+            << "##############################################################"
+            << std::endl;
+        std::cout << "path: " << files[i][0] << " alias: " << files[i][1] << std::endl;
+        std::cout
+            << "##############################################################"
+            << std::endl;
+
+        std::string fileName = this->getSourceDir() + "/" + files[i][PATH] ;
+        std::stringstream sysCommand;
+        std::stringstream errorText;
+
+        std::string href_file =
+            RouteReverse::Manager::getAbsolutURL(
+                files[i][ALIAS],
+                request
+            );
+        sysCommand
+            << "curl " <<  href_file << " > " <<  fileName << ";"
+        ;
+
+        log_debug( "[" << __LINE__ << "] command: " << sysCommand.str() );
+        int returncode = system( sysCommand.str().c_str() );
+        log_debug( "[" << __LINE__ << "]The value returned was: " << i);
+        if ( returncode ) {
+            errorText
+                << "Download file is Failed: \""
+                << sysCommand.str()
+            ;
+            throw Core::TntWebWizardException( errorText.str() );
+        }
+
+        // Add new file in Makefile.tnt configuration.
+        this->makefileData.read( this->getMakefilePath() );
+        this->makefileData.addCppFile( "./src/" + files[i][PATH] );
+        this->makefileData.write( this->getMakefilePath() );
+    };
 }
 
 // G --------------------------------------------------------------------------
