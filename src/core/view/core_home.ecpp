@@ -16,14 +16,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #>
 
 
-<%session
-    include="core/model/UserSession.h"
-    include="formtoken/manager/manager.h">
-        Tww::Core::UserSession userSession(
-            FormToken::Manager::getRawToken( request )
-        );
-</%session>
-
 <%pre>
     #include <routereverse/manager/manager.h>
     #include <string>

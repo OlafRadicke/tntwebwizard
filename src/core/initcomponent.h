@@ -101,20 +101,22 @@ void initcomponent ( tnt::Tntnet &app ) {
 
     // ======= module FormToken =======
 
+    // core/resources/modul_formtoken.zip
 
-//   "core/resources/tntnet.png",
-//   "core/resources/tntwebwizard.css",
-//   "formtoken/controller/controller.cpp",
-//   "formtoken/initcomponent.h",
-//   "formtoken/manager/manager.cpp",
-//   "formtoken/manager/manager.h",
-//   "formtoken/subpage_form_token.dox",
-//   "formtoken/views/formtoken_no_availabe_token.ecpp",
+    app.mapUrl(
+        "^/core/modul_formtoken.zip$",
+        "resources"
+    ).setPathInfo( "core/resources/modul_formtoken.zip" );
 
+    RouteReverse::Manager::add(
+        "core_modul_formtoken_zip",
+        "core/modul_formtoken.zip"
+    );
+    
     // /formtoken/controller/controller.cpp
 
     app.mapUrl(
-        "^formtoken/controller.cpp$",
+        "^/formtoken/controller.cpp$",
         "resources"
     ).setPathInfo( "formtoken/controller/controller.cpp" );
 
@@ -126,7 +128,7 @@ void initcomponent ( tnt::Tntnet &app ) {
     // formtoken/initcomponent.h
 
     app.mapUrl(
-        "^formtoken/initcomponent.h$",
+        "^/formtoken/initcomponent.h$",
         "resources"
     ).setPathInfo( "formtoken/initcomponent.h" );
 
@@ -138,7 +140,7 @@ void initcomponent ( tnt::Tntnet &app ) {
     // formtoken/subpage_form_token.dox
 
     app.mapUrl(
-        "^formtoken/subpage_form_token.dox$",
+        "^/formtoken/subpage_form_token.dox$",
         "resources"
     ).setPathInfo( "formtoken/subpage_form_token.dox" );
 
@@ -150,7 +152,7 @@ void initcomponent ( tnt::Tntnet &app ) {
     // formtoken/manager/manager.cpp
 
     app.mapUrl(
-        "^formtoken/manager/manager.cpp$",
+        "^/formtoken/manager/manager.cpp$",
         "resources"
     ).setPathInfo( "formtoken/manager/manager.cpp" );
 
@@ -162,7 +164,7 @@ void initcomponent ( tnt::Tntnet &app ) {
     // formtoken/manager/manager.h
 
     app.mapUrl(
-        "^formtoken/manager.h$",
+        "^/formtoken/manager.h$",
         "resources"
     ).setPathInfo( "formtoken/manager/manager.h" );
 
@@ -174,7 +176,7 @@ void initcomponent ( tnt::Tntnet &app ) {
     // formtoken/views/formtoken_no_availabe_token.ecpp
 
     app.mapUrl(
-        "^formtoken/views/formtoken_no_availabe_token.ecpp$",
+        "^/formtoken/views/formtoken_no_availabe_token.ecpp$",
         "resources"
     ).setPathInfo( "formtoken/views/formtoken_no_availabe_token.ecpp" );
 

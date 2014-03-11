@@ -53,7 +53,8 @@
         "formtoken/manager/manager.cpp",
         "formtoken/manager/manager.h",
         "formtoken/subpage_form_token.dox",
-        "formtoken/views/formtoken_no_availabe_token.ecpp"
+        "formtoken/views/formtoken_no_availabe_token.ecpp",
+        "core/resources/modul_formtoken.zip"
     ],
     "buildDir": "bulid"
 }
