@@ -39,20 +39,22 @@ log_define("Core.MakefileData")
 void MakefileData::addCppFile( std::string _newFile ){
     log_debug( "addCppFiles: " << _newFile );
     this->cppFiles.push_back( _newFile );
-    log_debug( "addCppFiles ready" );
+}
+
+void MakefileData::addEcppFile( std::string _newFile ){
+    log_debug( "addEcppFiles: " << _newFile );
+    ecppFiles.push_back( _newFile );
 }
 
 void MakefileData::addHFile( std::string _newFile ){
     log_debug( "addHFiles: " << _newFile );
     this->hFiles.push_back( _newFile );
-    log_debug( "addCppFiles ready" );
 }
 
 
 void MakefileData::addResourcesFile( std::string _newFile ){
     log_debug( "addHFiles: " << _newFile );
     this->resourcesFiles.push_back( _newFile );
-    log_debug( "addCppFiles ready" );
 }
 
 // === G ===

@@ -40,7 +40,7 @@
         "./src/core/view/core_part_head.eccp",
         "./src/core/view/core_part_menu.eccp",
         "./src/core/view/core_part_title.eccp",
-        "./src/formtoken/views/formtoken_no_availabe_token.ecpp"
+        "./src/formtoken/view/formtoken_no_availabe_token.ecpp"
     ],
     "resourcesRoot": "./src/",
     "resourcesFiles": [
@@ -53,7 +53,7 @@
         "formtoken/manager/manager.cpp",
         "formtoken/manager/manager.h",
         "formtoken/subpage_form_token.dox",
-        "formtoken/views/formtoken_no_availabe_token.ecpp",
+        "formtoken/view/formtoken_no_availabe_token.ecpp",
         "routereverse/initcomponent.h",
         "routereverse/subpage_route_reverse.dox",
         "routereverse/manager/manager.cpp",

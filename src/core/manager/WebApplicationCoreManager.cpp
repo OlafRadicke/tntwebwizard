@@ -208,7 +208,6 @@ void WebApplicationCoreManager::createMain_cpp(){
         << "}\n"
     ;
 
-    log_debug("fileContent: \n"  << fileContent.str() );
     log_debug( __LINE__ << " write in: \n"  << this->getMainCppPath().c_str() );
     std::ofstream maincpp_file( this->getMainCppPath().c_str() );
     maincpp_file << fileContent.str() ;
@@ -505,7 +504,80 @@ void WebApplicationCoreManager::createConfig_h(){
 
     // Add new file in Makefile.tnt configuration.
     this->makefileData.read( this->getMakefilePath() );
-    this->makefileData.addCppFile( "./src/core/model/config.h" );
+    this->makefileData.addHFile( "./src/core/model/config.h" );
+    this->makefileData.write( this->getMakefilePath() );
+}
+
+void WebApplicationCoreManager::createHomeSite_epcc(){
+    log_debug("createHomeSite_epcc()" );
+
+    std::ostringstream fileContent;
+    fileContent
+        << "<# ###########################################################################\n"
+        << this->projectData.getSourceCodeHeader()
+        << "\n"
+        << "############################################################################ #>\n"
+        << "\n"
+    ;
+    if ( this->projectData.isRouteReverse( ) ) {
+        fileContent
+            << "<%pre>\n"
+            << "\t #include <routereverse/manager/manager.h>\n"
+            << "</%pre>\n"
+            << "<%cpp>\n"
+            << "\t std::string href_favicon_ico =\n"
+            << "\t\t RouteReverse::Manager::getLinkTo(\n"
+            << "\t\t\t \"core_favicon_ico\",\n"
+            << "\t\t\t request\n"
+            << "\t );\n"
+            << "</%cpp>\n"
+        ;
+    }
+    fileContent
+        << "<!DOCTYPE HTML>\n"
+        << "<html>\n"
+        << "<head>\n"
+        << "\t <title>\n"
+        << this->projectData.getProjectName()
+        << " - Home</title>\n"
+        << "\t <meta charset = \"UTF-8\">  \n"
+        << "\t <link\n"
+        << "\t\t rel=\"icon\"\n"
+    ;
+
+    if ( this->projectData.isRouteReverse( ) ) {
+        fileContent
+            << "\t\t href=\"<$ href_favicon_ico $>\"\n"
+        ;
+    } else {
+        fileContent
+            << "\t\t href=\"/core/favicon.ico\"\n"
+        ;
+    }
+    fileContent
+        << "\t\t type=\"image/x-icon\">\n"
+        << "</head>\n"
+        << "<body>\n"
+
+        << "\t <h2>\n"
+        << this->projectData.getProjectName()
+        << "</h2>\n"
+        << "\t <p>\n"
+        << "\t\t hello world!\n"
+        << "\t </p>\n"
+
+        << "</body>\n"
+        << "</html>\n"
+    ;
+
+    log_debug( __LINE__ << " write in: \n"  << this->getInitcomponentHPath().c_str() );
+    std::ofstream initcomph_file( this->getInitcomponentHPath().c_str() );
+    initcomph_file << fileContent.str() ;
+    initcomph_file.close();
+
+    // Add new file in Makefile.tnt configuration.
+    this->makefileData.read( this->getMakefilePath() );
+    this->makefileData.addCppFile( "./src/core/initcomponent.h" );
     this->makefileData.write( this->getMakefilePath() );
 }
 
@@ -524,7 +596,7 @@ void WebApplicationCoreManager::createInitcomponent_h(){
     ;
     if ( this->projectData.isRouteReverse( ) ) {
         fileContent
-            << "#include <routereverse/manager/Manager.h>\n"
+            << "#include <routereverse/manager/manager.h>\n"
         ;
     };
     fileContent
@@ -644,7 +716,7 @@ void WebApplicationCoreManager::createInitcomponent_h(){
 
     // Add new file in Makefile.tnt configuration.
     this->makefileData.read( this->getMakefilePath() );
-    this->makefileData.addCppFile( "./src/core/initcomponent.h" );
+    this->makefileData.addHFile( "./src/core/initcomponent.h" );
     this->makefileData.write( this->getMakefilePath() );
 
 }
@@ -662,14 +734,14 @@ void WebApplicationCoreManager::createMainCSS(){
         << "\n"
     ;
 
-    log_debug( __LINE__ << " write in: \n"  << this->getCSSPath().c_str() );
-    std::ofstream css_file( this->getCSSPath().c_str() );
+    log_debug( __LINE__ << " write in: \n"  << getHomeSiteEcppPath().c_str() );
+    std::ofstream css_file( getHomeSiteEcppPath().c_str() );
     css_file << fileContent.str() ;
     css_file.close();
 
     // Add new file in Makefile.tnt configuration.
     this->makefileData.read( this->getMakefilePath() );
-    this->makefileData.addCppFile( "./src/core/resources/" + this->makefileData.getBinName() + ".css" );
+    this->makefileData.addEcppFile( "./src/core/view/core_home.ecpp" );
     this->makefileData.write( this->getMakefilePath() );
 
 }
@@ -722,13 +794,14 @@ void WebApplicationCoreManager::createModulFormToken(
 
     const unsigned int PATH = 0;
     const unsigned int ALIAS = 1;
-    std::string files[6][2] = {
-        "formtoken/controller/controller.cpp","formtoken_controller_cpp",
-        "formtoken/initcomponent.h","formtoken_initcomponent_h",
-        "formtoken/manager/manager.cpp", "formtoken_manager_cpp",
-        "formtoken/manager/manager.h", "formtoken_manager_h",
-        "formtoken/subpage_form_token.dox","formtoken_subpage_form_token_dox",
-        "formtoken/views/formtoken_no_availabe_token.ecpp","formtoken_no_availabe_token_ecpp"
+    const unsigned int TYPE = 2;
+    std::string files[6][3] = {
+        "formtoken/controller/controller.cpp","formtoken_controller_cpp","cpp",
+        "formtoken/initcomponent.h","formtoken_initcomponent_h","h",
+        "formtoken/manager/manager.cpp", "formtoken_manager_cpp","cpp",
+        "formtoken/manager/manager.h", "formtoken_manager_h","h",
+        "formtoken/subpage_form_token.dox","formtoken_subpage_form_token_dox","dox",
+        "formtoken/view/formtoken_no_availabe_token.ecpp","formtoken_no_availabe_token_ecpp","ecpp"
     };
     for (unsigned int i = 0 ; i < 6; i++) {
         std::cout
@@ -754,8 +827,8 @@ void WebApplicationCoreManager::createModulFormToken(
 
         log_debug( "[" << __LINE__ << "] command: " << sysCommand.str() );
         int returncode = system( sysCommand.str().c_str() );
-        log_debug( "[" << __LINE__ << "]The value returned was: " << i);
-        if ( returncode ) {
+        log_debug( "[" << __LINE__ << "]The value returned was: " << returncode);
+        if ( returncode != 0 ) {
             errorText
                 << "Download file is Failed: \""
                 << sysCommand.str()
@@ -763,9 +836,27 @@ void WebApplicationCoreManager::createModulFormToken(
             throw Core::TntWebWizardException( errorText.str() );
         }
 
+
+        if ( !popen( sysCommand.str().c_str(), "r") ) {
+            errorText
+                << "Download file is Failed: \""
+                << sysCommand.str()
+            ;
+            throw Core::TntWebWizardException( errorText.str() );
+
+        }
+
         // Add new file in Makefile.tnt configuration.
         this->makefileData.read( this->getMakefilePath() );
-        this->makefileData.addCppFile( "./src/" + files[i][PATH] );
+        if ( files[i][TYPE] == "cpp" ) {
+            this->makefileData.addCppFile( "./src/" + files[i][PATH] );
+        }
+        if ( files[i][TYPE] == "ecpp" ) {
+            this->makefileData.addEcppFile( "./src/" + files[i][PATH] );
+        }
+        if ( files[i][TYPE] == "h" ) {
+            this->makefileData.addHFile( "./src/" + files[i][PATH] );
+        }
         this->makefileData.write( this->getMakefilePath() );
     };
 
@@ -805,12 +896,13 @@ void WebApplicationCoreManager::createModulRouteReverse(
 
     const unsigned int PATH = 0;
     const unsigned int ALIAS = 1;
-    std::string files[5][2] = {
-        "routereverse/initcomponent.h", "routereverse_initcomponent_h",
-        "routereverse/subpage_route_reverse.dox", "routereverse_subpage_route_reverse_dox",
-        "routereverse/manager/manager.cpp", "routereverse_manager_cpp",
-        "routereverse/manager/manager.h", "routereverse_manager.h",
-        "routereverse/model/routereverseexception.h", "routereverse_routereverseexception.h"
+    const unsigned int TYPE = 2;
+    std::string files[5][3] = {
+        "routereverse/initcomponent.h", "routereverse_initcomponent_h","h",
+        "routereverse/subpage_route_reverse.dox", "routereverse_subpage_route_reverse_dox","dox",
+        "routereverse/manager/manager.cpp", "routereverse_manager_cpp","cpp",
+        "routereverse/manager/manager.h", "routereverse_manager.h","h",
+        "routereverse/model/routereverseexception.h", "routereverse_routereverseexception.h","h"
     };
 
     for (unsigned int i = 0 ; i < 5; i++) {
@@ -837,8 +929,8 @@ void WebApplicationCoreManager::createModulRouteReverse(
 
         log_debug( "[" << __LINE__ << "] command: " << sysCommand.str() );
         int returncode = system( sysCommand.str().c_str() );
-        log_debug( "[" << __LINE__ << "]The value returned was: " << i);
-        if ( returncode ) {
+        log_debug( "[" << __LINE__ << "]The value returned was: " << returncode);
+        if ( returncode != 0 ) {
             errorText
                 << "Download file is Failed: \""
                 << sysCommand.str()
@@ -848,7 +940,12 @@ void WebApplicationCoreManager::createModulRouteReverse(
 
         // Add new file in Makefile.tnt configuration.
         this->makefileData.read( this->getMakefilePath() );
-        this->makefileData.addCppFile( "./src/" + files[i][PATH] );
+        if ( files[i][TYPE] == "cpp" ) {
+            this->makefileData.addCppFile( "./src/" + files[i][PATH] );
+        }
+        if ( files[i][TYPE] == "h" ) {
+            this->makefileData.addHFile( "./src/" + files[i][PATH] );
+        }
         this->makefileData.write( this->getMakefilePath() );
     };
 }
@@ -872,6 +969,10 @@ std::string WebApplicationCoreManager::getCSSPath(){
         << ".css"
     ;
     return completPath.str();
+}
+
+std::string WebApplicationCoreManager::getHomeSiteEcppPath(){
+    return this->userSession.getSessionPath() + "/src/core/view/core_home.ecpp";
 }
 
 std::string WebApplicationCoreManager::getInitcomponentHPath(){

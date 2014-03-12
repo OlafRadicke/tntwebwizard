@@ -53,10 +53,18 @@ class MakefileData {
 public:
 
     MakefileData():
+        tntmakeVersion(1),
+        cppCompiler("g++"),
         cppFiles(),
         hFiles(),
+        cppFlags("-c -Wall -pedantic  -I./src"),
+        cppLinkerFlags("-I./src -lcxxtools -ltntnet -ltntdb"),
+        ecppCompiler("ecppc"),
+        ecppFlags("-I./src"),
         ecppFiles(),
-        resourcesFiles(){};
+        resourcesFiles(),
+        resourcesRoot("./src/"),
+        buildDir("bulid"){};
 
     // === A ===
 
@@ -64,6 +72,11 @@ public:
      * Add a file name in the list of *.cpp files.
      */
     void addCppFile( std::string _newFile );
+
+    /**
+     * Add a file name in the list of *.ecpp files.
+     */
+    void addEcppFile( std::string _newFile );
 
     /**
      * Add a file name in the list of *.h files.

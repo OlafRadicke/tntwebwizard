@@ -123,6 +123,11 @@ private:
     void createModulRouteReverse( const tnt::HttpRequest& request );
 
     /**
+     * Create the "src/core/view/core_home.ecpp" file.
+     */
+    void createHomeSite_epcc();
+
+    /**
      * Create the "src/core/initcomponent.h" file.
      */
     void createInitcomponent_h();
@@ -141,6 +146,11 @@ private:
      * Get the temporary path of "src/core/resources/[project name].css" file.
      */
     std::string getCSSPath();
+
+    /**
+     * Get the temporary path of "src/core/view/core_home.ecpp" file.
+     */
+    std::string getHomeSiteEcppPath();
 
     /**
      * Get the temporary path of "src/core/initcomponent.h" file.
