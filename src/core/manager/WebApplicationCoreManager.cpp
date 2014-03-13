@@ -133,16 +133,16 @@ void WebApplicationCoreManager::createMain_cpp(){
         ;
     }
     if (  this->projectData.isCliSupport( ) ){
-        fileContent << "#include <cxxtools/arg.h>.\n";
+        fileContent << "#include <cxxtools/arg.h>\n";
     }
     fileContent << "\n";
     // ***** std lib part *****
-    fileContent << "#include  <iostream.h> \n";
+    fileContent << "#include  <ostream> \n";
     fileContent << "\n\n";
 
     if (  this->projectData.isCxxtoolsLoging( ) ){
         fileContent
-            << "\t log_define(\"main\");\n"
+            << "log_define(\"main\")\n"
         ;
     }
     fileContent
@@ -154,9 +154,9 @@ void WebApplicationCoreManager::createMain_cpp(){
         fileContent
             << "\t cxxtools::Arg<bool> arg_verbose(argc, argv, 'v');\n"
             << "\t cxxtools::Arg<std::string> arg_config(argc, argv, 'c', \"\");\n"
-            << "\t if (verbose)\n"
+            << "\t if ( arg_verbose )\n"
             << "\t\t std::cout << \"verbose option is set\" << std::endl;\n"
-            << "\t if ( verbose && arg_config != \"\")\n"
+            << "\t if ( arg_verbose && arg_config.getValue() != \"\")\n"
             << "\t\t std::cout << \"us config:\" << arg_config.getValue() << std::endl;\n"
         ;
     }
@@ -174,14 +174,14 @@ void WebApplicationCoreManager::createMain_cpp(){
         fileContent <<  "\t config.read();\n";
     }
     if (  this->projectData.isCxxtoolsLoging( ) ){
-        fileContent <<  "\t log_init( config.logging() );\n\n";
+        fileContent <<  "\t log_init( config.getLogging() );\n\n";
     }
     fileContent
         <<  "\t // Init Application Server\n"
         <<  "\t tnt::Tntnet app;\n"
         <<  "\t tnt::Configurator tntConfigurator( app );\n"
-        <<  "\t tntConfigurator.setSessionTimeout ( config.sessionTimeout() );\n"
-        <<  "\t app.listen( config.appIp(), config.appPort() );\n\n"
+        <<  "\t tntConfigurator.setSessionTimeout ( config.getSessionTimeout() );\n"
+        <<  "\t app.listen( config.getAppIp(), config.getAppPort() );\n\n"
         <<  "\t // init comonent parts\n"
         <<  "\t Core::initcomponent( app );\n"
     ;
@@ -196,13 +196,13 @@ void WebApplicationCoreManager::createMain_cpp(){
         << "\t\t << \""
         << this->projectData.getProjectName()
         << " is started and run on http://\" \n"
-        << "\t\t << config.appIp() << \":\" \n"
-        << "\t\t << config.appPort() << \"/\" << std::endl\n"
+        << "\t\t << config.getAppIp() << \":\" \n"
+        << "\t\t << config.getAppPort() << \"/\" << std::endl\n"
         << "\t ;\n"
         << "\t log_info( \"starting " << this->projectData.getProjectName() << "\");\n"
         << "\t log_info( \" " << this->projectData.getProjectName()
-        << " is started and run on http://\" <<  config.appIp() << \":\" "
-        << "<<  config.appPort() << \"/\"); \n\n"
+        << " is started and run on http://\" <<  config.getAppIp() << \":\" "
+        << "<<  config.getAppPort() << \"/\"); \n\n"
         << "\t app.run(); \n\n"
         << "\t return 0;\n"
         << "}\n"
@@ -259,7 +259,7 @@ void WebApplicationCoreManager::createConfig_cpp(){
 
     if (  this->projectData.isCxxtoolsLoging( ) ){
         fileContent
-            << "\t log_define(\"Core.Config\");\n"
+            << "log_define(\"Core.Config\")\n"
         ;
     }
 
@@ -279,9 +279,9 @@ void WebApplicationCoreManager::createConfig_cpp(){
         << "\t\t cxxtools::FileInfo::exists(\" "
         << this->makefileData.getBinName()  << ".conf\")\n"
         << "\t ){\n"
-        << "\t\t fname = \"" << this->makefileData.getBinName()  << ".conf;\n"
+        << "\t\t fname = \"" << this->makefileData.getBinName()  << ".conf\";\n"
         << "\t } else {\n"
-        << "\t\t fname = \"/etc/" << this->makefileData.getBinName()  << ".conf;\n"
+        << "\t\t fname = \"/etc/" << this->makefileData.getBinName()  << ".conf\";\n"
         << "\t }\n"
         << "\n"
         << "\t std::ifstream in(fname.c_str());\n"
@@ -329,7 +329,7 @@ void WebApplicationCoreManager::createConfig_cpp(){
         << "\t\t // \"si.getMember\" with 2 parameters - member name and a reference - fills\n"
         << "\t\t // the reference only if found This makes logging configuration optional.\n"
         << "\n"
-        << "\t\t si.getMember(\"logging\", config.m_logging);\n"
+        << "\t\t si.getMember(\"logging\", config.logging);\n"
         << "\n"
         << "\t\t // \"si.getMember\" with one parameter - the member name - throws an\n"
         << "\t\t // exception when the member is not found. Using it makes the setting\n"
@@ -411,7 +411,7 @@ void WebApplicationCoreManager::createConfig_h(){
         ;
     }
     fileContent
-        << "\t void read(const std::string& filename = ""); \n"
+        << "\t void read(const std::string& filename = \"\"); \n"
         << "\n"
     ;
     if (  this->projectData.isDoxygenTemplates( ) ){
@@ -422,7 +422,7 @@ void WebApplicationCoreManager::createConfig_h(){
         ;
     }
     fileContent
-        << "\t const cxxtools::SerializationInfo& logging() const \n"
+        << "\t const cxxtools::SerializationInfo& getLogging() const \n"
         << "\t { return this->logging; } \n"
         << "\n"
     ;
@@ -434,7 +434,7 @@ void WebApplicationCoreManager::createConfig_h(){
         ;
     }
     fileContent
-        << "\t const std::string& appIp() const \n"
+        << "\t const std::string& getAppIp() const \n"
         << "\t { return this->appIp; } \n"
         << "\n"
     ;
@@ -446,7 +446,7 @@ void WebApplicationCoreManager::createConfig_h(){
         ;
     }
     fileContent
-        << "\t unsigned short appPort() const \n"
+        << "\t unsigned short getAppPort() const \n"
         << "\t { return this->appPort; } \n"
         << "\n"
     ;
@@ -458,7 +458,7 @@ void WebApplicationCoreManager::createConfig_h(){
         ;
     }
     fileContent
-        << "\t const std::string& domainName() const \n"
+        << "\t const std::string& getDomainName() const \n"
         << "\t { return this->domainName; } \n"
         << "\n"
     ;
@@ -470,7 +470,7 @@ void WebApplicationCoreManager::createConfig_h(){
         ;
     }
     fileContent
-        << "\t unsigned sessionTimeout() const \n"
+        << "\t unsigned getSessionTimeout() const \n"
         << "\t { return this->sessionTimeout; } \n"
         << "\n"
         << "private: \n"
