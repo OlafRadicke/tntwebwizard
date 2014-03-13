@@ -11,3 +11,4 @@
 * project config view update.
 * css
 * std comp add
+* example conf generating 

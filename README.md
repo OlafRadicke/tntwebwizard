@@ -3,6 +3,10 @@
 
 A witzard for tntnet with web gui.
 
+# Project page
+
+[https://github.com/OlafRadicke/tntwebwizard](https://github.com/OlafRadicke/tntwebwizard)
+
 # License
 
 GNU affero general public license version 3
@@ -11,7 +15,8 @@ GNU affero general public license version 3
 
 ## Build system
 
-As build system is used tntmake. You find this tool on [GitHub](https://github.com/OlafRadicke/tntmake)
+As build system is used tntmake. You find this tool on
+[GitHub](https://github.com/OlafRadicke/tntmake)
 
 ## Libraries
 
@@ -19,6 +24,10 @@ A tntnnet environment with cxxtools and tntnet
 
 * [https://github.com/maekitalo/tntnet](https://github.com/maekitalo/tntnet)
 * [https://github.com/maekitalo/cxxtools](https://github.com/maekitalo/cxxtools)
+
+## runtime requirement
+* zip
+* curl
 
 # Build
 
@@ -38,7 +47,8 @@ Contains project data of tntwebwizard tool.
 
 In this directory will storage tntwebwizard his temporary files and directories.
 
-# runtime dependences
+# Documentation
 
-* zip
-* curl
+Do command "doxygen ./Doxyfile" for generation (api) documentation.
+
+
