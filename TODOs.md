@@ -11,4 +11,7 @@
 * project config view update.
 * css
 * std comp add
-* example conf generating 
+* example conf generating
+
+* add IPv6 support
+* add lists of IP's support

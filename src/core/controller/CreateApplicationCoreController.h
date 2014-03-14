@@ -48,6 +48,9 @@ public:
         Tww::Core::ProjectData& _projectData,
         Tww::Core::MakefileData& _makefileData
     ):
+        form_hostname("rename.me"),
+        form_host_ipv4("0.0.0.0"),
+        form_port_no(80800),
         warning(false),
         makefileData( _makefileData ),
         projectData( _projectData ),
@@ -60,12 +63,41 @@ public:
         tnt::QueryParams& qparam
     );
 
+    /**
+     * If this variable value not empty than it is a message for the
+     * user (target for display in the web user interface).
+     */
     std::string feedback;
+
+    /**
+     * This variable storage the last user form input or the default value
+     * for the host name configuration.
+     */
+    std::string form_hostname;
+
+    /**
+     * This variable storage the last user form input or the default value
+     * for the port number configuration.
+     */
+    std::string form_host_ipv4;
+
+    /**
+     * This variable storage the last user form input or the default value
+     * for the port number configuration.
+     */
+    int form_port_no;
+
+    /**
+     * This variable storage the last user form input or the default value
+     * for the session time out configuration.
+     */
+    int form_session_timeout;
 
     /**
      * If this set true than the feeback text get a warning css stile.
      */
     bool warning;
+
 
 private:
 

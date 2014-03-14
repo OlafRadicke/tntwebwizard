@@ -54,6 +54,7 @@ class ProjectData {
 public:
 
     ProjectData():
+        configFormat("json"),
         wizardVersion( 1 ),
         projectName("newproject"),
         doxygenTemplates(true),
@@ -61,7 +62,7 @@ public:
         cxxtoolsLoging(true),
         routeReverse(true),
         cliSupport(false),
-        configFormat("json")
+        tntDBsupport(true)
     { }
 
     // === G ===
@@ -133,10 +134,15 @@ public:
 
     /**
      * If that "true" than it use the module "routereverse".
-     * \see subpage_route_reverse
      */
     const bool isRouteReverse( ) const
     { return this->routeReverse; };
+
+    /**
+     * If that "true" than it use the tntdb lib.
+     */
+    const bool isTntDB( ) const
+    { return this->tntDBsupport; };
 
     // === R ===
 
@@ -206,6 +212,15 @@ public:
         this->sourceCodeHeader = _sourceCodeHeader ;
     };
 
+
+    /**
+     * Swich tntdb support. If that "true" than it use the tntdb lib.
+     */
+    void setTntDBsupport( bool _tntDB ){
+        this->tntDBsupport = _tntDB;
+
+    };
+
     // === W ===
 
     /**
@@ -215,6 +230,11 @@ public:
 
 
 private:
+
+    /**
+     * This format can be "xml" or "json".
+     */
+    std::string configFormat;
 
     /**
      * The version of wizard that is create the configuration file.
@@ -259,7 +279,10 @@ private:
      */
     bool cliSupport;
 
-    std::string configFormat;
+    /**
+     * @see isTntDB() .
+     */
+    bool tntDBsupport;
 };
 
 } // namespace Core

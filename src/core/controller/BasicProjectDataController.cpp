@@ -58,6 +58,19 @@ void BasicProjectDataController::formDataAssume ( tnt::QueryParams& qparam ){
     this->projectData.setRouteReverse(
         qparam.arg<bool>("form_route_reverse")
     );
+    this->projectData.setTntDBsupport(
+        qparam.arg<bool>("form_tntdb_support")
+    );
+    this->makefileData.setCppLinkerFlags("-I./src -ltntnet");
+    if ( this->projectData.isTntDB() ) {
+        this->makefileData.setCppLinkerFlags("-I./src -ltntnet -ltntdb");
+    }
+    if ( this->projectData.isCxxtoolsLoging( ) ) {
+        this->makefileData.setCppLinkerFlags("-I./src -ltntnet -lcxxtools");
+    }
+    if ( this->projectData.isTntDB() && this->projectData.isCxxtoolsLoging( ) ) {
+        this->makefileData.setCppLinkerFlags("-I./src -ltntnet -lcxxtools -ltntdb");
+    }
 
     // makefile data
     this->makefileData.setBinName(

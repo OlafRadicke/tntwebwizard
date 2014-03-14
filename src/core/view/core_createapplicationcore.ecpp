@@ -105,9 +105,63 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <option value="xml">XML</option>
                     </select>
                 </div>
+
+                <div class="form_labels">
+                    <label from="hostname">Host name:</label>
+                </div>
+                <div class="form_inputs">
+                    <input
+                        id="hostname"
+                        name="form_hostname"
+                        type="text"
+                        size="30"
+                        maxlength="30"
+                        value="<$ controller.form_hostname $>">
+                </div>
+
+                <div class="form_labels">
+                    <label from="host_ipv4">Host IPv4:</label>
+                </div>
+                <div class="form_inputs">
+                    <input
+                        id="host_ipv4"
+                        name="form_host_ipv4"
+                        type="text"
+                        size="30"
+                        maxlength="30"
+                        value="<$ controller.form_host_ipv4 $>">
+                </div>
+
+                <div class="form_labels">
+                    <label from="port_no">Port number:</label>
+                </div>
+                <div class="form_inputs">
+                    <input
+                        id="port_no"
+                        name="form_port_no"
+                        type="number"
+                        min="1"
+                        max="49151"
+                        value="<$ controller.form_port_no $>">
+                </div>
+
+                <div class="form_labels">
+                    <label from="session_timeout">Session timeout (seconds):</label>
+                </div>
+                <div class="form_inputs">
+                    <input
+                        id="session_timeout"
+                        name="form_session_timeout"
+                        type="number"
+                        min="1"
+                        max="600000"
+                        step="60"
+                        value="<$ controller.form_session_timeout $>">
+                </div>
+
                 <br>
                 <div class="form_labels">
-                    <label></label>
+                    <label>&nbsp;&nbsp;</label>
                 </div>
                 <div class="form_inputs">
                     <button

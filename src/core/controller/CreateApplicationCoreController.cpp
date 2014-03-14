@@ -51,6 +51,16 @@ void CreateApplicationCoreController::worker (
         qparam.arg<bool>("form_cli_support");
     std::string form_config_format =
         qparam.arg<std::string>("form_config_format");
+
+    this->form_hostname =
+        qparam.arg<std::string>("form_hostname");
+    this->form_host_ipv4 =
+        qparam.arg<std::string>("form_host_ipv4");
+    this->form_port_no =
+        qparam.arg<int>("form_port_no");
+    this->form_session_timeout =
+        qparam.arg<int>("form_session_timeout");
+
     bool form_create =
         qparam.arg<bool>("form_create_button");
 
@@ -82,7 +92,10 @@ void CreateApplicationCoreController::worker (
             this->makefileData
         );
         if ( !this->preChecksOk( webappManager ) ) return;
-
+        webappManager.setHostname( this->form_hostname );
+        webappManager.setPortNo( this->form_port_no );
+        webappManager.setIPv4No( this->form_host_ipv4 );
+        webappManager.setSessionTimeout( this->form_session_timeout );
         try {
             webappManager.createApplicationCore( request );
         } catch ( Core::TntWebWizardException& tww_exception ) {
@@ -98,7 +111,7 @@ void CreateApplicationCoreController::worker (
         // read project configuration...
         this->projectData.read( file_projectdata.str() );
         this->makefileData.read( file_makefile.str() );
-
+        // check is this step allowed.
         WebApplicationCoreManager webappManager(
             this->userSession,
             this->projectData,

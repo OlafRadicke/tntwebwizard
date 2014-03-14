@@ -37,6 +37,37 @@ public:
 
 // G --------------------------------------------------------------------------
 
+// S --------------------------------------------------------------------------
+
+    /**
+     * Set host name for example configuration.
+     */
+    void setHostname( std::string _newHostName ){
+        this->hostname = _newHostName;
+    };
+
+    /**
+     * Set IPv4 for example configuration.
+     */
+    void setIPv4No( std::string _newIPv4 ){
+        this->host_ipv4 = _newIPv4;
+    };
+
+    /**
+     * Set port number for example configuration.
+     */
+    void setPortNo( int _newPortNo ){
+        this->port_no = _newPortNo;
+    };
+
+
+    /**
+     * Set session time out (in in seconds).
+     */
+    void setSessionTimeout( int _newTimeout){
+        this->session_timeout = _newTimeout;
+    }
+
 // W --------------------------------------------------------------------------
 
     WebApplicationCoreManager (
@@ -44,8 +75,12 @@ public:
         Tww::Core::ProjectData& _projectData,
         Tww::Core::MakefileData& _makefileData
     ):
+        hostname("rename.me"),
+        host_ipv4("0.0.0.0"),
         makefileData( _makefileData ),
         projectData( _projectData ),
+        port_no(80800),
+        session_timeout(2700),
         userSession( _userSession )
         {};
 
@@ -64,6 +99,15 @@ public:
 
 private:
 
+    /**
+     * host name for example configuration.
+     */
+    std::string hostname;
+
+    /**
+     * port number for example configuration.
+     */
+    std::string host_ipv4;
 
     /**
      * Represent the makefile data.
@@ -76,9 +120,20 @@ private:
     Tww::Core::ProjectData& projectData;
 
     /**
+     * IPv4 for example configuration.
+     */
+    int port_no;
+
+    /**
+     * Session timeout (in seconds).
+     */
+    int session_timeout;
+
+    /**
      * Session information.
      */
     Tww::Core::UserSession& userSession;
+
 
     // ========= private member functions =========
     /**
@@ -95,6 +150,11 @@ private:
      * Create the "src/core/model/config.h" file.
      */
     void createConfig_h();
+
+    /**
+     * Create the "[projectname].conf" file as example.
+     */
+    void createConfigExample();
 
     /**
      * Create the Directory Structure of core part:
@@ -132,6 +192,8 @@ private:
      */
     void createInitcomponent_h();
 
+
+    // ======== getter ===========================================
     /**
      * Get the temporary path of "src/core/model/config.cpp" file.
      */
@@ -141,6 +203,11 @@ private:
      * Get the temporary path of "src/core/model/config.h" file.
      */
     std::string getConfigHPath();
+
+    /**
+     * Get the temporary path of "[project name].conf" file.
+     */
+    std::string getConfigExamplePath();
 
     /**
      * Get the temporary path of "src/core/resources/[project name].css" file.

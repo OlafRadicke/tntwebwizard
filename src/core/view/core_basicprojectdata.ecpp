@@ -171,15 +171,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </div>
 
                 <div class="form_labels">
-                    <label from="route_reverse">Route revers support:</label>
+                    <label from="tntdb_support"><a href="http://www.tntnet.org/tntdb.html">TntDB</a> support:</label>
                 </div>
                 <div class="form_inputs">
                     <input
                         type="checkbox"
-                        id="route_reverse"
+                        id="tntdb_support"
                         value="true"
-                        name="form_route_reverse"
-%     if ( projectData.isRouteReverse() ) {
+                        name="form_tntdb_support"
+%     if ( projectData.isTntDB( ) ) {
                         checked >
 %     } else {
                         >
@@ -195,6 +195,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         type="submit"
                         value="form_save_button" >Save</button>
                 </div>
+
+
+
             </form>
         </fieldset>
         <fieldset>

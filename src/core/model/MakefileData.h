@@ -191,6 +191,12 @@ public:
     void setBinName( std::string _binName )
     { this->binName = _binName; };
 
+    /**
+     * Set flags of g++ linker.
+     */
+    void setCppLinkerFlags( std::string _newFlags ){
+     this->cppLinkerFlags = _newFlags;
+    }
 
     // === W ===
 

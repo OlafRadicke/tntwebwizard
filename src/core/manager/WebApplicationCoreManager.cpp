@@ -63,6 +63,7 @@ void WebApplicationCoreManager::createApplicationCore(
     this->createMain_cpp();
     this->createConfig_h();
     this->createConfig_cpp();
+    this->createConfigExample();
     this->createInitcomponent_h();
     this->createMainCSS();
     if ( this->projectData.isFormToken( ) ) {
@@ -506,6 +507,49 @@ void WebApplicationCoreManager::createConfig_h(){
     this->makefileData.read( this->getMakefilePath() );
     this->makefileData.addHFile( "./src/core/model/config.h" );
     this->makefileData.write( this->getMakefilePath() );
+}
+
+void WebApplicationCoreManager::createConfigExample(){
+    log_debug("createConfigExample()" );
+
+    std::ostringstream fileContent;
+    fileContent
+        << "// configuration example. You can modified this file.\n"
+        << "{\n"
+        << "\t appIp: \"" << this->host_ipv4 << "\",\n"
+        << "\t appPort: " << this->port_no << ",\n"
+        << "\t domain: \"" << this->hostname << "\",\n"
+        << "\t // set the runtime for sessions in seconds\n"
+        << "\t sessionRuntime: " << this->session_timeout << ",\n"
+    ;
+    if (  this->projectData.isCxxtoolsLoging( ) ){
+        fileContent
+            << "\t logging: {\n"
+            << "\t\t file: \"" << this->makefileData.getBinName() << ".log\",\n"
+            << "\t\t rootlogger: \"I\",\n"
+            << "\t\t logger: {\n"
+        ;
+        if ( this->projectData.isTntDB() ){
+            fileContent
+                << "\t\t\t \"tntdb\": \"DEBUG\",\n"
+            ;
+        }
+        fileContent
+            << "\t\t\t \"main\": \"DEBUG\"\n"
+            << "\t\t }\n"
+            << "\t }\n"
+        ;
+    }
+    fileContent
+        << "}\n"
+        << "// vim:syntax=javascript\n"
+        << "}\n"
+    ;
+
+    log_debug( __LINE__ << " write in: \n"  << getConfigExamplePath().c_str() );
+    std::ofstream initcomph_file( getConfigExamplePath().c_str() );
+    initcomph_file << fileContent.str() ;
+    initcomph_file.close();
 }
 
 void WebApplicationCoreManager::createHomeSite_epcc(){
@@ -958,6 +1002,17 @@ std::string WebApplicationCoreManager::getConfigCppPath(){
 
 std::string WebApplicationCoreManager::getConfigHPath(){
     return this->userSession.getSessionPath() + "/src/core/model/config.h";
+}
+
+std::string WebApplicationCoreManager::getConfigExamplePath(){
+    std::ostringstream completPath;
+    completPath
+        << this->userSession.getSessionPath()
+        << "/"
+        << this->makefileData.getBinName()
+        << ".conf"
+    ;
+    return completPath.str();
 }
 
 std::string WebApplicationCoreManager::getCSSPath(){
