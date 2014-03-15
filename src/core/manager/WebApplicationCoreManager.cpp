@@ -61,6 +61,7 @@ void WebApplicationCoreManager::createApplicationCore(
 
     this->createCoreDirectoryStructure();
     this->createMain_cpp();
+    this->createHomeSite_epcc();
     this->createConfig_h();
     this->createConfig_cpp();
     this->createConfigExample();
@@ -69,7 +70,10 @@ void WebApplicationCoreManager::createApplicationCore(
     if ( this->projectData.isFormToken( ) ) {
         this->createModulFormToken( request );
     }
-    if ( this->projectData.isRouteReverse( ) ) {
+    log_debug("##################################" );
+    log_debug("this->projectData.isRouteReverse()" << this->projectData.isRouteReverse() );
+    log_debug("##################################" );
+    if ( this->projectData.isRouteReverse() ) {
         this->createModulRouteReverse( request );
     }
 }
@@ -275,14 +279,15 @@ void WebApplicationCoreManager::createConfig_cpp(){
         << "\n"
         << "\t if (!filename.empty()) {\n"
         << "\t\t fname = filename;\n"
-        << "\t }\n"
-        << "\t if (\n"
-        << "\t\t cxxtools::FileInfo::exists(\" "
-        << this->makefileData.getBinName()  << ".conf\")\n"
-        << "\t ){\n"
-        << "\t\t fname = \"" << this->makefileData.getBinName()  << ".conf\";\n"
         << "\t } else {\n"
-        << "\t\t fname = \"/etc/" << this->makefileData.getBinName()  << ".conf\";\n"
+        << "\t\t if (\n"
+        << "\t\t\t cxxtools::FileInfo::exists(\"./"
+        << this->makefileData.getBinName()  << ".conf\")\n"
+        << "\t\t ){\n"
+        << "\t\t\t fname = \"" << this->makefileData.getBinName()  << ".conf\";\n"
+        << "\t\t } else {\n"
+        << "\t\t\t fname = \"/etc/" << this->makefileData.getBinName()  << ".conf\";\n"
+        << "\t\t }\n"
         << "\t }\n"
         << "\n"
         << "\t std::ifstream in(fname.c_str());\n"
@@ -614,14 +619,14 @@ void WebApplicationCoreManager::createHomeSite_epcc(){
         << "</html>\n"
     ;
 
-    log_debug( __LINE__ << " write in: \n"  << this->getInitcomponentHPath().c_str() );
-    std::ofstream initcomph_file( this->getInitcomponentHPath().c_str() );
+    log_debug( __LINE__ << " write in: \n"  << this->getHomeSiteEcppPath().c_str() );
+    std::ofstream initcomph_file( this->getHomeSiteEcppPath().c_str() );
     initcomph_file << fileContent.str() ;
     initcomph_file.close();
 
     // Add new file in Makefile.tnt configuration.
     this->makefileData.read( this->getMakefilePath() );
-    this->makefileData.addCppFile( "./src/core/initcomponent.h" );
+    this->makefileData.addEcppFile( "./src/core/view/core_home.ecpp" );
     this->makefileData.write( this->getMakefilePath() );
 }
 
@@ -778,14 +783,17 @@ void WebApplicationCoreManager::createMainCSS(){
         << "\n"
     ;
 
-    log_debug( __LINE__ << " write in: \n"  << getHomeSiteEcppPath().c_str() );
-    std::ofstream css_file( getHomeSiteEcppPath().c_str() );
+    log_debug( __LINE__ << " write in: \n"  << getCSSPath().c_str() );
+    std::ofstream css_file( getCSSPath().c_str() );
     css_file << fileContent.str() ;
     css_file.close();
 
     // Add new file in Makefile.tnt configuration.
     this->makefileData.read( this->getMakefilePath() );
-    this->makefileData.addEcppFile( "./src/core/view/core_home.ecpp" );
+    this->makefileData.addResourcesFile(
+        "core/resources/" + this->makefileData.getBinName() + ".css"
+    );
+
     this->makefileData.write( this->getMakefilePath() );
 
 }

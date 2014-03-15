@@ -50,7 +50,8 @@ public:
     ):
         form_hostname("rename.me"),
         form_host_ipv4("0.0.0.0"),
-        form_port_no(80800),
+        form_port_no(10080),
+        form_session_timeout(7200),
         warning(false),
         makefileData( _makefileData ),
         projectData( _projectData ),
@@ -115,6 +116,11 @@ private:
      * Session information.
      */
     Tww::Core::UserSession& userSession;
+
+    /**
+     * Get the path to file "./tntwebwizard.pro".
+     */
+    std::string getProjectFilePath();
 
     /**
      * Some plausibility data checks before start working.

@@ -139,9 +139,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <input
                         id="port_no"
                         name="form_port_no"
-                        type="number"
-                        min="1"
-                        max="49151"
+                        type="text"
+                        size="30"
+                        maxlength="30"
                         value="<$ controller.form_port_no $>">
                 </div>
 
@@ -152,10 +152,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <input
                         id="session_timeout"
                         name="form_session_timeout"
-                        type="number"
-                        min="1"
-                        max="600000"
-                        step="60"
+                        type="text"
+                        size="30"
+                        maxlength="30"
                         value="<$ controller.form_session_timeout $>">
                 </div>
 

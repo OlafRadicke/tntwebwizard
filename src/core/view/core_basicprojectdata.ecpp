@@ -139,6 +139,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </div>
 
                 <div class="form_labels">
+                    <label from="route_reverse">Reverse routing support (dynamic links):</label>
+                </div>
+                <div class="form_inputs">
+                    <input
+                        type="checkbox"
+                        id="route_reverse"
+                        value="true"
+                        name="form_route_reverse"
+%     if ( projectData.isRouteReverse() ) {
+                        checked >
+%     } else {
+                        >
+%     }
+                </div>
+
+                <div class="form_labels">
                     <label from="csrf_token">Forms with csrf(cross site request forgery) token:</label>
                 </div>
                 <div class="form_inputs">
@@ -199,10 +215,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
             </form>
-        </fieldset>
-        <fieldset>
-            <legend>Generated XML</legend>
-            <$ projectData.getXml( ) $>
         </fieldset>
     </div>
 

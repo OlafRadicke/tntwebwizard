@@ -89,7 +89,7 @@ void operator>>= (const cxxtools::SerializationInfo& si, ProjectData& projektDat
     si.getMember("source_code_header") >>= projektData.sourceCodeHeader;
     si.getMember("doxygen_templates")  >>= projektData.doxygenTemplates;
     si.getMember("form_token")         >>= projektData.formToken;
-    si.getMember("route_reverse")       >>= projektData.routeReverse;
+    si.getMember("route_reverse")      >>= projektData.routeReverse;
     si.getMember("cxxtools_loging")    >>= projektData.cxxtoolsLoging;
 
 }
@@ -101,7 +101,7 @@ void operator<<= ( cxxtools::SerializationInfo& si, const ProjectData& projektDa
     si.addMember("source_code_header") <<= projektData.getSourceCodeHeader( );
     si.addMember("doxygen_templates")  <<= projektData.isDoxygenTemplates( );
     si.addMember("form_token")         <<= projektData.isFormToken( );
-    si.addMember("route_reverse")       <<= projektData.isRouteReverse( );
+    si.addMember("route_reverse")      <<= projektData.isRouteReverse( );
     si.addMember("cxxtools_loging")    <<= projektData.isCxxtoolsLoging( );
 }
 
@@ -124,6 +124,14 @@ void ProjectData::read(const std::string& filename)
         log_debug( filename.c_str() << " does not exist");
     }
 }
+
+// === S ===
+
+
+void ProjectData::setRouteReverse( bool _yesOrNo ) {
+    this->routeReverse = _yesOrNo;
+}
+
 
 // === W ===
 

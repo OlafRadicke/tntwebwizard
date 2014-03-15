@@ -46,17 +46,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <h2>TNT-WEB-WIZARD</h2>
         <br />
-        Go to...
-        <div class="centerbox">
-            <ul>
-                <li><a href="<$ href_core_basicprojectdata $>">Basic Project Data</a></li>
-                <li><a href="">Load project data</a></li>
-                <li><a href="">Project browser</a></li>
-                <li><a href="">New Project</a></li>
-                <li><a href="">New component</a></li>
-                <li><a href="">Database support</a></li>
-                <li><a href="">REST (xml/json) API support</a></li>
-            </ul>
+        Start with <a href="<$ href_core_basicprojectdata $>">Basic Project Data</a>....
         </div>
 
       </div>

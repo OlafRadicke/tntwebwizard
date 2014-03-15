@@ -165,12 +165,12 @@ void initcomponent ( tnt::Tntnet &app ) {
         "formtoken/manager.h"
     );
 
-    // formtoken/views/formtoken_no_availabe_token.ecpp
+    // formtoken/view/formtoken_no_availabe_token.ecpp
 
     app.mapUrl(
         "^/formtoken/view/formtoken_no_availabe_token.ecpp$",
         "resources"
-    ).setPathInfo( "formtoken/views/formtoken_no_availabe_token.ecpp" );
+    ).setPathInfo( "formtoken/view/formtoken_no_availabe_token.ecpp" );
     RouteReverse::Manager::add(
         "formtoken_no_availabe_token_ecpp",
         "formtoken/view/formtoken_no_availabe_token.ecpp"

@@ -201,9 +201,7 @@ public:
     /**
      * Switch on and off generating code with reverse route support.
      */
-    void setRouteReverse( bool _yesOrNo ) {
-        this->routeReverse = _yesOrNo;
-    };
+    void setRouteReverse( bool _yesOrNo );
 
     /**
      * Set the header template with the licence and author.

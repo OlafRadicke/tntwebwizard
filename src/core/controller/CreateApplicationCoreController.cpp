@@ -44,46 +44,33 @@ void CreateApplicationCoreController::worker (
     tnt::HttpReply& reply,
     tnt::QueryParams& qparam
 ){
-    // define the query parameters
-
+    log_debug("webappManager.createApplicationCore()" );
 
     bool form_cli_support =
         qparam.arg<bool>("form_cli_support");
     std::string form_config_format =
         qparam.arg<std::string>("form_config_format");
 
-    this->form_hostname =
-        qparam.arg<std::string>("form_hostname");
-    this->form_host_ipv4 =
-        qparam.arg<std::string>("form_host_ipv4");
-    this->form_port_no =
-        qparam.arg<int>("form_port_no");
-    this->form_session_timeout =
-        qparam.arg<int>("form_session_timeout");
-
     bool form_create =
         qparam.arg<bool>("form_create_button");
 
-    std::stringstream file_projectdata;
-    file_projectdata
-        << this->userSession.getSessionPath()
-        << "/tntwebwizard.pro"
-    ;
     std::stringstream file_makefile;
     file_makefile
         << this->userSession.getSessionPath()
         << "/Makefile.tnt"
     ;
 
-    log_debug("file_projectdata: " << file_projectdata.str() );
-    log_debug("file_makefile: " << file_makefile.str() );
-    log_debug("form_cli_support: " << form_cli_support );
-    log_debug("form_config_format: " << form_config_format );
-    log_debug("form_create: " << form_create );
-
     // save button pressed
     if ( form_create ) {
-        log_debug("webappManager.createApplicationCore()" );
+
+        this->form_hostname =
+            qparam.arg<std::string>("form_hostname");
+        this->form_host_ipv4 =
+            qparam.arg<std::string>("form_host_ipv4");
+        this->form_port_no =
+            qparam.arg<int>("form_port_no");
+        this->form_session_timeout =
+            qparam.arg<int>("form_session_timeout");
 
         this->projectData.setCliSupport( form_cli_support );
         WebApplicationCoreManager webappManager(
@@ -109,7 +96,7 @@ void CreateApplicationCoreController::worker (
     } else {
         log_debug("Read project data and makefile..." );
         // read project configuration...
-        this->projectData.read( file_projectdata.str() );
+        this->projectData.read( this->getProjectFilePath() );
         this->makefileData.read( file_makefile.str() );
         // check is this step allowed.
         WebApplicationCoreManager webappManager(
@@ -145,6 +132,16 @@ bool CreateApplicationCoreController::preChecksOk (
         return false;
     }
     return true;
+}
+
+std::string CreateApplicationCoreController::getProjectFilePath(){
+
+    std::stringstream file_projectdata;
+    file_projectdata
+        << this->userSession.getSessionPath()
+        << "/tntwebwizard.pro"
+    ;
+    return file_projectdata.str();
 }
 
 } // namespace core
