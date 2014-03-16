@@ -19,6 +19,11 @@
             "core_downloadzip",
             request
         );
+    std::string href_core_projectreset =
+        RouteReverse::Manager::getLinkTo(
+            "core_projectreset",
+            request
+        );
 
 </%cpp>
 
@@ -29,6 +34,7 @@
             <li><a href="<$ href_core_basicprojectdata $>">(1.) Basic project data</a></li>
             <li><a href="<$ href_core_createapplicationcore $>">(2.)Create project core</a></li>
             <li><a href="<$ href_download_zip $>">Download</a></li>
+            <li><a href="<$ href_core_projectreset $>">Reset</a></li>
 <!--
             <li><a href="">Project browser</a></li>
             <li><a href="">New Project</a></li>

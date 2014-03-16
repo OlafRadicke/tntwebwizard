@@ -248,7 +248,6 @@ void initcomponent ( tnt::Tntnet &app ) {
         "core/basicprojectdata"
     );
 
-
     //core_createapplicationcore
     app.mapUrl(
         "^/core/createapplicationcore$",
@@ -271,8 +270,18 @@ void initcomponent ( tnt::Tntnet &app ) {
         "core/download.zip"
     );
 
-    // ready get info...
+    // core_projectreset
+    app.mapUrl(
+        "^/core/projectreset$",
+        "core_projectreset"
+    );
 
+    RouteReverse::Manager::add(
+        "core_projectreset",
+        "core/projectreset"
+    );
+
+    // ready get info...
     log_debug( RouteReverse::Manager::getAllReversesRoutes() );
 
 }

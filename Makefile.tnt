@@ -6,6 +6,7 @@
         "./src/core/controller/BasicProjectDataController.cpp",
         "./src/core/controller/CreateApplicationCoreController.cpp",
         "./src/core/controller/DownloadZipController.cpp",
+        "./src/core/controller/ProjectResetController.cpp",
         "./src/core/manager/WebApplicationCoreManager.cpp",
         "./src/core/model/Config.cpp",
         "./src/core/model/MakefileData.cpp",
@@ -23,6 +24,7 @@
         "./src/core/controller/BasicProjectDataController.h",
         "./src/core/controller/CreateApplicationCoreController.h",
         "./src/core/controller/DownloadZipController.h",
+        "./src/core/controller/ProjectResetController.h",
         "./src/core/manager/WebApplicationCoreManager.h",
         "./src/core/model/Config.h",
         "./src/core/model/MakefileData.h",
@@ -40,6 +42,7 @@
         "./src/core/view/core_part_head.eccp",
         "./src/core/view/core_part_menu.eccp",
         "./src/core/view/core_part_title.eccp",
+        "./src/core/view/core_projectreset.ecpp",
         "./src/formtoken/view/formtoken_no_availabe_token.ecpp"
     ],
     "resourcesRoot": "./src/",

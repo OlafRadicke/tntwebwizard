@@ -1,0 +1,87 @@
+<# ###########################################################################
+Copyright (C) 2013-2014  Olaf Radicke <briefkasten@olaf-rdicke.de>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or later
+version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+############################################################################ #>
+
+
+<%session
+    scope="shared"
+    include="core/model/UserSession.h"
+    include="core/model/ProjectData.h"
+    include="core/model/MakefileData.h"
+    include="formtoken/manager/manager.h">
+        Tww::Core::UserSession userSession(
+            FormToken::Manager::getRawToken( request )
+        );
+        Tww::Core::ProjectData projectData();
+        Tww::Core::MakefileData makefileData();
+</%session>
+
+<%request
+    include="core/controller/ProjectResetController.h">
+        Tww::Core::ProjectResetController
+            controller(
+                userSession,
+                projectData,
+                makefileData
+            );
+</%request>
+
+<%pre>
+    #include <routereverse/manager/manager.h>
+</%pre>
+<%cpp>
+
+    controller.worker(
+        request,
+        reply,
+        qparam
+    );
+
+</%cpp>
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>TNT-WEB-WIZARD - Reset</title>
+    <& core_part_head qparam >
+</head>
+<body>
+
+    <& core_part_title qparam >
+    <& core_part_menu qparam >
+
+      <div id="content">
+        <%include>core/view/core_part_feedbackbox.eccp</%include>
+
+        <h2>DATA RESET</h2>
+        <fieldset>
+            <legend>RESET PROJECT DATA</legend>
+            <form method="post">
+                <br />
+                Do you like to do delete all created data now?
+                <br>
+
+                <div class="form_inputs">
+                    <button
+                        name="form_reset_button"
+                        type="submit"
+                        value="form_reset_button" >Yes, I want to!</button>
+                </div>
+            </form>
+        </fieldset>
+      </div>
+</body>
+</html>

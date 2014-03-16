@@ -54,12 +54,6 @@ void CreateApplicationCoreController::worker (
     bool form_create =
         qparam.arg<bool>("form_create_button");
 
-    std::stringstream file_makefile;
-    file_makefile
-        << this->userSession.getSessionPath()
-        << "/Makefile.tnt"
-    ;
-
     // save button pressed
     if ( form_create ) {
 
@@ -97,7 +91,7 @@ void CreateApplicationCoreController::worker (
         log_debug("Read project data and makefile..." );
         // read project configuration...
         this->projectData.read( this->getProjectFilePath() );
-        this->makefileData.read( file_makefile.str() );
+        this->makefileData.read( this->getMakefilePath() );
         // check is this step allowed.
         WebApplicationCoreManager webappManager(
             this->userSession,
@@ -143,6 +137,16 @@ std::string CreateApplicationCoreController::getProjectFilePath(){
     ;
     return file_projectdata.str();
 }
+
+std::string CreateApplicationCoreController::getMakefilePath(){
+    std::stringstream file_makefile;
+    file_makefile
+        << this->userSession.getSessionPath()
+        << "/Makefile.tnt"
+    ;
+    return file_makefile.str();
+}
+
 
 } // namespace core
 } // namespace Tww
