@@ -1,4 +1,5 @@
 {
+    "tntmakeVersion": 1,
     "binName": "tntwebwizard",
     "cppCompiler": "g++",
     "cppFiles": [

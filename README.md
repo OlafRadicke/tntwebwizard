@@ -3,6 +3,8 @@
 
 A witzard for tntnet with web gui.
 
+![snapshot](snapshot_tntwebwizard.png)
+
 # Project page
 
 [https://github.com/OlafRadicke/tntwebwizard](https://github.com/OlafRadicke/tntwebwizard)
