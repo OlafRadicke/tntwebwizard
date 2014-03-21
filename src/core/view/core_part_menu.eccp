@@ -24,6 +24,12 @@
             "core_projectreset",
             request
         );
+    std::string href_core_about =
+        RouteReverse::Manager::getLinkTo(
+            "core_about",
+            request
+        );
+
 
 </%cpp>
 
@@ -52,8 +58,8 @@
 
         <ul class="nav">
             <li class="header">About</li>
-            <li><a href="">Tntnet</a></li>
-            <li><a href="">Tntwebwizard</a></li>
+            <li><a href="http://www.tntnet.org/">Tntnet</a></li>
+            <li><a href="<$ href_core_about $>">Tntwebwizard</a></li>
             <li><a href="https://github.com/OlafRadicke/tntwebwizard">Tntwebwizard on GitHub</a></li>
         </ul>
     </div>

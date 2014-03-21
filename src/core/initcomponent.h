@@ -281,6 +281,17 @@ void initcomponent ( tnt::Tntnet &app ) {
         "core/projectreset"
     );
 
+    // core_about
+    app.mapUrl(
+        "^/core/about$",
+        "core_about"
+    );
+
+    RouteReverse::Manager::add(
+        "core_about",
+        "core/about"
+    );
+
     // ready get info...
     log_debug( RouteReverse::Manager::getAllReversesRoutes() );
 

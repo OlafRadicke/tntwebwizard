@@ -15,3 +15,4 @@
 
 * add IPv6 support
 * add lists of IP's support
+* Add url prefixes for revers proxy support

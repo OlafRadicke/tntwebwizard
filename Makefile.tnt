@@ -37,6 +37,7 @@
     ],
     "ecppFiles": [
         "./src/core/view/core_home.ecpp",
+        "./src/core/view/core_about.ecpp",
         "./src/core/view/core_basicprojectdata.ecpp",
         "./src/core/view/core_createapplicationcore.ecpp",
         "./src/core/view/core_downloadzip.ecpp",

@@ -1,0 +1,91 @@
+<# ###########################################################################
+Copyright (C) 2013-2014  Olaf Radicke <briefkasten@olaf-rdicke.de>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or later
+version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+############################################################################ #>
+
+
+<%pre>
+    #include <routereverse/manager/manager.h>
+    #include <string>
+    #include <iostream>
+</%pre>
+
+<%cpp>
+
+    std::string href_core_basicprojectdata = RouteReverse::Manager::getLinkTo(
+        "core_basicprojectdata",
+        request
+    );
+
+</%cpp>
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>TNT-WEB-WIZARD - About</title>
+    <& core_part_head qparam >
+</head>
+<body>
+
+    <& core_part_title qparam >
+    <& core_part_menu qparam >
+
+      <div id="content">
+
+        <h2>About the TNT-WEB-WIZARD</h2>
+        <br />
+A witzard for tntnet with web gui.
+The TNT-WEB-WIZARD (TWW)  is a wizard for tntnet projects with a web user interface. TWW is programmed with tntnet framework and open source (AGPL).
+
+
+        <h3>Features</h3>
+            <ul>
+                <li>Planned
+                    <ul>
+                        <li>GitHub support (open existing projects)</li>
+                        <li>Support for editing the project configuration of a existing project</li>
+                        <li>Support for editing the makefile of a existing project</li>
+                        <li>Add new resources (images, files and so on) in a existing project</li>
+                        <li>Access Control List (ACL) support</li>
+                        <li>REST-API (json,xml) server/client support</li>
+                        <li>Adding own exception classes</li>
+                        <li>Adding new ecpp files (in a existing project)</li>
+                        <li>Adding new model classes (in a existing project) with generated  getter and setter methods</li>
+                        <li>Adding new controller classes (in a existing project)</li>
+                        <li>Adding new components with view, model and controller (in a existing project)</li>
+                        <li>Adding new components with a own name space (in a existing project)</li>
+                        <li>Unit-Test support</li>
+                        <li>Add IPv6 support</li>
+                        <li>Add support for a lists of IPs</li>
+                        <li>Add support for a lists of host names</li>
+                        <li>Add url prefixes support for revers proxy configurations</li>
+                    </ul>
+                </li>
+                <li>Ready implemented
+                    <ul>
+                        <li>Source code header template</li>
+                        <li>Doxygen templates</li>
+                        <li>Reverse routing support (dynamic links)</li>
+                        <li>Forms with csrf (cross site request forgery) token support</li>
+                        <li>Cxxtools loging support</li>
+                        <li>Basic tntdb support</li>
+                        <li>CLI support (cxxtools::Arg)</li>
+                    </ul>
+                </li>
+            </ul>
+
+      </div>
+</body>
+</html>
