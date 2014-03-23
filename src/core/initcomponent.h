@@ -66,10 +66,20 @@ void initcomponent ( tnt::Tntnet &app ) {
 
     // /core/resources/tntnet.png
 
+//     app.mapUrl(
+//         "^/core/tntnet.png$",
+//         "resources"
+//     ).setPathInfo("core/resources/tntnet.png");
+//     RouteReverse::Manager::add(
+//         "core_tntnet_png",
+//         "core/tntnet.png"
+//     );
+//
+    //tmp beta variant
     app.mapUrl(
         "^/core/tntnet.png$",
         "resources"
-    ).setPathInfo("core/resources/tntnet.png");
+    ).setPathInfo("core/resources/tntnet_beta.png");
     RouteReverse::Manager::add(
         "core_tntnet_png",
         "core/tntnet.png"
@@ -88,10 +98,20 @@ void initcomponent ( tnt::Tntnet &app ) {
 
     // /core/resources/tntwebwizard.css
 
+//     app.mapUrl(
+//         "^/core/tntwebwizard.css$",
+//         "resources"
+//     ).setPathInfo( "core/resources/tntwebwizard.css" );
+//     RouteReverse::Manager::add(
+//         "core_tntwebwizard_css",
+//         "core/tntwebwizard.css"
+//     );
+
+    //tmp beta variant
     app.mapUrl(
         "^/core/tntwebwizard.css$",
         "resources"
-    ).setPathInfo( "core/resources/tntwebwizard.css" );
+    ).setPathInfo( "core/resources/tntwebwizard_beta.css" );
     RouteReverse::Manager::add(
         "core_tntwebwizard_css",
         "core/tntwebwizard.css"

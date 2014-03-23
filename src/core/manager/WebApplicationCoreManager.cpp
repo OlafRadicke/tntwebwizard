@@ -59,6 +59,7 @@ void WebApplicationCoreManager::createApplicationCore(
         throw Core::TntWebWizardException( errorText.str() );
     }
 
+    this->createREADMEmd();
     this->createCoreDirectoryStructure();
     this->createMain_cpp();
     this->createHomeSite_epcc();
@@ -798,8 +799,6 @@ void WebApplicationCoreManager::createMainCSS(){
 
 }
 
-
-
 void WebApplicationCoreManager::createModulFormToken(
     const tnt::HttpRequest& request
 ) {
@@ -911,6 +910,42 @@ void WebApplicationCoreManager::createModulFormToken(
         }
         this->makefileData.write( this->getMakefilePath() );
     };
+
+}
+
+void WebApplicationCoreManager::createREADMEmd(){
+    log_debug("createREADMEmd()" );
+    std::ofstream writting_file;
+    std::ostringstream fileContent;
+
+    fileContent
+        << "# "
+        << this->projectData.getProjectName()
+        << "------------------------------------------------------------------------------"
+        << "\n\n"
+        << "## Build\n\n"
+        << "For compiling this project go to the project root directory with the \n"
+        << "File \"Mafilel.tnt\" and do this command: \n\n"
+        << "    tntmake -b \n\n"
+        << "After there you find a folder with name \"build\" (if you not change in the \n"
+        << "configuration). In this folder is the executable file \""
+        << this->makefileData.getBinName() << "\"\n\n"
+        << "## Start program\n\n"
+        << "In the project root directory you can find a example configuration with name\n"
+        << "\"" << this->makefileData.getBinName() << ".conf. Normally the program search\n"
+        << "this file in the same folder or in \"/etc/\". You can modified this file for\n"
+        << "changing listening port, IP and domain name.\n\n"
+        << "## Dependencies\n\n"
+        << "For compiling this project you need the tntnet framework (tntnet.org) and\n"
+        << "build tool tntmake (https://github.com/OlafRadicke/tntmake). If you prefer \n"
+        << "other build tools (like autotools, cmake, qmake, or whatever) than it's under\n"
+        << "you own support."
+    ;
+
+    log_debug( __LINE__ << " write in: \n"  << this->getREADMEPath().c_str() );
+    std::ofstream initcomph_file( this->getREADMEPath().c_str() );
+    initcomph_file << fileContent.str() ;
+    initcomph_file.close();
 
 }
 
@@ -1047,15 +1082,12 @@ std::string WebApplicationCoreManager::getMainCppPath( ){
 }
 
 std::string WebApplicationCoreManager::getMakefilePath(){
-    log_debug( __LINE__ << " getMakefilePath()\n" );
-    log_debug(
-        __LINE__
-        << " this->userSession.getSessionPath()\n"
-        << this->userSession.getSessionPath()
-    );
     std::string complied_path = this->userSession.getSessionPath() + "/Makefile.tnt";
-    log_debug( __LINE__ << " complied_path: \n" << complied_path );
+    return complied_path;
+}
 
+std::string WebApplicationCoreManager::getREADMEPath(){
+    std::string complied_path = this->userSession.getSessionPath() + "/README.md";
     return complied_path;
 }
 

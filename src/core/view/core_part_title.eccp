@@ -13,6 +13,6 @@
 
     <div id="header">
         <a href="/" class="maintitle">TNT-WEB-WIZARD</a>
-        <span id="subheader"><a href="http://tntnet.org">tntnet.org</a></span>
+        <span id="subheader">beta</span>
         <a href="/"><img id="logo" src="<$ href_tntnet_png $>" alt="Tntnet logo"></a>
     </div>

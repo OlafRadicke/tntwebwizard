@@ -171,7 +171,6 @@ private:
      */
      void createMainCSS();
 
-
     /**
      * Create all directories and files of die module "FormToken";
      */
@@ -192,47 +191,57 @@ private:
      */
     void createInitcomponent_h();
 
+    /**
+     * Create the "README.md" file.
+     */
+    void createREADMEmd();
+
 
     // ======== getter ===========================================
     /**
-     * Get the temporary path of "src/core/model/config.cpp" file.
+     * Get the temporary path of the "src/core/model/config.cpp" file.
      */
     std::string getConfigCppPath();
 
     /**
-     * Get the temporary path of "src/core/model/config.h" file.
+     * Get the temporary path of the "src/core/model/config.h" file.
      */
     std::string getConfigHPath();
 
     /**
-     * Get the temporary path of "[project name].conf" file.
+     * Get the temporary path of the "[project name].conf" file.
      */
     std::string getConfigExamplePath();
 
     /**
-     * Get the temporary path of "src/core/resources/[project name].css" file.
+     * Get the temporary path of the "src/core/resources/[project name].css" file.
      */
     std::string getCSSPath();
 
     /**
-     * Get the temporary path of "src/core/view/core_home.ecpp" file.
+     * Get the temporary path of the "src/core/view/core_home.ecpp" file.
      */
     std::string getHomeSiteEcppPath();
 
     /**
-     * Get the temporary path of "src/core/initcomponent.h" file.
+     * Get the temporary path of the "src/core/initcomponent.h" file.
      */
     std::string getInitcomponentHPath();
 
     /**
-     * Get the temporary path of "src/main.cpp file.
+     * Get the temporary path of the "src/main.cpp file.
      */
     std::string getMainCppPath();
 
     /**
-     * Get the temporary path of Makefile.tnt file.
+     * Get the temporary path of the "Makefile.tnt" file.
      */
     std::string getMakefilePath();
+
+    /**
+     * Get the temporary path of the "README.md" file.
+     */
+    std::string getREADMEPath();
 
     /**
      * Get the temporary path of source code directory.
