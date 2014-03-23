@@ -847,13 +847,14 @@ void WebApplicationCoreManager::createModulFormToken(
     const unsigned int ALIAS = 1;
     const unsigned int TYPE = 2;
     std::string files[6][3] = {
-        "formtoken/controller/controller.cpp","formtoken_controller_cpp","cpp",
-        "formtoken/initcomponent.h","formtoken_initcomponent_h","h",
-        "formtoken/manager/manager.cpp", "formtoken_manager_cpp","cpp",
-        "formtoken/manager/manager.h", "formtoken_manager_h","h",
-        "formtoken/subpage_form_token.dox","formtoken_subpage_form_token_dox","dox",
-        "formtoken/view/formtoken_no_availabe_token.ecpp","formtoken_no_availabe_token_ecpp","ecpp"
+        {"formtoken/controller/controller.cpp","formtoken_controller_cpp","cpp"},
+        {"formtoken/initcomponent.h","formtoken_initcomponent_h","h"},
+        {"formtoken/manager/manager.cpp", "formtoken_manager_cpp","cpp"},
+        {"formtoken/manager/manager.h", "formtoken_manager_h","h"},
+        {"formtoken/subpage_form_token.dox","formtoken_subpage_form_token_dox","dox"},
+        {"formtoken/view/formtoken_no_availabe_token.ecpp","formtoken_no_availabe_token_ecpp","ecpp"}
     };
+
     for (unsigned int i = 0 ; i < 6; i++) {
         std::cout
             << "##############################################################"
