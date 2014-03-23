@@ -986,11 +986,11 @@ void WebApplicationCoreManager::createModulRouteReverse(
     const unsigned int ALIAS = 1;
     const unsigned int TYPE = 2;
     std::string files[5][3] = {
-        "routereverse/initcomponent.h", "routereverse_initcomponent_h","h",
-        "routereverse/subpage_route_reverse.dox", "routereverse_subpage_route_reverse_dox","dox",
-        "routereverse/manager/manager.cpp", "routereverse_manager_cpp","cpp",
-        "routereverse/manager/manager.h", "routereverse_manager.h","h",
-        "routereverse/model/routereverseexception.h", "routereverse_routereverseexception.h","h"
+        {"routereverse/initcomponent.h", "routereverse_initcomponent_h","h"},
+        {"routereverse/subpage_route_reverse.dox", "routereverse_subpage_route_reverse_dox","dox"},
+        {"routereverse/manager/manager.cpp", "routereverse_manager_cpp","cpp"},
+        {"routereverse/manager/manager.h", "routereverse_manager.h","h"},
+        {"routereverse/model/routereverseexception.h", "routereverse_routereverseexception.h","h"}
     };
 
     for (unsigned int i = 0 ; i < 5; i++) {
