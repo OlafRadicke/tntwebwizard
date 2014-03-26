@@ -1,0 +1,176 @@
+<#
+Copyright (C) 2013-2014  Olaf Radicke <briefkasten@olaf-rdicke.de>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or later
+version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#>
+
+<%session
+    scope="shared"
+    include="core/model/UserSession.h"
+    include="core/model/ProjectData.h"
+    include="core/model/MakefileData.h"
+    include="formtoken/manager/manager.h">
+        Tww::Core::UserSession userSession(
+            FormToken::Manager::getRawToken( request )
+        );
+        Tww::Core::ProjectData projectData();
+        Tww::Core::MakefileData makefileData();
+</%session>
+<%request
+    include="core/controller/NewComponentController.h" >
+        Tww::Core::NewComponentController
+            controller(
+                userSession,
+                projectData,
+                makefileData
+            );
+</%request>
+<%pre>
+    #include <routereverse/manager/manager.h>
+</%pre>
+<%cpp>
+
+    controller.worker(
+        request,
+        reply,
+        qparam
+    );
+
+</%cpp>
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>TNT-WEB-WIZARD - NEW COMPONENT</title>
+    <& core_part_head qparam >
+</head>
+<body>
+
+    <& core_part_title qparam >
+    <& core_part_menu qparam >
+
+    <div id="content">
+
+        <%include>core/view/core_part_feedbackbox.eccp</%include>
+        <fieldset>
+            <legend>BASIC COMPONENT DATA</legend>
+            <form method="post">
+                <div class="form_labels">
+                    <label from="namespace">Namespace:</label>
+                </div>
+                <div class="form_inputs">
+                    <input
+                        id="namespace"
+                        name="form_namespace"
+                        type="text"
+                        size="30"
+                        maxlength="30"
+                        value="<$ controller.getNameSpace() $>">
+                </div>
+
+                <div class="form_labels">
+                    <label from="ecppfilename">ecpp filename:</label>
+                </div>
+                <div class="form_inputs">
+                    <input
+                        id="ecppfilename"
+                        name="form_ecppfilename"
+                        type="text"
+                        size="30"
+                        maxlength="30"
+                        value="<$ controller.getEcppFileName() $>">
+                </div>
+
+                <div class="form_labels">
+                    <label from="controllername">Controller class name:</label>
+                </div>
+                <div class="form_inputs">
+                    <input
+                        id="controllername"
+                        name="form_controllername"
+                        type="text"
+                        size="30"
+                        maxlength="30"
+                        value="<$ controller.getControllerName() $>">
+                </div>
+
+                <fieldset>
+                    <legend>MODEL</legend>
+<!-- bis hier -->
+
+                    <div class="form_labels">
+                        <label from="modelname">Model name:</label>
+                    </div>
+                    <div class="form_inputs">
+                        <input
+                            id="modelname"
+                            name="form_modelname"
+                            type="text"
+                            size="30"
+                            maxlength="30"
+                            value="<$ controller.getModelName() $>">
+                    </div>
+
+                    <div class="form_labels">
+                        <label from="property_type">Add property:</label>
+                    </div>
+                    <div class="form_inputs">
+                        <select
+                            id="property_type"
+                            name="form_property_type">
+                            <option value="int">int</option>
+                            <option value="std::string">std::string</option>
+                            <option value="cxxtools::String">cxxtools::String</option>
+                            <option value="std::vector">std::vector</option>
+                            <option value="unsigned int">unsigned int</option>
+                            <option value="bool">bool</option>
+                        </select>
+                        <input
+                            id="property_name"
+                            name="form_property_name"
+                            type="text"
+                            size="30"
+                            maxlength="30"
+                            value="<$ controller.getControllerName() $>">
+
+                        <button
+                            name="form_add_property"
+                            type="submit"
+                            value="form_add_property" >Add</button>
+                    </div>
+
+                        <ul>
+% std::vector<std::string> allProperties = controller.getPropertyList();
+% for (unsigned int i=0; i<allProperties.size() ; i++) {
+                            <li><$  allProperties[i] $></li>
+% }
+                        <ul>
+
+                </fieldset>
+
+                <div class="form_labels">
+                    <label></label>
+                </div>
+                <div class="form_inputs">
+                    <button
+                        name="form_save_button"
+                        type="submit"
+                        value="form_save_button" >Save</button>
+                </div>
+
+            </form>
+        </fieldset>
+    </div>
+
+</body>
+</html>

@@ -118,7 +118,7 @@ bool CreateApplicationCoreController::preChecksOk (
         return false;
     }
 
-    if ( this->projectData.getSourceCodeHeader() == "getSourceCodeHeader()" ) {
+    if ( this->projectData.getSourceCodeHeader() == "" ) {
         this->feedback = "The licence template for the source code header is \
         not set. Go to the menu point \"Basic project data\" make the basic \
         configuration please.";

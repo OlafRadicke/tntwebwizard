@@ -1,8 +1,48 @@
+<#
+Copyright (C) 2013-2014  Olaf Radicke <briefkasten@olaf-rdicke.de>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or later
+version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#>
+
+<%session
+    scope="shared"
+    include="core/model/UserSession.h"
+    include="core/model/ProjectData.h"
+    include="core/model/MakefileData.h"
+    include="formtoken/manager/manager.h">
+        Tww::Core::UserSession userSession(
+            FormToken::Manager::getRawToken( request )
+        );
+        Tww::Core::ProjectData projectData();
+        Tww::Core::MakefileData makefileData();
+</%session>
+
 
 <%pre>
     #include <routereverse/manager/manager.h>
+    #include <core/manager/WebApplicationCoreManager.h>
 </%pre>
 <%cpp>
+
+    projectData.read( userSession.getSessionPath() + "/tntwebwizard.pro" );
+    makefileData.read( userSession.getSessionPath() + "/Makefile.tnt" );
+    Tww::Core::WebApplicationCoreManager webappManager(
+        userSession,
+        projectData,
+        makefileData
+    );
+
 
     std::string href_core_basicprojectdata =
         RouteReverse::Manager::getLinkTo(
@@ -17,6 +57,12 @@
     std::string href_download_zip =
         RouteReverse::Manager::getLinkTo(
             "core_downloadzip",
+            request
+        );
+
+    std::string href_core_newcomponent =
+        RouteReverse::Manager::getLinkTo(
+            "core_newcomponent",
             request
         );
     std::string href_core_projectreset =
@@ -37,14 +83,21 @@
         <ul class="nav">
             <li class="header">Project configuration</li>
             <li><a href="/">Home</a></li>
-            <li><a href="<$ href_core_basicprojectdata $>">(1.) Basic project data</a></li>
-            <li><a href="<$ href_core_createapplicationcore $>">(2.)Create project core</a></li>
+            <li><a href="<$ href_core_basicprojectdata $>">Basic project data</a></li>
+% if(
+%     !webappManager.isApplicationCoreExist()
+%     && makefileData.getBinName() != ""
+% ){
+            <li><a href="<$ href_core_createapplicationcore $>">Create project core</a></li>
+% }
+% if( webappManager.isApplicationCoreExist() ){
             <li><a href="<$ href_download_zip $>">Download</a></li>
+            <li><a href="<$ href_core_newcomponent $>">New component</a></li>
             <li><a href="<$ href_core_projectreset $>">Reset</a></li>
+% }
 <!--
+            <li><a href="">Load GitHub project</a></li>
             <li><a href="">Project browser</a></li>
-            <li><a href="">New Project</a></li>
-            <li><a href="">New component</a></li>
             <li><a href="">Database support</a></li>
             <li><a href="">REST API support</a></li>
 -->

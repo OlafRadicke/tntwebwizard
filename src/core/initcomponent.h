@@ -262,7 +262,6 @@ void initcomponent ( tnt::Tntnet &app ) {
         "^/core/basicprojectdata$",
         "core_basicprojectdata"
     );
-
     RouteReverse::Manager::add(
         "core_basicprojectdata",
         "core/basicprojectdata"
@@ -273,7 +272,6 @@ void initcomponent ( tnt::Tntnet &app ) {
         "^/core/createapplicationcore$",
         "core_createapplicationcore"
     );
-
     RouteReverse::Manager::add(
         "core_createapplicationcore",
         "core/createapplicationcore"
@@ -284,10 +282,19 @@ void initcomponent ( tnt::Tntnet &app ) {
         "^/core/download.zip$",
         "core_downloadzip"
     );
-
     RouteReverse::Manager::add(
         "core_downloadzip",
         "core/download.zip"
+    );
+
+    // core_newcomponent
+    app.mapUrl(
+        "^/core/newcomponent$",
+        "core_newcomponent"
+    );
+    RouteReverse::Manager::add(
+        "core_newcomponent",
+        "core/newcomponent"
     );
 
     // core_projectreset
@@ -295,7 +302,6 @@ void initcomponent ( tnt::Tntnet &app ) {
         "^/core/projectreset$",
         "core_projectreset"
     );
-
     RouteReverse::Manager::add(
         "core_projectreset",
         "core/projectreset"

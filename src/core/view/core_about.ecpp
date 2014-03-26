@@ -58,6 +58,7 @@ The TNT-WEB-WIZARD (TWW)  is a wizard for tntnet projects with a web user interf
                         <li>Support for editing the project configuration of a existing project</li>
                         <li>Support for editing the makefile of a existing project</li>
                         <li>Add new resources (images, files and so on) in a existing project</li>
+                        <li>Adding (own) session classes</li>
                         <li>Access Control List (ACL) support</li>
                         <li>REST-API (json,xml) server/client support</li>
                         <li>Adding own exception classes</li>

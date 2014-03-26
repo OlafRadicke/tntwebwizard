@@ -18,8 +18,8 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CORE_CREATEAPPLICATIONCORECONTROLLER_H
-#define CORE_CREATEAPPLICATIONCORECONTROLLER_H
+#ifndef CORE_NEWCOMPONENT_H
+#define CORE_NEWCOMPONENT_H
 
 #include <core/model/MakefileData.h>
 #include <core/model/ProjectData.h>
@@ -29,35 +29,31 @@
 #include <tnt/httpreply.h>
 
 #include <string>
+#include <map>
+#include <vector>
 
 namespace Tww {
 namespace Core {
 
-class WebApplicationCoreManager;
-
 /**
-* @class CreateApplicationCoreController This class is the controller of
-* the Site core_createapplicationcore.
+* @class NewComponentController This class is the controller of the
+* Site basic_newcomponent.
 */
-class CreateApplicationCoreController {
+class NewComponentController {
 
 public:
 
-    CreateApplicationCoreController(
+    NewComponentController(
         Tww::Core::UserSession& _userSession,
         Tww::Core::ProjectData& _projectData,
         Tww::Core::MakefileData& _makefileData
     ):
-        form_hostname("rename.me"),
-        form_host_ipv4("0.0.0.0"),
-        form_port_no(10080),
-        form_session_timeout(7200),
         warning(false),
         makefileData( _makefileData ),
         projectData( _projectData ),
         userSession( _userSession )
         {};
-        
+
    /**
     * This function is call from the view when it comes a client request.
     */
@@ -68,39 +64,47 @@ public:
     );
 
     /**
-     * If this variable value not empty than it is a message for the
-     * user (target for display in the web user interface).
+     * Feedback dialogue text
      */
     std::string feedback;
-
-    /**
-     * This variable storage the last user form input or the default value
-     * for the host name configuration.
-     */
-    std::string form_hostname;
-
-    /**
-     * This variable storage the last user form input or the default value
-     * for the port number configuration.
-     */
-    std::string form_host_ipv4;
-
-    /**
-     * This variable storage the last user form input or the default value
-     * for the port number configuration.
-     */
-    int form_port_no;
-
-    /**
-     * This variable storage the last user form input or the default value
-     * for the session time out configuration.
-     */
-    int form_session_timeout;
 
     /**
      * If this set true than the feeback text get a warning css stile.
      */
     bool warning;
+
+    /**
+     * Get name of controller class.
+     */
+    std::string getControllerName(){
+        return this->controllerName;
+    }
+
+     /**
+     * Get the name of the ecpp view file.
+     */
+     std::string getEcppFileName(){
+         return this->ecppFileName;
+     }
+
+    /**
+     * Get the name of model class.
+     */
+     std::string getModelName(){
+        return this->modelName;
+     }
+
+     /**
+     * Get the namespace name.
+     */
+     std::string getNameSpace(){
+         return this->nameSpace;
+     }
+
+    /**
+     * Get a list of model properties.
+     */
+    std::vector<std::string> getPropertyList();
 
 
 private:
@@ -121,6 +125,33 @@ private:
     Tww::Core::UserSession& userSession;
 
     /**
+     * The name of the controller class.
+     */
+    std::string controllerName;
+
+    /**
+     * The namespace of the new componet.
+     */
+    std::string nameSpace;
+
+    /**
+     * The name of the ecpp view file.
+     */
+    std::string ecppFileName;
+
+    /**
+     * The name of the model class.
+     */
+    std::string modelName;
+
+    /**
+     * A map of model properties
+     */
+    std::map<std::string,std::string> propertyMap;
+
+
+
+    /**
      * Get the path to file "./tntwebwizard.pro".
      */
     std::string getProjectFilePath();
@@ -129,11 +160,6 @@ private:
      * Get the path to file "./Makefile.tnt".
      */
     std::string getMakefilePath();
-
-    /**
-     * Some plausibility data checks before start working.
-     */
-    bool preChecksOk ( WebApplicationCoreManager& webappManager );
 
 };
 
