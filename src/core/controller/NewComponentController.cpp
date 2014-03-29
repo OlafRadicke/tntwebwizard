@@ -37,18 +37,7 @@ namespace Core {
 
 log_define("Core.NewComponentController")
 
-std::vector<std::string> NewComponentController::getPropertyList(){
-    std::vector<std::string> allProperties;
-    std::map<std::string,std::string> propertyMap;
-    for (
-        std::map<std::string,std::string>::iterator it=this->propertyMap.begin();
-        it!=this->propertyMap.end();
-        ++it
-    ){
-        allProperties.push_back( it->second + "  " + it->first );
-    }
-    return allProperties;
-}
+
 
 
 void NewComponentController::worker (
@@ -73,8 +62,7 @@ void NewComponentController::worker (
     this->controllerName =
         qparam.arg<std::string>("form_controllername");
 
-    this->modelName =
-        qparam.arg<std::string>("form_modelname");
+    this->newModelData.setName( qparam.arg<std::string>("form_modelname")) ;
 
     // save button pressed
     if ( qparam.arg<bool>("form_create_button") == true ) {
@@ -87,14 +75,17 @@ void NewComponentController::worker (
         // click button "add a property"
         if ( qparam.arg<bool>("form_add_property") == true  ) {
         log_debug("add_property is pushed..." );
-            propertyMap[qparam.arg<std::string>("form_property_name")]
-                = qparam.arg<std::string>("form_property_type");
-
+            this->newModelData.addProperty(
+                qparam.arg<std::string>("form_property_name"),
+                qparam.arg<std::string>("form_property_type")
+            );
         } else {
 
         }
     }
 }
+
+
 
 
 std::string NewComponentController::getProjectFilePath(){

@@ -24,6 +24,7 @@
 #include <core/model/MakefileData.h>
 #include <core/model/ProjectData.h>
 #include <core/model/UserSession.h>
+#include <core/model/NewModelData.h>
 
 #include <tnt/httprequest.h>
 #include <tnt/httpreply.h>
@@ -46,13 +47,22 @@ public:
     NewComponentController(
         Tww::Core::UserSession& _userSession,
         Tww::Core::ProjectData& _projectData,
-        Tww::Core::MakefileData& _makefileData
+        Tww::Core::MakefileData& _makefileData,
+        Tww::Core::NewModelData& _newModelData
     ):
         warning(false),
+        newModelData(_newModelData),
         makefileData( _makefileData ),
         projectData( _projectData ),
         userSession( _userSession )
         {};
+
+    // === A ===
+
+
+    // === S ===
+
+    // === W ===
 
    /**
     * This function is call from the view when it comes a client request.
@@ -87,13 +97,6 @@ public:
          return this->ecppFileName;
      }
 
-    /**
-     * Get the name of model class.
-     */
-     std::string getModelName(){
-        return this->modelName;
-     }
-
      /**
      * Get the namespace name.
      */
@@ -101,13 +104,30 @@ public:
          return this->nameSpace;
      }
 
-    /**
-     * Get a list of model properties.
-     */
-    std::vector<std::string> getPropertyList();
 
 
 private:
+
+    /**
+     * The name of the controller class.
+     */
+    std::string controllerName;
+
+    /**
+     * The name of the ecpp view file.
+     */
+    std::string ecppFileName;
+
+    /**
+     * The namespace of the new componet.
+     */
+    std::string nameSpace;
+
+    /**
+     * This class storage the information about the model class in
+     * the new component.
+     */
+    Tww::Core::NewModelData& newModelData;
 
     /**
      * Represent the makefile data.
@@ -124,42 +144,19 @@ private:
      */
     Tww::Core::UserSession& userSession;
 
-    /**
-     * The name of the controller class.
-     */
-    std::string controllerName;
+    // === FUNCTIONS ===
 
     /**
-     * The namespace of the new componet.
+     * Get the path to file "./Makefile.tnt".
      */
-    std::string nameSpace;
-
-    /**
-     * The name of the ecpp view file.
-     */
-    std::string ecppFileName;
-
-    /**
-     * The name of the model class.
-     */
-    std::string modelName;
-
-    /**
-     * A map of model properties
-     */
-    std::map<std::string,std::string> propertyMap;
-
-
+    std::string getMakefilePath();
 
     /**
      * Get the path to file "./tntwebwizard.pro".
      */
     std::string getProjectFilePath();
 
-    /**
-     * Get the path to file "./Makefile.tnt".
-     */
-    std::string getMakefilePath();
+
 
 };
 

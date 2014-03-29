@@ -20,12 +20,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     include="core/model/UserSession.h"
     include="core/model/ProjectData.h"
     include="core/model/MakefileData.h"
+    include="core/model/NewModelData.h"
     include="formtoken/manager/manager.h">
         Tww::Core::UserSession userSession(
             FormToken::Manager::getRawToken( request )
         );
         Tww::Core::ProjectData projectData();
         Tww::Core::MakefileData makefileData();
+        Tww::Core::NewModelData newModelData();
 </%session>
 <%request
     include="core/controller/NewComponentController.h" >
@@ -33,7 +35,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             controller(
                 userSession,
                 projectData,
-                makefileData
+                makefileData,
+                newModelData
             );
 </%request>
 <%pre>
@@ -46,7 +49,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         reply,
         qparam
     );
-
 </%cpp>
 <!DOCTYPE HTML>
 <html>
@@ -118,7 +120,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             type="text"
                             size="30"
                             maxlength="30"
-                            value="<$ controller.getModelName() $>">
+                            value="<$ newModelData.getName() $>">
                     </div>
 
                     <div class="form_labels">
@@ -150,7 +152,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     </div>
 
                         <ul>
-% std::vector<std::string> allProperties = controller.getPropertyList();
+% std::vector<std::string> allProperties = newModelData.getPropertyList();
 % for (unsigned int i=0; i<allProperties.size() ; i++) {
                             <li><$  allProperties[i] $></li>
 % }
