@@ -54,6 +54,7 @@ The TNT-WEB-WIZARD (TWW)  is a wizard for tntnet projects with a web user interf
             <ul>
                 <li>Planned
                     <ul>
+                        <li>favicon.ico upload in core create process</li>
                         <li>GitHub support (open existing projects)</li>
                         <li>Support for editing the project configuration of a existing project</li>
                         <li>Support for editing the makefile of a existing project</li>
