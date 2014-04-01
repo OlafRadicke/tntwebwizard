@@ -20,6 +20,7 @@
 
 #include <core/controller/NewComponentController.h>
 
+#include <core/manager/WebApplicationCoreManager.h>
 #include <core/model/MakefileData.h>
 #include <core/model/ProjectData.h>
 #include <core/model/TntWebWizardException.h>
@@ -52,6 +53,9 @@ void NewComponentController::worker (
         << "\n form_add_property\n "
         <<  qparam.arg<bool>("form_add_property")
     );
+
+    //
+    if ( this->isProjectFounded() == false ) return;
 
     this->nameSpace =
         qparam.arg<std::string>("form_namespace");
@@ -86,6 +90,38 @@ void NewComponentController::worker (
 }
 
 
+bool NewComponentController::isProjectFounded() {
+
+    // read project configuration...
+    this->projectData.read( this->getProjectFilePath() );
+    this->makefileData.read( this->getMakefilePath() );
+    // check is this step allowed.
+    WebApplicationCoreManager webappManager(
+        this->userSession,
+        this->projectData,
+        this->makefileData
+    );
+
+    if( webappManager.isApplicationCoreExist() == false ) {
+        this->feedback = "There is no core project exist! Go back to menu \"Basic project data\".";
+        this->warning = true;
+        return false;
+    }
+    if( this->makefileData.getBinName() == "" ) {
+        this->feedback = "The binary file name is not set! Go back to menu \"Basic project data\".";
+        this->warning = true;
+        return false;
+    }
+
+    if ( this->projectData.getSourceCodeHeader() == "" ) {
+        this->feedback = "The licence template for the source code header is \
+        not set. Go to the menu point \"Basic project data\" make the basic \
+        configuration please.";
+        this->warning = true;
+        return false;
+    }
+    return true;
+}
 
 
 std::string NewComponentController::getProjectFilePath(){

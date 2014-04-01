@@ -156,7 +156,11 @@ private:
      */
     std::string getProjectFilePath();
 
-
+    // === P ===
+    /**
+     * Some plausibility data checks before start working.
+     */
+    bool isProjectFounded( );
 
 };
 
