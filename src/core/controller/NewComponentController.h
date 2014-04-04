@@ -51,7 +51,7 @@ public:
         Tww::Core::NewModelData& _newModelData
     ):
         warning(false),
-        newModelData(_newModelData),
+        newModelData( _newModelData ),
         makefileData( _makefileData ),
         projectData( _projectData ),
         userSession( _userSession )

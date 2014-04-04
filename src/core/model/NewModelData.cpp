@@ -27,6 +27,10 @@
 #include <fstream>
 #include <ostream>
 
+#include <string>         // std::string
+#include <locale>         // std::locale, std::toupper
+// #include <algorithm>
+
 namespace Tww {
 namespace Core {
 
@@ -34,7 +38,40 @@ log_define("Core.NewModelData")
 
 // === A ===
 
+// === C ===
 
+
+void NewModelData::createCppFile(){
+
+    //pass
+}
+
+void NewModelData::createFiles( Tww::Core::ProjectData& _projectData ){
+    this->createHFile( _projectData );
+    this->createCppFile();
+}
+
+
+void NewModelData::createHFile( Tww::Core::ProjectData& _projectData ){
+    log_debug("createHFile()" );
+    std::ofstream writting_file;
+    std::ostringstream fileContent;
+
+    fileContent
+        << "/* \n"
+        << _projectData.getSourceCodeHeader()
+        << "\n*/ \n\n"
+        << "#ifndef " << toUpper( this->componentNamespace )
+        << "_" << toUpper( this->modelName ) << "_H \n"
+        << "#define " << toUpper( this->componentNamespace )
+        << "_" << toUpper( this->modelName ) << "_H \n"
+
+
+        << "#endif"
+    ;
+    log_debug( "\n++++++++++++++++++++++++++++\n" << fileContent.str() << "\n+++++++++++++++++++++++++++\n");
+
+}
 
 // === G ===
 
@@ -56,6 +93,17 @@ std::vector<std::string> NewModelData::getPropertyList(){
 
 // === R ===
 
+// === U ===
+
+std::string NewModelData::toUpper( std::string _mixedString ){
+    std::ostringstream upperString;
+//     std::locale loc("de_DE.UTF8");
+    std::locale loc;
+
+    for (std::string::size_type i=0; i<_mixedString.length(); ++i)
+        upperString << std::toupper(_mixedString[i],loc);
+    return upperString.str();
+}
 
 
 // === W ===

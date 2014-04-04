@@ -173,9 +173,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </div>
             <div class="form_inputs">
                 <button
-                    name="form_save_button"
+                    name="form_create_button"
                     type="submit"
-                    value="form_save_button" >Create component</button>
+                    value="form_create_button" >Create component</button>
             </div>
 
         </form>

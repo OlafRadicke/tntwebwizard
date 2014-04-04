@@ -82,7 +82,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <div id="menu">
         <ul class="nav">
             <li class="header">Project configuration</li>
-            <li><a href="/">Home</a></li>
             <li><a href="<$ href_core_basicprojectdata $>">Basic project data</a></li>
 % if(
 %     !webappManager.isApplicationCoreExist()
@@ -91,8 +90,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <li><a href="<$ href_core_createapplicationcore $>">Create project core</a></li>
 % }
 % if( webappManager.isApplicationCoreExist() ){
-            <li><a href="<$ href_download_zip $>">Download</a></li>
             <li><a href="<$ href_core_newcomponent $>">New component</a></li>
+            <li><a href="<$ href_download_zip $>">Download</a></li>
             <li><a href="<$ href_core_projectreset $>">Reset</a></li>
 % }
 <!--

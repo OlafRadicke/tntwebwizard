@@ -48,8 +48,8 @@ void NewComponentController::worker (
 ){
     log_debug("NewComponentController::worker..." );
     log_debug(
-        "\n form_save_button\n "
-        << qparam.arg<bool>("form_save_button")
+        "\n form_create_button\n "
+        << qparam.arg<bool>("form_create_button")
         << "\n form_add_property\n "
         <<  qparam.arg<bool>("form_add_property")
     );
@@ -71,6 +71,8 @@ void NewComponentController::worker (
     // save button pressed
     if ( qparam.arg<bool>("form_create_button") == true ) {
         log_debug("create_button is pushed..." );
+        this->newModelData.setNamespace( this->nameSpace );
+        this->newModelData.createFiles( this->projectData );
 
         this->feedback = "Okay! Project core is created now!";
         this->warning = false;

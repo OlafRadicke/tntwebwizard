@@ -21,6 +21,9 @@
 #ifndef CORE_NEWMODELDATA_H
 #define CORE_NEWMODELDATA_H
 
+#include <core/model/ProjectData.h>
+#include <core/model/MakefileData.h>
+
 #include <map>
 #include <vector>
 #include <string>
@@ -49,6 +52,12 @@ public:
         this->propertyMap[ _property_name ] = _property_type;
     };
 
+    // === C ===
+
+    /**
+     * This function create the code files of a model.
+     */
+    void createFiles( Tww::Core::ProjectData& _projectData );
 
     // === G ===
 
@@ -74,6 +83,13 @@ public:
         this->modelName = _name;
     }
 
+    /**
+     * Set the name of namespace.
+     */
+    void setNamespace( std::string _name ){
+        this->componentNamespace = _name;
+    }
+
 
 private:
 
@@ -86,6 +102,29 @@ private:
      * A map of model properties
      */
     std::map<std::string,std::string> propertyMap;
+
+
+    /**
+     * The namespace of the new component.
+     */
+    std::string componentNamespace;
+
+    // === FUNCTIONS ===
+
+
+    /**
+     * This function create the implementation code file (".cpp") of a model.
+     */
+    void createCppFile();
+
+    /**
+     * This function create the header code file (".h") of a model.
+     */
+    void createHFile( Tww::Core::ProjectData& _projectData );
+
+    std::string toUpper( std::string _mixedString );
+
+
 
 };
 
