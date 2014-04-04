@@ -41,7 +41,9 @@ class NewModelData {
 public:
 
     NewModelData():
-        modelName("rename_me"){};
+        getterFunctions(true),
+        modelName("rename_me"),
+        setterFunctions(true){};
 
     // === A ===
 
@@ -53,6 +55,7 @@ public:
     };
 
     // === C ===
+
 
     /**
      * This function create the code files of a model.
@@ -68,11 +71,44 @@ public:
         return this->modelName;
      }
 
-
     /**
      * Get a list of model properties in form "[type] [name]".
      */
     std::vector<std::string> getPropertyList();
+
+    // === I ===
+
+    /**
+     * If will create getter functions than it get back true.
+     */
+    bool isGetterFunctions() {
+        return this->getterFunctions;
+    }
+
+
+    /**
+     * This function set the value of getterFunctions.
+     * If that set true than it will create getter functions.
+     */
+    void isGetterFunctions( bool _newValue) {
+        this->getterFunctions = _newValue;
+    }
+
+    /**
+     * If will create setter functions than it get back true.
+     */
+    bool isSetterFunctions() {
+        return this->setterFunctions;
+    }
+
+
+    /**
+     * This function set the value of setterFunctions.
+     * If that set true than it will create getter functions.
+     */
+    void isSetterFunctions( bool _newValue) {
+        this->setterFunctions = _newValue;
+    }
 
     // === S ===
 
@@ -94,6 +130,11 @@ public:
 private:
 
     /**
+     * If this value true than it will create getter functions.
+     */
+    bool getterFunctions;
+
+    /**
      * The name of the model class.
      */
     std::string modelName;
@@ -109,8 +150,13 @@ private:
      */
     std::string componentNamespace;
 
-    // === FUNCTIONS ===
 
+    /**
+     * If this value true than it will create setter functions.
+     */
+    bool setterFunctions;
+
+    // === FUNCTIONS ===
 
     /**
      * This function create the implementation code file (".cpp") of a model.
@@ -122,9 +168,10 @@ private:
      */
     void createHFile( Tww::Core::ProjectData& _projectData );
 
+    /**
+     * This function change all character in upper-case and get it back.
+     */
     std::string toUpper( std::string _mixedString );
-
-
 
 };
 

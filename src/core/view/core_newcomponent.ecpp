@@ -144,6 +144,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <label></label>
                 </div>
                 <div class="form_inputs">
+                    <input
+                        id="property_name"
+                        name="form_property_name"
+                        type="text"
+                        size="30"
+                        maxlength="30">
                     <select
                         id="property_type"
                         name="form_property_type">
@@ -154,18 +160,46 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <option value="unsigned int">unsigned int</option>
                         <option value="bool">bool</option>
                     </select>
-                    <input
-                        id="property_name"
-                        name="form_property_name"
-                        type="text"
-                        size="30"
-                        maxlength="30">
 
                     <button
                         name="form_add_property"
                         type="submit"
                         value="form_add_property" >Add property</button>
                 </div>
+
+                <div class="form_labels">
+                    <label from="getter_functions">Create setter functions:</label>
+                </div>
+                <div class="form_inputs">
+                    <input
+                        type="checkbox"
+                        id="getter_functions"
+                        value="true"
+                        name="form_getter_functions"
+%     if ( newModelData.isGetterFunctions() ) {
+                        checked >
+%     } else {
+                        >
+%     }
+                </div>
+
+                <div class="form_labels">
+                    <label from="setter_functions">Create setter functions:</label>
+                </div>
+                <div class="form_inputs">
+                    <input
+                        type="checkbox"
+                        id="setter_functions"
+                        value="true"
+                        name="form_setter_functions"
+%     if ( newModelData.isSetterFunctions() ) {
+                        checked >
+%     } else {
+                        >
+%     }
+                </div>
+
+
             </fieldset>
 
             <div class="form_labels">

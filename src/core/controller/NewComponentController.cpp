@@ -57,16 +57,21 @@ void NewComponentController::worker (
     //
     if ( this->isProjectFounded() == false ) return;
 
-    this->nameSpace =
-        qparam.arg<std::string>("form_namespace");
-
-    this->ecppFileName =
-        qparam.arg<std::string>("form_ecppfilename");
-
-    this->controllerName =
-        qparam.arg<std::string>("form_controllername");
-
-    this->newModelData.setName( qparam.arg<std::string>("form_modelname")) ;
+    if ( qparam.arg<bool>("form_create_button") == true
+        or qparam.arg<bool>("form_add_property") == true
+    ) {
+        this->nameSpace =
+            qparam.arg<std::string>("form_namespace");
+        this->ecppFileName =
+            qparam.arg<std::string>("form_ecppfilename");
+        this->controllerName =
+            qparam.arg<std::string>("form_controllername");
+        this->newModelData.setName( qparam.arg<std::string>("form_modelname") );
+        this->newModelData.isGetterFunctions(
+            qparam.arg<bool>("form_getter_functions") );
+        this->newModelData.isSetterFunctions(
+            qparam.arg<bool>("form_setter_functions") );
+    }
 
     // save button pressed
     if ( qparam.arg<bool>("form_create_button") == true ) {
@@ -81,10 +86,16 @@ void NewComponentController::worker (
         // click button "add a property"
         if ( qparam.arg<bool>("form_add_property") == true  ) {
         log_debug("add_property is pushed..." );
-            this->newModelData.addProperty(
-                qparam.arg<std::string>("form_property_name"),
-                qparam.arg<std::string>("form_property_type")
-            );
+            if ( qparam.arg<std::string>("form_property_name") == "" ) {
+                this->feedback = "A property must be have a name!";
+                this->warning = true;
+                return;
+            } else {
+                this->newModelData.addProperty(
+                    qparam.arg<std::string>("form_property_name"),
+                    qparam.arg<std::string>("form_property_type")
+                );
+            }
         } else {
 
         }
