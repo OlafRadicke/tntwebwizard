@@ -146,7 +146,75 @@ void NewModelData::createHFile( Tww::Core::ProjectData& _projectData ){
         << "public:\n"
     ;
 
-    
+    if ( this->isConstructor() == true){
+        if ( _projectData.isDoxygenTemplates( ) == true ) {
+            fileContent
+                << "    /** \n"
+                << "     * @todo need a comment for constructor. \n"
+                << "     */\n"
+            ;
+        }
+        if( this->propertyMap.size() > 0 ){
+            int contvarinits = 0;
+            for (
+                std::map<std::string,std::string>::iterator it=this->propertyMap.begin();
+                it!=this->propertyMap.end();
+                ++it
+            ){
+                if(
+                    it->second  == "std::list"
+                    or it->second  == "cxxtools::String"
+                ){
+                    if(contvarinits == 0) {
+                        fileContent << "    " << this->modelName << "():\n";
+                    }
+                    if(contvarinits > 0) {
+                        fileContent << ",\n";
+                    }
+                    fileContent << "        " << it->first << "(\"\")";
+                    ++contvarinits;
+                }
+                if(
+                    it->second  == "int"
+                    or it->second  == "long int"
+                    or it->second  == "unsigned int"
+                ){
+                    if(contvarinits == 0) {
+                        fileContent << "    " << this->modelName << "():\n";
+                    }
+                    if(contvarinits > 0) {
+                        fileContent << ",\n";
+                    }
+                    fileContent << "        " << it->first << "(0)";
+                    ++contvarinits;
+                }
+                if( it->second  == "float" ){
+                    if(contvarinits == 0) {
+                        fileContent << "    " << this->modelName << "():\n";
+                    }
+                    if(contvarinits > 0) {
+                        fileContent << ",\n";
+                    }
+                    fileContent << "        " << it->first << "(0.0)";
+                    ++contvarinits;
+                }
+
+            }
+            fileContent << "{};\n\n";
+        } else {
+            fileContent << "    " << this->modelName << "(){};\n\n";
+        }
+    }
+    if ( this->isDestructor() == true){
+        if ( _projectData.isDoxygenTemplates( ) == true ) {
+            fileContent
+                << "    /** \n"
+                << "     * @todo need a comment for destructor. \n"
+                << "     */\n"
+            ;
+        }
+        fileContent << "    ~" << this->modelName << "(){};\n\n";
+    }
 
     log_debug("isGetterFunctions(): " << this->isGetterFunctions() );
     if ( this->isGetterFunctions() == true){
@@ -156,11 +224,10 @@ void NewModelData::createHFile( Tww::Core::ProjectData& _projectData ){
             it!=this->propertyMap.end();
             ++it
         ){
-            std::cout << it->first << " => " << it->second << '\n';
             if ( _projectData.isDoxygenTemplates( ) == true ) {
                 fileContent
                     << "    /** \n"
-                    << "     * @dodo need a comment. \n"
+                    << "     * @todo need a comment. \n"
                     << "     * @return \n"
                     << "     */\n"
                 ;
@@ -184,7 +251,7 @@ void NewModelData::createHFile( Tww::Core::ProjectData& _projectData ){
             if ( _projectData.isDoxygenTemplates( ) == true ) {
                 fileContent
                     << "    /** \n"
-                    << "     * @dodo need a comment. \n"
+                    << "     * @todo need a comment. \n"
                     << "     * @arg _newValue \n"
                     << "     */\n"
                 ;
@@ -207,7 +274,7 @@ void NewModelData::createHFile( Tww::Core::ProjectData& _projectData ){
     ){
         // std::cout << it->first << " => " << it->second << '\n';
         if ( _projectData.isDoxygenTemplates( ) == true ) {
-            fileContent  << "    /** @dodo need a comment. */\n" ;
+            fileContent  << "    /** @todo need a comment. */\n" ;
         }
         fileContent << "    " << it->second << " " << it->first << ";\n\n";
 

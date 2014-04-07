@@ -95,7 +95,6 @@ public:
         this->isClassConstructor = _newValue;
     }
 
-
     /**
      * If a class destructor needed than it get value true.
      */

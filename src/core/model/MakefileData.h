@@ -36,7 +36,7 @@ class MakefileData {
 
 
     /**
-    * define how to deserialize the project data file
+    * define how to deserialize the MakefileData class
     * @arg si serialization info
     * @arg projektData makefile data class
     */
