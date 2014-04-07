@@ -352,13 +352,19 @@ button:hover, button:active {
 div.form_labels {
     padding: 5px;
     clear: left;
+    text-align: top;
     display:inline-block;
     width: 20%;
     box-sizing: border-box;
 }
 
+div.form_labels.label{
+    text-align: top;
+}
+
 div.form_inputs {
     padding: 5px;
+    text-align: top;
     display:inline-block;
     width: 60%;
     box-sizing: border-box;

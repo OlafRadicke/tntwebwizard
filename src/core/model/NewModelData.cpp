@@ -30,6 +30,10 @@
 #include <string>         // std::string
 #include <locale>         // std::locale, std::toupper
 // #include <algorithm>
+#include <cxxtools/utf8codec.h>
+#include <cxxtools/string.h>
+#include <cxxtools/char.h>
+
 
 namespace Tww {
 namespace Core {
@@ -64,11 +68,156 @@ void NewModelData::createHFile( Tww::Core::ProjectData& _projectData ){
         << "#ifndef " << toUpper( this->componentNamespace )
         << "_" << toUpper( this->modelName ) << "_H \n"
         << "#define " << toUpper( this->componentNamespace )
-        << "_" << toUpper( this->modelName ) << "_H \n"
-
-
-        << "#endif"
+        << "_" << toUpper( this->modelName ) << "_H \n\n"
     ;
+
+
+    for (
+        std::map<std::string,std::string>::iterator it=this->propertyMap.begin();
+        it!=this->propertyMap.end();
+        ++it
+    ){
+        // std::cout << it->first << " => " << it->second << '\n';
+        if ( it->second == "std::string") {
+            fileContent  << "#include <string>\n";
+            break;
+        }
+    }
+    for (
+        std::map<std::string,std::string>::iterator it=this->propertyMap.begin();
+        it!=this->propertyMap.end();
+        ++it
+    ){
+        // std::cout << it->first << " => " << it->second << '\n';
+        if ( it->second == "std::vector") {
+            fileContent  << "#include <vector>\n";
+            break;
+        }
+    }
+    for (
+        std::map<std::string,std::string>::iterator it=this->propertyMap.begin();
+        it!=this->propertyMap.end();
+        ++it
+    ){
+        // std::cout << it->first << " => " << it->second << '\n';
+        if ( it->second == "std::map") {
+            fileContent  << "#include <map>\n";
+            break;
+        }
+    }
+    for (
+        std::map<std::string,std::string>::iterator it=this->propertyMap.begin();
+        it!=this->propertyMap.end();
+        ++it
+    ){
+        // std::cout << it->first << " => " << it->second << '\n';
+        if ( it->second == "std::list") {
+            fileContent  << "#include <list>\n";
+            break;
+        }
+    }
+    for (
+        std::map<std::string,std::string>::iterator it=this->propertyMap.begin();
+        it!=this->propertyMap.end();
+        ++it
+    ){
+        // std::cout << it->first << " => " << it->second << '\n';
+        if ( it->second == "std::stringstream") {
+            fileContent  << "#include <sstream>\n";
+            break;
+        }
+    }
+    if ( this->serializationSupport == true ){
+        fileContent  << "#include <cxxtools/serializationinfo.h>\n";
+    }
+    if( this->componentNamespace != "" ){
+        fileContent  << "namespace " << this->componentNamespace << " {\n\n";
+    }
+    if( _projectData.isDoxygenTemplates( ) == true ){
+        fileContent
+            << "/** \n"
+            << "* @class " << this->modelName << " This class storage the data of ... \n"
+            << "* @todo fill this with information!\n"
+            << "*/\n"
+        ;
+    }
+    fileContent
+        << "class " << this->modelName << " {\n\n"
+        << "public:\n"
+    ;
+
+    
+
+    log_debug("isGetterFunctions(): " << this->isGetterFunctions() );
+    if ( this->isGetterFunctions() == true){
+        log_debug( "this->propertyMap.end(): " << this->propertyMap.size() );
+        for (
+            std::map<std::string,std::string>::iterator it=this->propertyMap.begin();
+            it!=this->propertyMap.end();
+            ++it
+        ){
+            std::cout << it->first << " => " << it->second << '\n';
+            if ( _projectData.isDoxygenTemplates( ) == true ) {
+                fileContent
+                    << "    /** \n"
+                    << "     * @dodo need a comment. \n"
+                    << "     * @return \n"
+                    << "     */\n"
+                ;
+            }
+            fileContent
+                << "    " << it->second << " get_" << it->first << "(){\n"
+                << "        return this->" << it->first << ";\n"
+                << "    };\n\n";
+
+        }
+    }
+    log_debug("isSetterFunctions(): " << this->isSetterFunctions() );
+    if ( this->isSetterFunctions() == true){
+        log_debug("this->propertyMap.end(): " << this->propertyMap.size() );
+        for (
+            std::map<std::string,std::string>::iterator it=this->propertyMap.begin();
+            it!=this->propertyMap.end();
+            ++it
+        ){
+            std::cout << it->first << " => " << it->second << '\n';
+            if ( _projectData.isDoxygenTemplates( ) == true ) {
+                fileContent
+                    << "    /** \n"
+                    << "     * @dodo need a comment. \n"
+                    << "     * @arg _newValue \n"
+                    << "     */\n"
+                ;
+            }
+            fileContent
+                << "    " << it->second << " set_" << it->first << "( "
+                << it->second << " _newValue ){\n"
+                << "        this->" << it->first << " = _newValue;\n"
+                << "    };\n\n"
+            ;
+
+        }
+    }
+
+    fileContent << "private:\n";
+    for (
+        std::map<std::string,std::string>::iterator it=this->propertyMap.begin();
+        it!=this->propertyMap.end();
+        ++it
+    ){
+        // std::cout << it->first << " => " << it->second << '\n';
+        if ( _projectData.isDoxygenTemplates( ) == true ) {
+            fileContent  << "    /** @dodo need a comment. */\n" ;
+        }
+        fileContent << "    " << it->second << " " << it->first << ";\n\n";
+
+    }
+
+    if( this->componentNamespace != ""){
+        fileContent  << "} // and of namespace " << this->componentNamespace << "\n";
+    }
+    fileContent << "#endif" ;
+
     log_debug( "\n++++++++++++++++++++++++++++\n" << fileContent.str() << "\n+++++++++++++++++++++++++++\n");
 
 }
@@ -82,7 +231,7 @@ std::vector<std::string> NewModelData::getPropertyList(){
         it!=this->propertyMap.end();
         ++it
     ){
-        allProperties.push_back( it->second + "  " + it->first );
+        allProperties.push_back( it->second + " " + it->first );
     }
     return allProperties;
 }
@@ -99,12 +248,23 @@ std::string NewModelData::toUpper( std::string _mixedString ){
     std::ostringstream upperString;
 //     std::locale loc("de_DE.UTF8");
     std::locale loc;
-
-    for (std::string::size_type i=0; i<_mixedString.length(); ++i)
+    for (std::string::size_type i=0; i<_mixedString.length(); ++i){
         upperString << std::toupper(_mixedString[i],loc);
+    }
     return upperString.str();
 }
 
+std::string NewModelData::cxxToUpper( std::string _mixedString ){
+    std::ostringstream upperString;
+    cxxtools::String lastLetter;
+    cxxtools::String uMixedString = cxxtools::Utf8Codec::decode( _mixedString );
+    for ( cxxtools::String::size_type i=0;
+            i < uMixedString.length();
+            ++i){
+        upperString << cxxtools::toupper(uMixedString[i]);
+    }
+    return upperString.str();
+}
 
 // === W ===
 

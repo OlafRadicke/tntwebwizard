@@ -128,21 +128,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         value="<$ newModelData.getName() $>">
                 </div>
 
+<!-- property_type -->
                 <div class="form_labels">
-                    <label from="property_type">Property:</label>
-                </div>
-                <div class="form_inputs">
-
-                    <ul>
+                    <label from="property_list">Property:</label>
+                    <br>
+                    <ul id="property_list">
 % std::vector<std::string> allProperties = newModelData.getPropertyList();
 % for (unsigned int i=0; i<allProperties.size() ; i++) {
                             <li><$  allProperties[i] $></li>
 % }
                     <ul>
                 </div>
-                <div class="form_labels">
-                    <label></label>
-                </div>
+
                 <div class="form_inputs">
                     <input
                         id="property_name"
@@ -154,11 +151,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         id="property_type"
                         name="form_property_type">
                         <option value="int">int</option>
-                        <option value="std::string">std::string</option>
-                        <option value="cxxtools::String">cxxtools::String</option>
-                        <option value="std::vector">std::vector</option>
-                        <option value="unsigned int">unsigned int</option>
                         <option value="bool">bool</option>
+                        <option value="float">float</option>
+                        <option value="long int">long int</option>
+                        <option value="unsigned int">unsigned int</option>
+                        <option value="cxxtools::String">cxxtools::String</option>
+                        <option value="std::list">std::list</option>
+                        <option value="std::map">std::map</option>
+                        <option value="std::string">std::string</option>
+                        <option value="std::stringstream">std::stringstream</option>
+                        <option value="std::vector">std::vector</option>
                     </select>
 
                     <button
@@ -167,8 +169,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         value="form_add_property" >Add property</button>
                 </div>
 
+<!-- getter_functions -->
                 <div class="form_labels">
-                    <label from="getter_functions">Create setter functions:</label>
+                    <label from="getter_functions">Create getter functions:</label>
                 </div>
                 <div class="form_inputs">
                     <input
@@ -183,6 +186,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %     }
                 </div>
 
+<!-- setter_functions -->
                 <div class="form_labels">
                     <label from="setter_functions">Create setter functions:</label>
                 </div>
@@ -198,6 +202,58 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         >
 %     }
                 </div>
+
+<!-- constructor -->
+                <div class="form_labels">
+                    <label from="constructor">Create constructor:</label>
+                </div>
+                <div class="form_inputs">
+                    <input
+                        type="checkbox"
+                        id="constructor"
+                        value="true"
+                        name="form_constructor"
+%     if ( newModelData.isConstructor() ) {
+                        checked >
+%     } else {
+                        >
+%     }
+                </div>
+
+<!-- destructor -->
+                <div class="form_labels">
+                    <label from="destructor">Create destructor:</label>
+                </div>
+                <div class="form_inputs">
+                    <input
+                        type="checkbox"
+                        id="destructor"
+                        value="true"
+                        name="form_destructor"
+%     if ( newModelData.isDestructor() ) {
+                        checked >
+%     } else {
+                        >
+%     }
+                </div>
+
+<!-- serialization -->
+                <div class="form_labels">
+                    <label from="serialization">Add serialization support:</label>
+                </div>
+                <div class="form_inputs">
+                    <input
+                        type="checkbox"
+                        id="serialization"
+                        value="true"
+                        name="form_serialization"
+%     if ( newModelData.isSerializationSupported() ) {
+                        checked >
+%     } else {
+                        >
+%     }
+                </div>
+
 
 
             </fieldset>

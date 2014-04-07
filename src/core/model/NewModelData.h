@@ -42,8 +42,10 @@ public:
 
     NewModelData():
         getterFunctions(true),
-        modelName("rename_me"),
-        setterFunctions(true){};
+        isClassConstructor(true),
+        isClassDestructor(false),
+        setterFunctions(true),
+        serializationSupport(false){};
 
     // === A ===
 
@@ -79,6 +81,37 @@ public:
     // === I ===
 
     /**
+     * If a class constructor needed than it get value true.
+     */
+    bool isConstructor(){
+        return this->isClassConstructor;
+    }
+
+    /**
+     * This function set the value of property isClassConstructor.
+     * @arg _newValue If that set true than it will create a class constructor.
+     */
+    void isConstructor( bool _newValue){
+        this->isClassConstructor = _newValue;
+    }
+
+
+    /**
+     * If a class destructor needed than it get value true.
+     */
+    bool isDestructor(){
+        return this->isClassDestructor;
+    }
+
+    /**
+     * This function set the value of property isClassDestructor.
+     * @arg _newValue If that set true than it will create a class Destructor.
+     */
+    void isDestructor( bool _newValue){
+        this->isClassDestructor = _newValue;
+    }
+
+    /**
      * If will create getter functions than it get back true.
      */
     bool isGetterFunctions() {
@@ -87,8 +120,8 @@ public:
 
 
     /**
-     * This function set the value of getterFunctions.
-     * If that set true than it will create getter functions.
+     * This function set the value of property getterFunctions.
+     * @arg _newValue If that set true than it will create getter functions.
      */
     void isGetterFunctions( bool _newValue) {
         this->getterFunctions = _newValue;
@@ -101,13 +134,28 @@ public:
         return this->setterFunctions;
     }
 
-
     /**
-     * This function set the value of setterFunctions.
-     * If that set true than it will create getter functions.
+     * This function set the value of property setterFunctions.
+     * @arg _newValue If that set true than it will create getter functions.
      */
     void isSetterFunctions( bool _newValue) {
         this->setterFunctions = _newValue;
+    }
+
+    /**
+     * If serialization support needed than it get value true.
+     */
+    bool isSerializationSupported() {
+        return this->serializationSupport;
+    }
+
+    /**
+     * This function set the value of property serializationSupport.
+     * @arg _newValue If this value true than it will create a class with
+     * serialization support.
+     */
+    void isSerializationSupported( bool _newValue ) {
+        this->serializationSupport = _newValue;
     }
 
     // === S ===
@@ -135,6 +183,16 @@ private:
     bool getterFunctions;
 
     /**
+     * If this value true than it will create a class constructor.
+     */
+    bool isClassConstructor;
+
+    /**
+     * If this value true than it will create a class destructor.
+     */
+    bool isClassDestructor;
+
+    /**
      * The name of the model class.
      */
     std::string modelName;
@@ -156,6 +214,11 @@ private:
      */
     bool setterFunctions;
 
+    /**
+     * If this value true than it will create a class this serialization support.
+     */
+    bool serializationSupport;
+
     // === FUNCTIONS ===
 
     /**
@@ -172,6 +235,11 @@ private:
      * This function change all character in upper-case and get it back.
      */
     std::string toUpper( std::string _mixedString );
+
+    /**
+     * Do the same like toUpper function but use cxxtools lib.
+     */
+    std::string cxxToUpper( std::string _mixedString );
 
 };
 

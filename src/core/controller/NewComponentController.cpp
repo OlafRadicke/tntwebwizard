@@ -71,6 +71,12 @@ void NewComponentController::worker (
             qparam.arg<bool>("form_getter_functions") );
         this->newModelData.isSetterFunctions(
             qparam.arg<bool>("form_setter_functions") );
+        this->newModelData.isConstructor(
+            qparam.arg<bool>("form_constructor") );
+        this->newModelData.isDestructor(
+            qparam.arg<bool>("form_destructor") );
+        this->newModelData.isSerializationSupported(
+            qparam.arg<bool>("form_serialization") );
     }
 
     // save button pressed
