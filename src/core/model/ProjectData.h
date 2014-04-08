@@ -41,7 +41,10 @@ class ProjectData {
     * @arg si serialization info
     * @arg projektData project data class
     */
-    friend void operator>>= (const cxxtools::SerializationInfo& si, ProjectData& projektData );
+    friend void operator>>= (
+        const cxxtools::SerializationInfo& si,
+        ProjectData& projektData
+    );
 
 
     /**
@@ -49,7 +52,10 @@ class ProjectData {
     * @arg si serialization info
     * @arg ProjectData project data class
     */
-    friend void operator<<= ( cxxtools::SerializationInfo& si, const ProjectData& projektData );
+    friend void operator<<= (
+        cxxtools::SerializationInfo& si,
+        const ProjectData& projektData
+    );
 
 public:
 

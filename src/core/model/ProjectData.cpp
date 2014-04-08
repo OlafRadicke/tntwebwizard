@@ -82,8 +82,10 @@ std::string ProjectData::getXml( ) {
 
 // === O ===
 
-void operator>>= (const cxxtools::SerializationInfo& si, ProjectData& projektData )
-{
+void operator>>= (
+    const cxxtools::SerializationInfo& si,
+    ProjectData& projektData
+){
     si.getMember("wizard_version")     >>= projektData.wizardVersion;
     si.getMember("project_name")       >>= projektData.projectName;
     si.getMember("source_code_header") >>= projektData.sourceCodeHeader;
@@ -94,8 +96,10 @@ void operator>>= (const cxxtools::SerializationInfo& si, ProjectData& projektDat
 
 }
 
-void operator<<= ( cxxtools::SerializationInfo& si, const ProjectData& projektData )
-{
+void operator<<= (
+    cxxtools::SerializationInfo& si,
+    const ProjectData& projektData
+){
     si.addMember("wizard_version")     <<= projektData.getWizardVersion( );
     si.addMember("project_name")       <<= projektData.getProjectName( );
     si.addMember("source_code_header") <<= projektData.getSourceCodeHeader( );

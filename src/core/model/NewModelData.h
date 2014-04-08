@@ -21,8 +21,9 @@
 #ifndef CORE_NEWMODELDATA_H
 #define CORE_NEWMODELDATA_H
 
-#include <core/model/ProjectData.h>
 #include <core/model/MakefileData.h>
+#include <core/model/ProjectData.h>
+#include <core/model/UserSession.h>
 
 #include <map>
 #include <vector>
@@ -40,12 +41,19 @@ class NewModelData {
 
 public:
 
-    NewModelData():
+    NewModelData(
+        Tww::Core::UserSession& _userSession,
+        Tww::Core::ProjectData& _projectData,
+        Tww::Core::MakefileData& _makefileData
+    ):
+        makefileData( _makefileData ),
+        projectData( _projectData ),
+        userSession( _userSession ),
         getterFunctions(true),
         isClassConstructor(true),
         isClassDestructor(false),
         setterFunctions(true),
-        serializationSupport(false){};
+        jsonSerializationSupport(false){};
 
     // === A ===
 
@@ -62,7 +70,7 @@ public:
     /**
      * This function create the code files of a model.
      */
-    void createFiles( Tww::Core::ProjectData& _projectData );
+    void createFiles( );
 
     // === G ===
 
@@ -83,7 +91,7 @@ public:
     /**
      * If a class constructor needed than it get value true.
      */
-    bool isConstructor(){
+    bool isConstructor() const {
         return this->isClassConstructor;
     }
 
@@ -98,7 +106,7 @@ public:
     /**
      * If a class destructor needed than it get value true.
      */
-    bool isDestructor(){
+    bool isDestructor() const {
         return this->isClassDestructor;
     }
 
@@ -113,7 +121,7 @@ public:
     /**
      * If will create getter functions than it get back true.
      */
-    bool isGetterFunctions() {
+    bool isGetterFunctions() const {
         return this->getterFunctions;
     }
 
@@ -129,10 +137,17 @@ public:
     /**
      * If will create setter functions than it get back true.
      */
-    bool isSetterFunctions() {
+    bool isSetterFunctions() const {
         return this->setterFunctions;
     }
 
+    /**
+     * If json serialization support needed than it get value true.
+     */
+    bool isJsonSerializationSupported() const {
+        return this->jsonSerializationSupport;
+    }
+    
     /**
      * This function set the value of property setterFunctions.
      * @arg _newValue If that set true than it will create getter functions.
@@ -141,20 +156,14 @@ public:
         this->setterFunctions = _newValue;
     }
 
-    /**
-     * If serialization support needed than it get value true.
-     */
-    bool isSerializationSupported() {
-        return this->serializationSupport;
-    }
 
     /**
-     * This function set the value of property serializationSupport.
+     * This function set the value of property jsonSerializationSupport.
      * @arg _newValue If this value true than it will create a class with
-     * serialization support.
+     * json serialization support.
      */
-    void isSerializationSupported( bool _newValue ) {
-        this->serializationSupport = _newValue;
+    void isJsonSerializationSupported( bool _newValue ) {
+        this->jsonSerializationSupport = _newValue;
     }
 
     // === S ===
@@ -175,6 +184,21 @@ public:
 
 
 private:
+
+    /**
+     * Represent the makefile data.
+     */
+    Tww::Core::MakefileData& makefileData;
+
+    /**
+     * Class with project data.
+     */
+    Tww::Core::ProjectData& projectData;
+
+    /**
+     * Session information.
+     */
+    Tww::Core::UserSession& userSession;
 
     /**
      * If this value true than it will create getter functions.
@@ -214,9 +238,10 @@ private:
     bool setterFunctions;
 
     /**
-     * If this value true than it will create a class this serialization support.
+     * If this value true than it will create a class with json  serialization
+     * support.
      */
-    bool serializationSupport;
+    bool jsonSerializationSupport;
 
     // === FUNCTIONS ===
 
@@ -228,7 +253,13 @@ private:
     /**
      * This function create the header code file (".h") of a model.
      */
-    void createHFile( Tww::Core::ProjectData& _projectData );
+    void createHFile( );
+
+
+    /**
+     * Convert stings to lower-case.
+     */
+    std::string toLower( std::string _mixedString );
 
     /**
      * This function change all character in upper-case and get it back.

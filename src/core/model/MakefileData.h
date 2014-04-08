@@ -152,7 +152,6 @@ public:
 
     /**
      * Get a export of user quote data in json format.
-     * @arg userID Id of a user.
      * @return A json document.
      */
     std::string getJson( );

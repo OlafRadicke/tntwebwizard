@@ -75,15 +75,15 @@ void NewComponentController::worker (
             qparam.arg<bool>("form_constructor") );
         this->newModelData.isDestructor(
             qparam.arg<bool>("form_destructor") );
-        this->newModelData.isSerializationSupported(
-            qparam.arg<bool>("form_serialization") );
+        this->newModelData.isJsonSerializationSupported(
+            qparam.arg<bool>("form_json_serialization") );
     }
 
     // save button pressed
     if ( qparam.arg<bool>("form_create_button") == true ) {
         log_debug("create_button is pushed..." );
         this->newModelData.setNamespace( this->nameSpace );
-        this->newModelData.createFiles( this->projectData );
+        this->newModelData.createFiles();
 
         this->feedback = "Okay! Project core is created now!";
         this->warning = false;

@@ -22,10 +22,12 @@
 #include <core/model/TntWebWizardException.h>
 
 #include <cxxtools/fileinfo.h>
+#include <cxxtools/directory.h>
 #include <cxxtools/log.h>
 
 #include <fstream>
 #include <ostream>
+#include <sstream>
 
 #include <string>         // std::string
 #include <locale>         // std::locale, std::toupper
@@ -46,32 +48,18 @@ log_define("Core.NewModelData")
 
 
 void NewModelData::createCppFile(){
-
-    //pass
-}
-
-void NewModelData::createFiles( Tww::Core::ProjectData& _projectData ){
-    this->createHFile( _projectData );
-    this->createCppFile();
-}
-
-
-void NewModelData::createHFile( Tww::Core::ProjectData& _projectData ){
-    log_debug("createHFile()" );
-    std::ofstream writting_file;
+    log_debug("createCppFile()" );
     std::ostringstream fileContent;
 
     fileContent
         << "/* \n"
-        << _projectData.getSourceCodeHeader()
+        << this->projectData.getSourceCodeHeader()
         << "\n*/ \n\n"
-        << "#ifndef " << toUpper( this->componentNamespace )
-        << "_" << toUpper( this->modelName ) << "_H \n"
-        << "#define " << toUpper( this->componentNamespace )
-        << "_" << toUpper( this->modelName ) << "_H \n\n"
     ;
-
-
+    fileContent
+        << "#include <" << this->toLower( this->componentNamespace) << "/model/"
+        << this->modelName << ".h>\n"
+    ;
     for (
         std::map<std::string,std::string>::iterator it=this->propertyMap.begin();
         it!=this->propertyMap.end();
@@ -127,13 +115,219 @@ void NewModelData::createHFile( Tww::Core::ProjectData& _projectData ){
             break;
         }
     }
-    if ( this->serializationSupport == true ){
-        fileContent  << "#include <cxxtools/serializationinfo.h>\n";
+    if ( this->jsonSerializationSupport == true ){
+        fileContent
+            << "#include <cxxtools/serializationinfo.h>\n"
+            << "#include <cxxtools/jsondeserializer.h>\n"
+            << "#include <cxxtools/jsonserializer.h>\n"
+        ;
+    }
+    if ( this->projectData.isCxxtoolsLoging( ) ){
+        fileContent  << "#include <cxxtools/log.h>\n";
     }
     if( this->componentNamespace != "" ){
-        fileContent  << "namespace " << this->componentNamespace << " {\n\n";
+        fileContent  << "\nnamespace " << this->componentNamespace << " {\n\n";
     }
-    if( _projectData.isDoxygenTemplates( ) == true ){
+
+    if ( this->projectData.isCxxtoolsLoging( ) ){
+        fileContent
+            << "log_define(\"" << this->componentNamespace << "."
+            << this->modelName << "\")\n\n"
+        ;
+    }
+
+    if ( this->jsonSerializationSupport == true ){
+
+        fileContent
+            << "void operator>>= (const cxxtools::SerializationInfo& si, "
+            << this->modelName << "& _" << toLower( this->modelName ) << " )\n"
+            << "{\n"
+        ;
+        for (
+            std::map<std::string,std::string>::iterator it=this->propertyMap.begin();
+            it!=this->propertyMap.end();
+            ++it
+        ){
+            fileContent
+                << "    si.getMember(\"" << it->first
+                << "\") >>= _" << toLower( this->modelName ) << "."
+                << it->first << ";\n"
+            ;
+        }
+        fileContent
+            << "}\n\n"
+            << "void operator<<= ( cxxtools::SerializationInfo& si, const "
+            << this->modelName << "& _" << toLower( this->modelName ) << " )\n"
+            << "{\n"
+        ;
+        for (
+            std::map<std::string,std::string>::iterator it=this->propertyMap.begin();
+            it!=this->propertyMap.end();
+            ++it
+        ){
+            fileContent
+                << "    si.addMember(\"" << it->first
+                << "\") <<= _" << toLower( this->modelName ) << ".get_"
+                << it->first << "();\n"
+            ;
+        }
+        fileContent
+            << "} \n\n"
+            << "std::string " << this->modelName << "::getJson( ) {\n"
+            << "    std::string json_text;\n"
+            << "    std::stringstream sstream;\n"
+            << "    cxxtools::JsonSerializer serializer( sstream );\n"
+            << "    // this makes it just nice to read\n"
+            << "    serializer.beautify(true);\n"
+            << "    serializer.serialize( *this ).finish();\n"
+            << "    json_text = sstream.str();\n"
+            << "    return json_text;\n"
+            << "}\n\n"
+            << "void " << this->modelName << "::loadJson( std::stringstream& _input ){\n"
+            << "        cxxtools::JsonDeserializer deserializer( _input );\n"
+            << "        deserializer.deserialize(*this);\n"
+            << "        return;\n"
+            << "}\n"
+        ;
+
+
+    }
+    if( this->componentNamespace != ""){
+        fileContent  << "} // and of namespace " << this->componentNamespace << "\n";
+    }
+
+    std::stringstream modelCppFileName;
+    modelCppFileName
+        << this->userSession.getSessionPath()
+        << "/src/"
+        << this->toLower( this->componentNamespace )
+        << "/model/"
+        << this->modelName
+        << ".cpp"
+    ;
+
+    log_debug(
+        __LINE__
+        << " write in: \n"
+        << modelCppFileName.str()
+    );
+    std::ofstream modeCppFile( modelCppFileName.str().c_str() );
+    modeCppFile << fileContent.str() ;
+    modeCppFile.close();
+
+    // Add new file in Makefile.tnt configuration.
+    this->makefileData.read( this->userSession.getSessionPath() + "/Makefile.tnt" );
+    this->makefileData.addCppFile(
+        "./src/"
+        + this->toLower( this->componentNamespace )
+        + "/model/"
+        + this->modelName
+        + ".cpp"
+    );
+    this->makefileData.write( this->userSession.getSessionPath() + "/Makefile.tnt" );
+}
+
+void NewModelData::createFiles(){
+    std::stringstream compDirName;
+    compDirName
+        << this->userSession.getSessionPath()
+        << "/src/"
+        << this->toLower( this->componentNamespace )
+    ;
+    if ( !cxxtools::Directory::exists( compDirName.str() ) ) {
+        cxxtools::Directory::create( compDirName.str() );
+    }
+    compDirName
+        << "/model/"
+    ;
+    if ( !cxxtools::Directory::exists( compDirName.str() ) ) {
+        cxxtools::Directory::create( compDirName.str() );
+    }
+    this->createHFile();
+    this->createCppFile();
+}
+
+
+void NewModelData::createHFile(){
+    log_debug("createHFile()" );
+    std::ostringstream fileContent;
+
+    fileContent
+        << "/* \n"
+        << this->projectData.getSourceCodeHeader()
+        << "\n*/ \n\n"
+        << "#ifndef " << toUpper( this->componentNamespace )
+        << "_" << toUpper( this->modelName ) << "_H \n"
+        << "#define " << toUpper( this->componentNamespace )
+        << "_" << toUpper( this->modelName ) << "_H \n\n"
+    ;
+    for (
+        std::map<std::string,std::string>::iterator it=this->propertyMap.begin();
+        it!=this->propertyMap.end();
+        ++it
+    ){
+        // std::cout << it->first << " => " << it->second << '\n';
+        if ( it->second == "std::string") {
+            fileContent  << "#include <string>\n";
+            break;
+        }
+    }
+    for (
+        std::map<std::string,std::string>::iterator it=this->propertyMap.begin();
+        it!=this->propertyMap.end();
+        ++it
+    ){
+        // std::cout << it->first << " => " << it->second << '\n';
+        if ( it->second == "std::vector") {
+            fileContent  << "#include <vector>\n";
+            break;
+        }
+    }
+    for (
+        std::map<std::string,std::string>::iterator it=this->propertyMap.begin();
+        it!=this->propertyMap.end();
+        ++it
+    ){
+        // std::cout << it->first << " => " << it->second << '\n';
+        if ( it->second == "std::map") {
+            fileContent  << "#include <map>\n";
+            break;
+        }
+    }
+    for (
+        std::map<std::string,std::string>::iterator it=this->propertyMap.begin();
+        it!=this->propertyMap.end();
+        ++it
+    ){
+        // std::cout << it->first << " => " << it->second << '\n';
+        if ( it->second == "std::list") {
+            fileContent  << "#include <list>\n";
+            break;
+        }
+    }
+    for (
+        std::map<std::string,std::string>::iterator it=this->propertyMap.begin();
+        it!=this->propertyMap.end();
+        ++it
+    ){
+        // std::cout << it->first << " => " << it->second << '\n';
+        if ( it->second == "std::stringstream"
+            or  this->jsonSerializationSupport == true
+        ) {
+            fileContent  << "#include <sstream>\n";
+            break;
+        }
+    }
+    if ( this->jsonSerializationSupport == true ){
+        fileContent
+            << "#include <cxxtools/serializationinfo.h>\n"
+            << "#include <cxxtools/jsondeserializer.h>\n"
+        ;
+    }
+    if( this->componentNamespace != "" ){
+        fileContent  << "\nnamespace " << this->componentNamespace << " {\n\n";
+    }
+    if( this->projectData.isDoxygenTemplates( ) == true ){
         fileContent
             << "/** \n"
             << "* @class " << this->modelName << " This class storage the data of ... \n"
@@ -141,13 +335,33 @@ void NewModelData::createHFile( Tww::Core::ProjectData& _projectData ){
             << "*/\n"
         ;
     }
-    fileContent
-        << "class " << this->modelName << " {\n\n"
-        << "public:\n"
-    ;
+    fileContent << "class " << this->modelName << " {\n\n" ;
+
+    if( this->isJsonSerializationSupported() == true ) {
+        fileContent
+            << "   /**\n"
+            << "    * Definition how to deserialize the class data of "
+            << this->modelName << "\n"
+            << "    * @arg si serialization info\n"
+            << "    * @arg " << this->modelName << " the data class\n"
+            << "    */\n"
+            << "    friend void operator>>= (const cxxtools::SerializationInfo& si, "
+            << this->modelName << "& _" << toLower( this->modelName ) << " );\n\n"
+
+            << "    /**\n"
+            << "    * Definition how to serialize the class of data.\n"
+            << "    * @arg si serialization info\n"
+            << "    * @arg " << this->modelName << " the data class\n"
+            << "    */\n"
+            << "    friend void operator<<= ( cxxtools::SerializationInfo& si, "
+            << "const " << this->modelName << "& _" << toLower( this->modelName ) << " );\n\n"
+        ;
+    }
+
+    fileContent << "public:\n" ;
 
     if ( this->isConstructor() == true){
-        if ( _projectData.isDoxygenTemplates( ) == true ) {
+        if ( this->projectData.isDoxygenTemplates( ) == true ) {
             fileContent
                 << "    /** \n"
                 << "     * @todo need a comment for constructor. \n"
@@ -162,7 +376,7 @@ void NewModelData::createHFile( Tww::Core::ProjectData& _projectData ){
                 ++it
             ){
                 if(
-                    it->second  == "std::list"
+                    it->second  == "std::string"
                     or it->second  == "cxxtools::String"
                 ){
                     if(contvarinits == 0) {
@@ -206,7 +420,7 @@ void NewModelData::createHFile( Tww::Core::ProjectData& _projectData ){
         }
     }
     if ( this->isDestructor() == true){
-        if ( _projectData.isDoxygenTemplates( ) == true ) {
+        if ( this->projectData.isDoxygenTemplates( ) == true ) {
             fileContent
                 << "    /** \n"
                 << "     * @todo need a comment for destructor. \n"
@@ -214,6 +428,20 @@ void NewModelData::createHFile( Tww::Core::ProjectData& _projectData ){
             ;
         }
         fileContent << "    ~" << this->modelName << "(){};\n\n";
+    }
+
+    if ( this->jsonSerializationSupport == true ){
+        fileContent
+            << "    /**\n"
+            << "     * Get a export of " << this->modelName << " data in json format.\n"
+            << "     * @return A json document.\n"
+            << "     */\n"
+            << "    std::string getJson( );\n\n"
+            << "    /**\n"
+            << "     * read json as string stream input.\n"
+            << "     */\n"
+            << "    void loadJson( std::stringstream& _input );\n\n"
+        ;
     }
 
     log_debug("isGetterFunctions(): " << this->isGetterFunctions() );
@@ -224,7 +452,7 @@ void NewModelData::createHFile( Tww::Core::ProjectData& _projectData ){
             it!=this->propertyMap.end();
             ++it
         ){
-            if ( _projectData.isDoxygenTemplates( ) == true ) {
+            if ( this->projectData.isDoxygenTemplates( ) == true ) {
                 fileContent
                     << "    /** \n"
                     << "     * @todo need a comment. \n"
@@ -233,9 +461,9 @@ void NewModelData::createHFile( Tww::Core::ProjectData& _projectData ){
                 ;
             }
             fileContent
-                << "    " << it->second << " get_" << it->first << "(){\n"
+                << "     const " << it->second << " get_" << it->first << "() const {\n"
                 << "        return this->" << it->first << ";\n"
-                << "    };\n\n";
+                << "    }\n\n";
 
         }
     }
@@ -248,7 +476,7 @@ void NewModelData::createHFile( Tww::Core::ProjectData& _projectData ){
             ++it
         ){
             std::cout << it->first << " => " << it->second << '\n';
-            if ( _projectData.isDoxygenTemplates( ) == true ) {
+            if ( this->projectData.isDoxygenTemplates( ) == true ) {
                 fileContent
                     << "    /** \n"
                     << "     * @todo need a comment. \n"
@@ -257,10 +485,10 @@ void NewModelData::createHFile( Tww::Core::ProjectData& _projectData ){
                 ;
             }
             fileContent
-                << "    " << it->second << " set_" << it->first << "( "
+                << "    void set_" << it->first << "( "
                 << it->second << " _newValue ){\n"
                 << "        this->" << it->first << " = _newValue;\n"
-                << "    };\n\n"
+                << "    }\n\n"
             ;
 
         }
@@ -273,12 +501,13 @@ void NewModelData::createHFile( Tww::Core::ProjectData& _projectData ){
         ++it
     ){
         // std::cout << it->first << " => " << it->second << '\n';
-        if ( _projectData.isDoxygenTemplates( ) == true ) {
+        if ( this->projectData.isDoxygenTemplates( ) == true ) {
             fileContent  << "    /** @todo need a comment. */\n" ;
         }
         fileContent << "    " << it->second << " " << it->first << ";\n\n";
 
     }
+    fileContent  << "}; // and of class " << this->modelName << "\n";
 
     if( this->componentNamespace != ""){
         fileContent  << "} // and of namespace " << this->componentNamespace << "\n";
@@ -287,6 +516,35 @@ void NewModelData::createHFile( Tww::Core::ProjectData& _projectData ){
 
     log_debug( "\n++++++++++++++++++++++++++++\n" << fileContent.str() << "\n+++++++++++++++++++++++++++\n");
 
+    std::stringstream compHFileName;
+    compHFileName
+        << this->userSession.getSessionPath()
+        << "/src/"
+        << this->toLower( this->componentNamespace )
+        << "/model/"
+        << this->modelName
+        << ".h"
+    ;
+
+    log_debug(
+        __LINE__
+        << " write in: \n"
+        << compHFileName.str()
+    );
+    std::ofstream compHfile( compHFileName.str().c_str() );
+    compHfile << fileContent.str() ;
+    compHfile.close();
+
+    // Add new file in Makefile.tnt configuration.
+    this->makefileData.read( this->userSession.getSessionPath() + "/Makefile.tnt" );
+    this->makefileData.addHFile(
+        "./src/"
+        + this->toLower( this->componentNamespace )
+        + "/model/"
+        + this->modelName
+        + ".h"
+    );
+    this->makefileData.write( this->userSession.getSessionPath() + "/Makefile.tnt" );
 }
 
 // === G ===
@@ -303,13 +561,17 @@ std::vector<std::string> NewModelData::getPropertyList(){
     return allProperties;
 }
 
-// === O ==
+// === T ===
 
-
-
-// === R ===
-
-// === U ===
+std::string NewModelData::toLower( std::string _mixedString ){
+    std::ostringstream upperString;
+//     std::locale loc("de_DE.UTF8");
+    std::locale loc;
+    for (std::string::size_type i=0; i<_mixedString.length(); ++i){
+        upperString << std::tolower(_mixedString[i],loc);
+    }
+    return upperString.str();
+}
 
 std::string NewModelData::toUpper( std::string _mixedString ){
     std::ostringstream upperString;
@@ -320,6 +582,10 @@ std::string NewModelData::toUpper( std::string _mixedString ){
     }
     return upperString.str();
 }
+
+// === U ===
+
+
 
 std::string NewModelData::cxxToUpper( std::string _mixedString ){
     std::ostringstream upperString;

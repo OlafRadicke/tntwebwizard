@@ -27,7 +27,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         );
         Tww::Core::ProjectData projectData();
         Tww::Core::MakefileData makefileData();
-        Tww::Core::NewModelData newModelData();
+        Tww::Core::NewModelData newModelData(
+                userSession,
+                projectData,
+                makefileData
+        );
 </%session>
 <%request
     include="core/controller/NewComponentController.h" >
@@ -239,15 +243,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <!-- serialization -->
                 <div class="form_labels">
-                    <label from="serialization">Add serialization support:</label>
+                    <label from="json_serialization">Add json serialization support:</label>
                 </div>
                 <div class="form_inputs">
                     <input
                         type="checkbox"
-                        id="serialization"
+                        id="json_serialization"
                         value="true"
-                        name="form_serialization"
-%     if ( newModelData.isSerializationSupported() ) {
+                        name="form_json_serialization"
+%     if ( newModelData.isJsonSerializationSupported() ) {
                         checked >
 %     } else {
                         >
