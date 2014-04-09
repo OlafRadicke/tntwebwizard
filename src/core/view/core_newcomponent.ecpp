@@ -241,7 +241,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %     }
                 </div>
 
-<!-- serialization -->
+<!-- json serialization -->
                 <div class="form_labels">
                     <label from="json_serialization">Add json serialization support:</label>
                 </div>
@@ -259,7 +259,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </div>
 
 
-
+<!-- xml serialization -->
+                <div class="form_labels">
+                    <label from="xml_serialization">Add xml serialization support:</label>
+                </div>
+                <div class="form_inputs">
+                    <input
+                        type="checkbox"
+                        id="xml_serialization"
+                        value="true"
+                        name="form_xml_serialization"
+%     if ( newModelData.isXmlSerializationSupported() ) {
+                        checked >
+%     } else {
+                        >
+%     }
+                </div>
             </fieldset>
 
             <div class="form_labels">

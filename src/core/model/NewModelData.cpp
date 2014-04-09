@@ -117,9 +117,14 @@ void NewModelData::createCppFile(){
     }
     if ( this->jsonSerializationSupport == true ){
         fileContent
-            << "#include <cxxtools/serializationinfo.h>\n"
             << "#include <cxxtools/jsondeserializer.h>\n"
             << "#include <cxxtools/jsonserializer.h>\n"
+        ;
+    }
+    if ( this->xmlSerializationSupport == true ){
+        fileContent
+            << "#include <cxxtools/xml/xmlserializer.h>\n"
+            << "#include <cxxtools/xml/xml.h>\n"
         ;
     }
     if ( this->projectData.isCxxtoolsLoging( ) ){
@@ -136,7 +141,9 @@ void NewModelData::createCppFile(){
         ;
     }
 
-    if ( this->jsonSerializationSupport == true ){
+    if ( this->jsonSerializationSupport == true
+        or this->xmlSerializationSupport == true
+    ){
 
         fileContent
             << "void operator>>= (const cxxtools::SerializationInfo& si, "
@@ -171,6 +178,8 @@ void NewModelData::createCppFile(){
                 << it->first << "();\n"
             ;
         }
+    }
+    if ( this->jsonSerializationSupport == true ){
         fileContent
             << "} \n\n"
             << "std::string " << this->modelName << "::getJson( ) {\n"
@@ -187,11 +196,27 @@ void NewModelData::createCppFile(){
             << "        cxxtools::JsonDeserializer deserializer( _input );\n"
             << "        deserializer.deserialize(*this);\n"
             << "        return;\n"
+            << "}\n\n"
+        ;
+    }
+
+    if ( this->xmlSerializationSupport == true ){
+        fileContent
+            << "std::string " << this->modelName << "::getXML( ) {\n"
+            << "    std::stringstream sstream;\n"
+            << "    cxxtools::xml::XmlSerializer serializer( sstream );\n"
+            << "    // this makes it just nice to read\n"
+            << "    serializer.serialize( *this, \"" << this->modelName << "\" );\n"
+            << "    return sstream.str();\n"
+            << "}\n\n"
+            << "void " << this->modelName << "::loadXML( std::stringstream& _input ){\n"
+            << "        cxxtools::xml::XmlDeserializer deserializer( _input );\n"
+            << "        deserializer.deserialize(*this);\n"
+            << "        return;\n"
             << "}\n"
         ;
-
-
     }
+
     if( this->componentNamespace != ""){
         fileContent  << "} // and of namespace " << this->componentNamespace << "\n";
     }
@@ -321,7 +346,6 @@ void NewModelData::createHFile(){
     if ( this->jsonSerializationSupport == true ){
         fileContent
             << "#include <cxxtools/serializationinfo.h>\n"
-            << "#include <cxxtools/jsondeserializer.h>\n"
         ;
     }
     if( this->componentNamespace != "" ){
@@ -337,7 +361,9 @@ void NewModelData::createHFile(){
     }
     fileContent << "class " << this->modelName << " {\n\n" ;
 
-    if( this->isJsonSerializationSupported() == true ) {
+    if( this->isJsonSerializationSupported() == true
+        or this->isXmlSerializationSupported() == true
+    ) {
         fileContent
             << "   /**\n"
             << "    * Definition how to deserialize the class data of "
@@ -432,15 +458,28 @@ void NewModelData::createHFile(){
 
     if ( this->jsonSerializationSupport == true ){
         fileContent
-            << "    /**\n"
-            << "     * Get a export of " << this->modelName << " data in json format.\n"
-            << "     * @return A json document.\n"
-            << "     */\n"
+            << "   /**\n"
+            << "    * Get a export of " << this->modelName << " data in json format.\n"
+            << "    * @return A json document.\n"
+            << "    */\n"
             << "    std::string getJson( );\n\n"
-            << "    /**\n"
-            << "     * read json as string stream input.\n"
-            << "     */\n"
+            << "   /**\n"
+            << "    * read json as string stream input.\n"
+            << "    */\n"
             << "    void loadJson( std::stringstream& _input );\n\n"
+        ;
+    }
+    if ( this->xmlSerializationSupport == true ){
+        fileContent
+            << "   /**\n"
+            << "    * Get a export of " << this->modelName << " data in xml format.\n"
+            << "    * @return A xml document.\n"
+            << "    */\n"
+            << "    std::string getXML( );\n\n"
+            << "   /**\n"
+            << "    * read xml as string stream input.\n"
+            << "    */\n"
+            << "    void loadXML( std::stringstream& _input );\n\n"
         ;
     }
 

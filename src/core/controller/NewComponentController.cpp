@@ -77,6 +77,8 @@ void NewComponentController::worker (
             qparam.arg<bool>("form_destructor") );
         this->newModelData.isJsonSerializationSupported(
             qparam.arg<bool>("form_json_serialization") );
+        this->newModelData.isXmlSerializationSupported(
+            qparam.arg<bool>("form_xml_serialization") );
     }
 
     // save button pressed

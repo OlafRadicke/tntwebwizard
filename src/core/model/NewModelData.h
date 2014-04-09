@@ -53,7 +53,8 @@ public:
         isClassConstructor(true),
         isClassDestructor(false),
         setterFunctions(true),
-        jsonSerializationSupport(false){};
+        jsonSerializationSupport(false),
+        xmlSerializationSupport(false){};
 
     // === A ===
 
@@ -135,27 +136,11 @@ public:
     }
 
     /**
-     * If will create setter functions than it get back true.
-     */
-    bool isSetterFunctions() const {
-        return this->setterFunctions;
-    }
-
-    /**
      * If json serialization support needed than it get value true.
      */
     bool isJsonSerializationSupported() const {
         return this->jsonSerializationSupport;
     }
-    
-    /**
-     * This function set the value of property setterFunctions.
-     * @arg _newValue If that set true than it will create getter functions.
-     */
-    void isSetterFunctions( bool _newValue) {
-        this->setterFunctions = _newValue;
-    }
-
 
     /**
      * This function set the value of property jsonSerializationSupport.
@@ -166,6 +151,36 @@ public:
         this->jsonSerializationSupport = _newValue;
     }
 
+    /**
+     * This function set the value of property setterFunctions.
+     * @arg _newValue If that set true than it will create getter functions.
+     */
+    void isSetterFunctions( bool _newValue) {
+        this->setterFunctions = _newValue;
+    }
+
+    /**
+     * If will create setter functions than it get back true.
+     */
+    bool isSetterFunctions() const {
+        return this->setterFunctions;
+    }
+
+    /**
+     * If xml serialization support needed than it get value true.
+     */
+    bool isXmlSerializationSupported() const {
+        return this->xmlSerializationSupport;
+    }
+
+    /**
+     * This function set the value of property xmlSerializationSupport.
+     * @arg _newValue If this value true than it will create a class with
+     * xml serialization support.
+     */
+    void isXmlSerializationSupported( bool _newValue ) {
+        this->xmlSerializationSupport = _newValue;
+    }
     // === S ===
 
     /**
@@ -242,6 +257,12 @@ private:
      * support.
      */
     bool jsonSerializationSupport;
+
+    /**
+     * If this value true than it will create a class with xml  serialization
+     * support.
+     */
+    bool xmlSerializationSupport;
 
     // === FUNCTIONS ===
 
