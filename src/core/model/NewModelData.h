@@ -34,7 +34,7 @@ namespace Tww {
 namespace Core {
 
 /**
-* @class NewModel This class storage the data of a new model class. It is use
+* @class NewModelData This class storage the data of a new model class. It is use
 * in the wizard based process when the user create a new component.
 */
 class NewModelData {
@@ -81,6 +81,15 @@ public:
      std::string getName(){
         return this->modelName;
      }
+
+
+    /**
+     * Get back a map of model properties. The property name is the map key
+     * and the map value is the property type.
+     */
+    std::map<std::string,std::string>& getPropertyMap(){
+        return this->propertyMap;
+    }
 
     /**
      * Get a list of model properties in form "[type] [name]".

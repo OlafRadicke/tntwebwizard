@@ -62,30 +62,68 @@ void NewComponentController::worker (
     ) {
         this->nameSpace =
             qparam.arg<std::string>("form_namespace");
+
         this->ecppFileName =
             qparam.arg<std::string>("form_ecppfilename");
+
+
+        // View file
+
+        this->newViewData.setName(
+            qparam.arg<std::string>("form_ecppfilename")
+        );
+        this->newViewData.setNamespace(
+            qparam.arg<std::string>("form_namespace")
+        );
+        this->newViewData.setControllerName(
+            qparam.arg<std::string>("form_controllername")
+        );
+        this->newViewData.setModelName(
+            qparam.arg<std::string>("form_modelname")
+        );
+        this->newViewData.isFormSupport(
+            qparam.arg<bool>("form_webform_support")
+        );
+
+        // Controller class
+
         this->controllerName =
             qparam.arg<std::string>("form_controllername");
-        this->newModelData.setName( qparam.arg<std::string>("form_modelname") );
+
+        // Model class
+
+        this->newModelData.setNamespace(
+            qparam.arg<std::string>("form_namespace")
+        );
+
+        this->newModelData.setName(
+            qparam.arg<std::string>("form_modelname")
+        );
         this->newModelData.isGetterFunctions(
-            qparam.arg<bool>("form_getter_functions") );
+            qparam.arg<bool>("form_getter_functions")
+        );
         this->newModelData.isSetterFunctions(
-            qparam.arg<bool>("form_setter_functions") );
+            qparam.arg<bool>("form_setter_functions")
+        );
         this->newModelData.isConstructor(
-            qparam.arg<bool>("form_constructor") );
+            qparam.arg<bool>("form_constructor")
+        );
         this->newModelData.isDestructor(
-            qparam.arg<bool>("form_destructor") );
+            qparam.arg<bool>("form_destructor")
+        );
         this->newModelData.isJsonSerializationSupported(
-            qparam.arg<bool>("form_json_serialization") );
+            qparam.arg<bool>("form_json_serialization")
+        );
         this->newModelData.isXmlSerializationSupported(
-            qparam.arg<bool>("form_xml_serialization") );
+            qparam.arg<bool>("form_xml_serialization")
+        );
     }
 
     // save button pressed
     if ( qparam.arg<bool>("form_create_button") == true ) {
         log_debug("create_button is pushed..." );
-        this->newModelData.setNamespace( this->nameSpace );
         this->newModelData.createFiles();
+        this->newViewData.createFiles( this->newModelData.getPropertyMap() );
 
         this->feedback = "Okay! Project core is created now!";
         this->warning = false;

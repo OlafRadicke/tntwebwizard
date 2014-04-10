@@ -21,6 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     include="core/model/ProjectData.h"
     include="core/model/MakefileData.h"
     include="core/model/NewModelData.h"
+    include="core/model/NewViewData.h"
     include="formtoken/manager/manager.h">
         Tww::Core::UserSession userSession(
             FormToken::Manager::getRawToken( request )
@@ -28,6 +29,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         Tww::Core::ProjectData projectData();
         Tww::Core::MakefileData makefileData();
         Tww::Core::NewModelData newModelData(
+                userSession,
+                projectData,
+                makefileData
+        );
+        Tww::Core::NewViewData newViewData(
                 userSession,
                 projectData,
                 makefileData
@@ -40,7 +46,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 userSession,
                 projectData,
                 makefileData,
-                newModelData
+                newModelData,
+                newViewData
             );
 </%request>
 <%pre>
@@ -98,6 +105,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         maxlength="30"
                         value="<$ controller.getEcppFileName() $>">
                 </div>
+
+<!-- web form support -->
+                <div class="form_labels">
+                    <label from="webform_support">Create web form:</label>
+                </div>
+                <div class="form_inputs">
+                    <input
+                        type="checkbox"
+                        id="webform_support"
+                        value="true"
+                        name="form_webform_support"
+%     if ( newViewData.isFormSupport() ) {
+                        checked >
+%     } else {
+                        >
+%     }
+                </div>
+
             </fieldset>
 
             <fieldset>

@@ -25,6 +25,7 @@
 #include <core/model/ProjectData.h>
 #include <core/model/UserSession.h>
 #include <core/model/NewModelData.h>
+#include <core/model/NewViewData.h>
 
 #include <tnt/httprequest.h>
 #include <tnt/httpreply.h>
@@ -48,10 +49,12 @@ public:
         Tww::Core::UserSession& _userSession,
         Tww::Core::ProjectData& _projectData,
         Tww::Core::MakefileData& _makefileData,
-        Tww::Core::NewModelData& _newModelData
+        Tww::Core::NewModelData& _newModelData,
+        Tww::Core::NewViewData& _newViewData
     ):
         warning(false),
         newModelData( _newModelData ),
+        newViewData( _newViewData ),
         makefileData( _makefileData ),
         projectData( _projectData ),
         userSession( _userSession )
@@ -61,6 +64,8 @@ public:
 
 
     // === S ===
+
+        
 
     // === W ===
 
@@ -128,6 +133,12 @@ private:
      * the new component.
      */
     Tww::Core::NewModelData& newModelData;
+
+    /**
+     * This class storage the information about the ecpp view file from
+     * a new component.
+     */
+    Tww::Core::NewViewData& newViewData;
 
     /**
      * Represent the makefile data.
