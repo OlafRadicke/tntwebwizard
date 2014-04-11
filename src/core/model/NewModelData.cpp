@@ -227,7 +227,7 @@ void NewModelData::createCppFile(){
         << "/src/"
         << this->toLower( this->componentNamespace )
         << "/model/"
-        << this->modelName
+        <<this->toLower( this->modelName )
         << ".cpp"
     ;
 
@@ -246,7 +246,7 @@ void NewModelData::createCppFile(){
         "./src/"
         + this->toLower( this->componentNamespace )
         + "/model/"
-        + this->modelName
+        + this->toLower( this->modelName )
         + ".cpp"
     );
     this->makefileData.write( this->userSession.getSessionPath() + "/Makefile.tnt" );
@@ -561,7 +561,7 @@ void NewModelData::createHFile(){
         << "/src/"
         << this->toLower( this->componentNamespace )
         << "/model/"
-        << this->modelName
+        << this->toLower( this->modelName )
         << ".h"
     ;
 
@@ -580,7 +580,7 @@ void NewModelData::createHFile(){
         "./src/"
         + this->toLower( this->componentNamespace )
         + "/model/"
-        + this->modelName
+        + this->toLower( this->modelName )
         + ".h"
     );
     this->makefileData.write( this->userSession.getSessionPath() + "/Makefile.tnt" );

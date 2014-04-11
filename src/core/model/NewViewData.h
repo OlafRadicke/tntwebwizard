@@ -47,10 +47,11 @@ public:
         makefileData( _makefileData ),
         projectData( _projectData ),
         userSession( _userSession ),
-        controllerName(""),
+        controllerName("NewController"),
         formSupport(false),
         modelName(""),
-        viewName(""){};
+        urlRoute("/comp/newview"),
+        viewName("newview"){};
 
     // === C ===
 
@@ -60,6 +61,7 @@ public:
      */
     void createFiles( std::map<std::string,std::string>& _propertyMap );
 
+
     // === G ===
 
     /**
@@ -67,6 +69,13 @@ public:
      */
      std::string getName(){
         return this->viewName;
+     }
+
+     /**
+      * Get the url route of the view.
+      */
+     std::string getUrlRoute(){
+         return this->urlRoute;
      }
 
     // === I ===
@@ -117,6 +126,13 @@ public:
         this->componentNamespace = _name;
     }
 
+     /**
+      * Get the url route of the view.
+      */
+     void setUrlRoute( std::string _newValue ){
+         this->urlRoute = _newValue;
+     }
+
 private:
 
     /**
@@ -155,11 +171,21 @@ private:
     std::string modelName;
 
     /**
+     * The url route of the view.
+     */
+    std::string urlRoute;
+
+    /**
      * The name of ecpp view.
      */
     std::string viewName;
 
     // === FUNCTIONS ===
+
+    /**
+     * This function create the file "initcomponent.h".
+     */
+    void createInitcomponent_hFile();
 
     /**
      * Convert stings to lower-case.
@@ -170,6 +196,7 @@ private:
      * This function change all character in upper-case and get it back.
      */
     std::string toUpper( std::string _mixedString );
+
 
 }; // end class
 

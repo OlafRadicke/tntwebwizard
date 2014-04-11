@@ -55,7 +55,7 @@ void NewViewData::createFiles( std::map<std::string,std::string>& _propertyMap )
         cxxtools::Directory::create( compDirName.str() );
     }
     compDirName
-        << "/model/"
+        << "/view/"
     ;
     if ( !cxxtools::Directory::exists( compDirName.str() ) ) {
         cxxtools::Directory::create( compDirName.str() );
@@ -66,20 +66,20 @@ void NewViewData::createFiles( std::map<std::string,std::string>& _propertyMap )
     fileContent
         << "<# \n"
         << this->projectData.getSourceCodeHeader()
-        << "#> \n\n"
+        << "\n#> \n\n"
         << "<%session\n"
         << "    scope=\"shared\"\n"
         << "    include=\""
         << this->toLower( this->componentNamespace )
         << "/model/" << this->toLower( this->modelName ) << ".h\">\n"
         << "    " << this->componentNamespace << "::" << this->modelName
-        << " _" << this->toLower( this->modelName ) << "();\n"
+        << " inst_" << this->toLower( this->modelName ) << "();\n"
         << "</%session>\n\n"
         << "<%request\n"
         << "    include=\"" << this->toLower( this->componentNamespace )
         << "/controller/" << this->toLower( this->controllerName ) << ".h\" >\n"
         << "        " << this->componentNamespace << "::" << this->controllerName << "\n"
-        << "            controller( _" << this->toLower( this->controllerName ) << ");\n"
+        << "            controller( inst_" << this->toLower( this->modelName ) << ");\n"
         << "</%request>\n"
         << "<%cpp>\n"
         << "    controller.worker(\n"
@@ -114,7 +114,7 @@ void NewViewData::createFiles( std::map<std::string,std::string>& _propertyMap )
                     << "            type=\"text\"\n"
                     << "            size=\"40\"\n"
                     << "            maxlength=\"40\"\n"
-                    << "            value=\"<$ _" << this->toLower( this->modelName ) << ".get_" << it->first << " $>\">\n"
+                    << "            value=\"<$ inst_" << this->toLower( this->modelName ) << ".get_" << it->first << "() $>\">\n\n"
                 ;
             }
             if ( it->second == "int"
@@ -130,7 +130,7 @@ void NewViewData::createFiles( std::map<std::string,std::string>& _propertyMap )
                     << "            type=\"number\"\n"
                     << "            size=\"40\"\n"
                     << "            maxlength=\"40\"\n"
-                    << "            value=\"<$ _" << this->toLower( this->modelName ) << ".get_" << it->first << " $>\">\n"
+                    << "            value=\"<$ inst_" << this->toLower( this->modelName ) << ".get_" << it->first << "() $>\">\n\n"
                 ;
             }
             if ( it->second == "bool" ) {
@@ -140,7 +140,13 @@ void NewViewData::createFiles( std::map<std::string,std::string>& _propertyMap )
                     << "            id=\"" << it->first << "\"\n"
                     << "            name=\"form_" << it->first << "\"\n"
                     << "            type=\"checkbox\"\n"
-                    << "            value=\"true\">\n"
+                    << "            value=\"true\"\n"
+                    << "%     if ( inst_" << this->toLower( this->modelName )
+                    << ".get_" << it->first << "() ) {\n"
+                    << "            checked >\n"
+                    << "%     } else {\n"
+                     << "                   >\n"
+                    << "%     }\n\n"
                 ;
             }
         }
@@ -148,7 +154,7 @@ void NewViewData::createFiles( std::map<std::string,std::string>& _propertyMap )
             << "        <button\n"
             << "            name=\"form_submit_button\"\n"
             << "            type=\"submit\"\n"
-            << "            value=\"form_create_button\" >Submit form</button>\n"
+            << "            value=\"form_submit_button\" >Submit form</button>\n"
             << "    </form>\n"
         ;
     }
@@ -165,7 +171,7 @@ void NewViewData::createFiles( std::map<std::string,std::string>& _propertyMap )
         << this->userSession.getSessionPath()
         << "/src/"
         << this->toLower( this->componentNamespace )
-        << "/model/"
+        << "/view/"
         << this->viewName
         << ".ecpp"
     ;
@@ -181,14 +187,21 @@ void NewViewData::createFiles( std::map<std::string,std::string>& _propertyMap )
 
     // Add new file in Makefile.tnt configuration.
     this->makefileData.read( this->userSession.getSessionPath() + "/Makefile.tnt" );
-    this->makefileData.addHFile(
+    this->makefileData.addEcppFile(
         "./src/"
         + this->toLower( this->componentNamespace )
-        + "/model/"
-        + this->modelName
-        + ".h"
+        + "/view/"
+        + this->viewName
+        + ".ecpp"
     );
     this->makefileData.write( this->userSession.getSessionPath() + "/Makefile.tnt" );
+}
+
+void NewViewData::createInitcomponent_hFile(){
+    log_debug("createInitcomponent_hFile()" );
+
+    std::stringstream fileContent;
+
 }
 
 // === T ===

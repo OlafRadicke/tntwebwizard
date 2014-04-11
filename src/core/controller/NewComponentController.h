@@ -65,7 +65,7 @@ public:
 
     // === S ===
 
-        
+
 
     // === W ===
 
@@ -96,13 +96,6 @@ public:
     }
 
      /**
-     * Get the name of the ecpp view file.
-     */
-     std::string getEcppFileName(){
-         return this->ecppFileName;
-     }
-
-     /**
      * Get the namespace name.
      */
      std::string getNameSpace(){
@@ -117,11 +110,6 @@ private:
      * The name of the controller class.
      */
     std::string controllerName;
-
-    /**
-     * The name of the ecpp view file.
-     */
-    std::string ecppFileName;
 
     /**
      * The namespace of the new componet.

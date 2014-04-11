@@ -103,7 +103,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         type="text"
                         size="30"
                         maxlength="30"
-                        value="<$ controller.getEcppFileName() $>">
+                        value="<$ newViewData.getName() $>">
+                </div>
+
+<!-- url route -->
+                <div class="form_labels">
+                    <label from="url_route">URL route(route reverse):</label>
+                </div>
+                <div class="form_inputs">
+                    <input
+                        id="url_route"
+                        name="form_url_route"
+                        type="text"
+                        size="30"
+                        maxlength="30"
+                        value="<$ newViewData.getUrlRoute() $>">
                 </div>
 
 <!-- web form support -->

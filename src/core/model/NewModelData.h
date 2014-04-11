@@ -52,8 +52,9 @@ public:
         getterFunctions(true),
         isClassConstructor(true),
         isClassDestructor(false),
-        setterFunctions(true),
         jsonSerializationSupport(false),
+        modelName("NewModelData"),
+        setterFunctions(true),
         xmlSerializationSupport(false){};
 
     // === A ===
@@ -225,6 +226,11 @@ private:
     Tww::Core::UserSession& userSession;
 
     /**
+     * The namespace of the new component.
+     */
+    std::string componentNamespace;
+
+    /**
      * If this value true than it will create getter functions.
      */
     bool getterFunctions;
@@ -240,6 +246,12 @@ private:
     bool isClassDestructor;
 
     /**
+     * If this value true than it will create a class with json  serialization
+     * support.
+     */
+    bool jsonSerializationSupport;
+
+    /**
      * The name of the model class.
      */
     std::string modelName;
@@ -249,23 +261,10 @@ private:
      */
     std::map<std::string,std::string> propertyMap;
 
-
-    /**
-     * The namespace of the new component.
-     */
-    std::string componentNamespace;
-
-
     /**
      * If this value true than it will create setter functions.
      */
     bool setterFunctions;
-
-    /**
-     * If this value true than it will create a class with json  serialization
-     * support.
-     */
-    bool jsonSerializationSupport;
 
     /**
      * If this value true than it will create a class with xml  serialization

@@ -60,17 +60,18 @@ void NewComponentController::worker (
     if ( qparam.arg<bool>("form_create_button") == true
         or qparam.arg<bool>("form_add_property") == true
     ) {
+        // general
+        
         this->nameSpace =
             qparam.arg<std::string>("form_namespace");
-
-        this->ecppFileName =
-            qparam.arg<std::string>("form_ecppfilename");
-
 
         // View file
 
         this->newViewData.setName(
             qparam.arg<std::string>("form_ecppfilename")
+        );
+        this->newViewData.setUrlRoute(
+            qparam.arg<std::string>("form_url_route")
         );
         this->newViewData.setNamespace(
             qparam.arg<std::string>("form_namespace")
