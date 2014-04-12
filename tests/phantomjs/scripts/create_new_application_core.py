@@ -11,49 +11,80 @@ class TestOne( unittest.TestCase ):
 
     def test_url(self):
         self.driver.set_window_size(1920,1080)
-# start screen
+# 01 - start screen
 # 1
         self.driver.get("http://0.0.0.0:8001/")
-        self.driver.save_screenshot("createcore_01.png")
+        self.driver.save_screenshot("/tmp/createcore_01_01.png")
 
-# Basic project data
+# 02 - Basic project data
 # 2
-        #self.driver.find_elements_by_partial_link_text("Basic project data")[0].click()
         self.driver.find_element_by_link_text('Basic project data').click()
-        #self.driver.get("../core/basicprojectdata")
-        self.driver.save_screenshot("createcore_02.png")
+        self.driver.save_screenshot("/tmp/createcore_02_02.png")
 
 # 3
+        self.driver.find_element_by_id("projectname").clear();
         self.driver.find_element_by_id("projectname").send_keys("ProjectA")
+        self.driver.find_element_by_id("binaryfilename").clear();
         self.driver.find_element_by_id("binaryfilename").send_keys("project_a")
-        #self.driver.find_element_by_id("licence_template").select_by_visible_text("AGPL3")
-        #self.driver.find_element_by_id("licence_template").deselect_by_value("AGPL3")
 
         el = self.driver.find_element_by_id("licence_template")
         for option in el.find_elements_by_tag_name('option'):
-            print "option.text" + option.text
             if option.text == 'AGPL3':
-                print "TEST OKAY!"
                 option.click()
 
-        self.driver.save_screenshot("createcore_03.png")
+        self.driver.save_screenshot("/tmp/createcore_02_03.png")
 
 # 4
         self.driver.find_element_by_name("form_assume_licence").click()
-        self.driver.save_screenshot("createcore_04.png")
+        self.driver.save_screenshot("/tmp/createcore_02_04.png")
 
 # 5
         self.driver.find_element_by_id("doxygen_templates").click()
         self.driver.find_element_by_id("route_reverse").click()
         self.driver.find_element_by_id("csrf_token").click()
         self.driver.find_element_by_id("tntdb_support").click()
-        self.driver.save_screenshot("createcore_05.png")
+        self.driver.save_screenshot("/tmp/createcore_02_05.png")
 
 # 6
         self.driver.find_element_by_name("form_save_button").click()
-        self.driver.save_screenshot("createcore_06.png")
+        self.driver.save_screenshot("/tmp/createcore_02_06.png")
+
+# 03 - Create project core
+
+        self.driver.find_element_by_link_text('Create project core').click()
+        self.driver.save_screenshot("/tmp/createcore_03_01.png")
 
 
+        el = self.driver.find_element_by_id("cli_support")
+        for option in el.find_elements_by_tag_name('option'):
+            if option.text == 'YES':
+                option.click()
+        self.driver.save_screenshot("/tmp/createcore_03_02.png")
+
+        el = self.driver.find_element_by_id("config_format")
+        for option in el.find_elements_by_tag_name('option'):
+            if option.text == 'JSON':
+                option.click()
+        self.driver.save_screenshot("/tmp/createcore_03_03.png")
+
+        self.driver.find_element_by_id("host_ipv4").clear();
+        self.driver.find_element_by_id("host_ipv4").send_keys("127.0.0.1")
+        self.driver.find_element_by_id("port_no").clear();
+        self.driver.find_element_by_id("port_no").send_keys("8088")
+        self.driver.find_element_by_id("session_timeout").clear();
+        self.driver.find_element_by_id("session_timeout").send_keys("14000")
+        self.driver.save_screenshot("/tmp/createcore_03_04.png")
+
+        el = self.driver.find_elements_by_xpath("//*[contains(text(), 'Create')]")
+        print el
+        for option in el:
+            print "option.text" + option.text
+            if option.text == 'Create':
+                print "TEST OKAY!"
+                option.click()
+        self.driver.save_screenshot("/tmp/createcore_03_05.png")
+
+#form_create_button
 
 # ende ...
 

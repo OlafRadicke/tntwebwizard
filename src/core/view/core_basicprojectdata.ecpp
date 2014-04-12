@@ -98,6 +98,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <select
                         id="licence_template"
                         name="form_licence_template">
+                        <option value="">select...</option>
                         <option value="GPL3">GPL3</option>
                         <option value="AGPL3">AGPL3</option>
                         <option value="Apache">Apache</option>

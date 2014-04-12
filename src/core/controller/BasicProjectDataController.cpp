@@ -120,7 +120,13 @@ void BasicProjectDataController::worker (
             log_debug( "## " << __LINE__ << " ##" );
             this->formDataAssume ( qparam );
             log_debug("add licence: " << form_licence_template );
-            this->assumeLicence( form_licence_template );
+            if(  ){
+                this->feedback="It is no licence select!.";
+                this->warning = true;
+                return;
+            } else {
+                this->assumeLicence( form_licence_template );
+            }
         // page (first) load
         } else {
             log_debug( "## " << __LINE__ << " ##" );
