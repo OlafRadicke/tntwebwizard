@@ -38,8 +38,68 @@ namespace Core {
 
 log_define("Core.NewComponentController")
 
+std::string NewComponentController::getProjectFilePath(){
 
+    std::stringstream file_projectdata;
+    file_projectdata
+        << this->userSession.getSessionPath()
+        << "/tntwebwizard.pro"
+    ;
+    return file_projectdata.str();
+}
 
+std::string NewComponentController::getMakefilePath(){
+    std::stringstream file_makefile;
+    file_makefile
+        << this->userSession.getSessionPath()
+        << "/Makefile.tnt"
+    ;
+    return file_makefile.str();
+}
+
+bool NewComponentController::isComponentFounded( std::string _newCompName ) {
+    // Create directories
+    std::stringstream compDirName;
+    compDirName
+        << this->userSession.getSessionPath()
+        << "/src/"
+        << this->toLower( _newCompName )
+    ;
+    return cxxtools::Directory::exists( compDirName.str() ) )
+}
+
+bool NewComponentController::isProjectFounded() {
+
+    // read project configuration...
+    this->projectData.read( this->getProjectFilePath() );
+    this->makefileData.read( this->getMakefilePath() );
+    // check is this step allowed.
+    WebApplicationCoreManager webappManager(
+        this->userSession,
+        this->projectData,
+        this->makefileData
+    );
+
+    if( webappManager.isApplicationCoreExist() == false ) {
+        this->feedback = "There is no core project exist! Go back to menu \"Basic project data\".";
+        this->warning = true;
+        return false;
+    }
+    if( this->makefileData.getBinName() == "" ) {
+        this->feedback = "The binary file name is not set! Go back to menu \"Basic project data\".";
+        this->warning = true;
+        return false;
+    }
+
+    if ( this->projectData.getSourceCodeHeader() == "" ) {
+        this->feedback = "The licence template for the source code header is \
+        not set. Go to the menu point \"Basic project data\" make the basic \
+        configuration please.";
+        this->warning = true;
+        return false;
+    }
+    return true;
+}
 
 void NewComponentController::worker (
     tnt::HttpRequest& request,
@@ -61,7 +121,7 @@ void NewComponentController::worker (
         or qparam.arg<bool>("form_add_property") == true
     ) {
         // general
-        
+
         this->nameSpace =
             qparam.arg<std::string>("form_namespace");
 
@@ -120,6 +180,12 @@ void NewComponentController::worker (
         );
     }
 
+    if( this->isComponentFounded( this->nameSpace ) {
+        this->feedback = "This namespace is all ready in use!";
+        this->warning = true;
+        return;
+    }
+
     // save button pressed
     if ( qparam.arg<bool>("form_create_button") == true ) {
         log_debug("create_button is pushed..." );
@@ -132,7 +198,7 @@ void NewComponentController::worker (
     } else {
         // click button "add a property"
         if ( qparam.arg<bool>("form_add_property") == true  ) {
-        log_debug("add_property is pushed..." );
+            log_debug("add_property is pushed..." );
             if ( qparam.arg<std::string>("form_property_name") == "" ) {
                 this->feedback = "A property must be have a name!";
                 this->warning = true;
@@ -149,59 +215,6 @@ void NewComponentController::worker (
     }
 }
 
-
-bool NewComponentController::isProjectFounded() {
-
-    // read project configuration...
-    this->projectData.read( this->getProjectFilePath() );
-    this->makefileData.read( this->getMakefilePath() );
-    // check is this step allowed.
-    WebApplicationCoreManager webappManager(
-        this->userSession,
-        this->projectData,
-        this->makefileData
-    );
-
-    if( webappManager.isApplicationCoreExist() == false ) {
-        this->feedback = "There is no core project exist! Go back to menu \"Basic project data\".";
-        this->warning = true;
-        return false;
-    }
-    if( this->makefileData.getBinName() == "" ) {
-        this->feedback = "The binary file name is not set! Go back to menu \"Basic project data\".";
-        this->warning = true;
-        return false;
-    }
-
-    if ( this->projectData.getSourceCodeHeader() == "" ) {
-        this->feedback = "The licence template for the source code header is \
-        not set. Go to the menu point \"Basic project data\" make the basic \
-        configuration please.";
-        this->warning = true;
-        return false;
-    }
-    return true;
-}
-
-
-std::string NewComponentController::getProjectFilePath(){
-
-    std::stringstream file_projectdata;
-    file_projectdata
-        << this->userSession.getSessionPath()
-        << "/tntwebwizard.pro"
-    ;
-    return file_projectdata.str();
-}
-
-std::string NewComponentController::getMakefilePath(){
-    std::stringstream file_makefile;
-    file_makefile
-        << this->userSession.getSessionPath()
-        << "/Makefile.tnt"
-    ;
-    return file_makefile.str();
-}
 
 
 } // namespace core

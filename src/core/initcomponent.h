@@ -323,8 +323,6 @@ void initcomponent ( tnt::Tntnet &app ) {
 
 }
 
-
-
 } // END namespace Core
 } // namespace Tww
 

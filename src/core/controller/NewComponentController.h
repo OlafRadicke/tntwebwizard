@@ -145,6 +145,8 @@ private:
 
     // === FUNCTIONS ===
 
+    // === G ===
+
     /**
      * Get the path to file "./Makefile.tnt".
      */
@@ -155,7 +157,14 @@ private:
      */
     std::string getProjectFilePath();
 
-    // === P ===
+    // === I ===
+
+    /**
+     * Check is the name of the new component all ready in use.
+     * If it found than it get a "true" value.
+     */
+    bool isComponentFounded( std::string _newCompName )
+
     /**
      * Some plausibility data checks before start working.
      */

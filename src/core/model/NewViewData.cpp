@@ -161,11 +161,7 @@ void NewViewData::createFiles( std::map<std::string,std::string>& _propertyMap )
     fileContent
         << "</body>\n"
     ;
-
-
-    // Write content in file...
-    log_debug( "\n++++++++++++++++++++++++++++\n" << fileContent.str() << "\n+++++++++++++++++++++++++++\n");
-
+    // --------- witting file(s) ---------
     std::stringstream compEcppFileName;
     compEcppFileName
         << this->userSession.getSessionPath()
@@ -201,8 +197,93 @@ void NewViewData::createInitcomponent_hFile(){
     log_debug("createInitcomponent_hFile()" );
 
     std::stringstream fileContent;
+    fileContent
+        << "/* \n"
+        << this->projectData.getSourceCodeHeader()
+        << "\n*/ \n\n"
+        << "#ifndef " << toUpper( this->componentNamespace )
+        << "_INITCOMPONENT_H \n"
+        << "#define " << toUpper( this->componentNamespace )
+        << "_INITCOMPONENT_H \n\n"
+        << "#include <string>\n"
+        << "#include <tnt/tntnet.h>\n"
+    ;
+    if ( this->projectData.isRouteReverse() == true ){
+        fileContent << "#include <routereverse/manager/manager.h>\n" ;
+    }
+    if ( this->projectData.isCxxtoolsLoging() ){
+        fileContent  << "#include <cxxtools/log.h>\n";
+    }
+    if( this->componentNamespace != "" ){
+        fileContent  << "\nnamespace " << this->componentNamespace << " {\n\n";
+    }
+    if ( this->projectData.isCxxtoolsLoging( ) ){
+        fileContent  << "log_define(\"" << this->componentNamespace << ".initcomponent\")\n";
+    }
+    if ( this->projectData.isDoxygenTemplates( ) ){
+        fileContent
+            << "/**\n"
+            << " * This function prepare the component \""
+            << this->componentNamespace << "\". specifically the routing.\n"
+            << " * @arg app a reference of the application server.\n"
+            << " */\n"
+        ;
+    }
+    fileContent
+        << "void initcomponent ( tnt::Tntnet &app ) {\n"
+        << "    app.mapUrl(\n"
+        << "        \"^/" << urlRoute << "$\",\n"
+        << "        \"" << this->viewName << "\"\n"
+        << "    );\n"
+    ;
+    if ( this->projectData.isRouteReverse() == true ){
+        fileContent
+            << "    RouteReverse::Manager::add(\n"
+            << "        \"" << this->viewName << "\",\n"
+            << "        \"" << urlRoute << "\"\n"
+            << "    );\n\n"
+        ;
+    }
+    if ( this->projectData.isCxxtoolsLoging() ){
+        fileContent
+            << "    // now it is ready and get info about all know routes.\n"
+            << "    log_debug( RouteReverse::Manager::getAllReversesRoutes() );\n\n"
+        ;
+    }
+    fileContent
+        << "} // end of function \n\n"
+        << "} // END namespace\n"
+        << "#endif // CORE_INITCOMPONENT_H\n"
+    ;
 
+    // --------- witting file(s) ---------
+    std::stringstream compInitFileName;
+    compInitFileName
+        << this->userSession.getSessionPath()
+        << "/src/"
+        << this->toLower( this->componentNamespace )
+        << "/initcomponent.h"
+    ;
+
+    log_debug(
+        __LINE__
+        << " write in: \n"
+        << compInitFileName.str()
+    );
+    std::ofstream compInitFile( compInitFileName.str().c_str() );
+    compInitFile << fileContent.str() ;
+    compInitFile.close();
+
+    // Add new file in Makefile.tnt configuration.
+    this->makefileData.read( this->userSession.getSessionPath() + "/Makefile.tnt" );
+    this->makefileData.addHFile(
+        "./src/"
+        + this->toLower( this->componentNamespace )
+        + "/initcomponent.h"
+    );
+    this->makefileData.write( this->userSession.getSessionPath() + "/Makefile.tnt" );
 }
+
 
 // === T ===
 

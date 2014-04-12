@@ -50,7 +50,7 @@ public:
         controllerName("NewController"),
         formSupport(false),
         modelName(""),
-        urlRoute("/comp/newview"),
+        urlRoute("comp/newview"),
         viewName("newview"){};
 
     // === C ===
