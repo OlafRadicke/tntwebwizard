@@ -38,3 +38,7 @@ su -c 'yum -y install python-selenium'
 > [user@localhost ~]# du --max-dept=0 -h  /tmp/phantomjs-1.9.7*
 > 745M    /tmp/phantomjs-1.9.7
 > 13M /tmp/phantomjs-1.9.7-1.x86_64.rpm
+
+# using
+
+> [user@localhost ~]# python ./python-test.py

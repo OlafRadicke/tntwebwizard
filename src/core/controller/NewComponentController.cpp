@@ -28,6 +28,7 @@
 
 #include <tnt/httprequest.h>
 #include <tnt/httpreply.h>
+#include <cxxtools/directory.h>
 #include <cxxtools/log.h>
 
 #include <string>
@@ -65,7 +66,7 @@ bool NewComponentController::isComponentFounded( std::string _newCompName ) {
         << "/src/"
         << this->toLower( _newCompName )
     ;
-    return cxxtools::Directory::exists( compDirName.str() ) )
+    return cxxtools::Directory::exists( compDirName.str() );
 }
 
 bool NewComponentController::isProjectFounded() {
@@ -100,6 +101,20 @@ bool NewComponentController::isProjectFounded() {
     }
     return true;
 }
+
+// === T ===
+
+std::string NewComponentController::toLower( std::string _mixedString ){
+    std::ostringstream upperString;
+//     std::locale loc("de_DE.UTF8");
+    std::locale loc;
+    for (std::string::size_type i=0; i<_mixedString.length(); ++i){
+        upperString << std::tolower(_mixedString[i],loc);
+    }
+    return upperString.str();
+}
+
+// === W ===
 
 void NewComponentController::worker (
     tnt::HttpRequest& request,
@@ -180,7 +195,7 @@ void NewComponentController::worker (
         );
     }
 
-    if( this->isComponentFounded( this->nameSpace ) {
+    if( this->isComponentFounded( this->nameSpace ) ) {
         this->feedback = "This namespace is all ready in use!";
         this->warning = true;
         return;

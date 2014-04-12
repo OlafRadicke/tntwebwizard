@@ -16,7 +16,9 @@ class TestOne( unittest.TestCase ):
         self.driver.save_screenshot("createcore_01.png")
 
 # Basic project data
-        self.driver.find_elements_by_link_text("Basic project data").click()
+        #self.driver.find_elements_by_partial_link_text("Basic project data")[0].click()
+        #self.driver.find_element_by_link_text('Basic project data').click()
+        self.driver.get("../core/basicprojectdata")
         self.driver.save_screenshot("createcore_02.png")
 
         self.driver.find_element_by_id("projectname").send_keys("ProjectA")

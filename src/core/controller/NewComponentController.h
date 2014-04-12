@@ -163,12 +163,17 @@ private:
      * Check is the name of the new component all ready in use.
      * If it found than it get a "true" value.
      */
-    bool isComponentFounded( std::string _newCompName )
+    bool isComponentFounded( std::string _newCompName );
 
     /**
      * Some plausibility data checks before start working.
      */
     bool isProjectFounded( );
+    
+    /**
+     * Convert stings to lower-case.
+     */
+    std::string toLower( std::string _mixedString );
 
 };
 
