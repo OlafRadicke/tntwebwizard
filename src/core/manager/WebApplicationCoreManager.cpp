@@ -933,7 +933,7 @@ void WebApplicationCoreManager::createREADMEmd(){
         << this->makefileData.getBinName() << "\"\n\n"
         << "## Start program\n\n"
         << "In the project root directory you can find a example configuration with name\n"
-        << "\"" << this->makefileData.getBinName() << ".conf. Normally the program search\n"
+        << "\"" << this->makefileData.getBinName() << ".conf\". Normally the program search\n"
         << "this file in the same folder or in \"/etc/\". You can modified this file for\n"
         << "changing listening port, IP and domain name.\n\n"
         << "## Dependencies\n\n"
