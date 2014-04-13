@@ -45,6 +45,7 @@ void CreateApplicationCoreController::worker (
     tnt::QueryParams& qparam
 ){
     log_debug("webappManager.createApplicationCore()" );
+    this->warning = false;
 
     bool form_cli_support =
         qparam.arg<bool>("form_cli_support");

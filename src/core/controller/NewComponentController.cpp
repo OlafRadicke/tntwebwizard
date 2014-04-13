@@ -122,13 +122,8 @@ void NewComponentController::worker (
     tnt::QueryParams& qparam
 ){
     log_debug("NewComponentController::worker..." );
-    log_debug(
-        "\n form_create_button\n "
-        << qparam.arg<bool>("form_create_button")
-        << "\n form_add_property\n "
-        <<  qparam.arg<bool>("form_add_property")
-    );
 
+    this->warning = false;
     //
     if ( this->isProjectFounded() == false ) return;
 
@@ -194,11 +189,13 @@ void NewComponentController::worker (
             qparam.arg<bool>("form_xml_serialization")
         );
     }
-
-    if( this->isComponentFounded( this->nameSpace ) ) {
-        this->feedback = "This namespace is all ready in use!";
-        this->warning = true;
-        return;
+    if ( this->nameSpace != "" ){
+        if( this->isComponentFounded( this->nameSpace ) ) {
+            this->feedback = "The namespace \""
+                + this->nameSpace + "\" is all ready in use!";
+            this->warning = true;
+            return;
+        }
     }
 
     // save button pressed

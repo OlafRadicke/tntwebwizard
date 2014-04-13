@@ -180,7 +180,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 % for (unsigned int i=0; i<allProperties.size() ; i++) {
                             <li><$  allProperties[i] $></li>
 % }
-                    <ul>
+                    </ul>
                 </div>
 
                 <div class="form_inputs">
