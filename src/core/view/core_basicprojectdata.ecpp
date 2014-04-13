@@ -118,8 +118,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         id="sourcecodeheader"
                         name="form_sourcecodeheader"
                         rows="15"
-                        cols="80"><$ projectData.getSourceCodeHeader()  $>
-                    </textarea>
+                        cols="80"><$ projectData.getSourceCodeHeader()  $></textarea>
                 </div>
 
                 <div class="form_labels">

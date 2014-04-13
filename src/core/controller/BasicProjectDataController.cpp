@@ -106,8 +106,22 @@ void BasicProjectDataController::worker (
 
     // save button pressed
     if ( form_save_button ) {
-        log_debug( "## " << __LINE__ << " ##" );
         this->formDataAssume ( qparam );
+        if( qparam.arg<std::string>("form_projectname") == "" ){
+                this->feedback="The project name is not set!.";
+                this->warning = true;
+                return;
+        }
+        if( qparam.arg<std::string>("form_sourcecodeheader") == "" ){
+                this->feedback="The source code header is not set!.";
+                this->warning = true;
+                return;
+        }
+        if( qparam.arg<std::string>("form_binaryfilename") == "" ){
+                this->feedback="It is no binary file name set!.";
+                this->warning = true;
+                return;
+        }
         this->projectData.write( file_projectdata.str() );
         this->makefileData.write( file_makefile.str() );
         this->feedback="The basic project date is saved.";
@@ -120,8 +134,8 @@ void BasicProjectDataController::worker (
             log_debug( "## " << __LINE__ << " ##" );
             this->formDataAssume ( qparam );
             log_debug("add licence: " << form_licence_template );
-            if(  ){
-                this->feedback="It is no licence select!.";
+            if( form_licence_template == "" ){
+                this->feedback="It is no licence template select!.";
                 this->warning = true;
                 return;
             } else {

@@ -7,7 +7,12 @@ from selenium import webdriver
 class TestOne( unittest.TestCase ):
 
     def setUp(self):
-        self.driver = webdriver.PhantomJS()
+        fp = webdriver.FirefoxProfile()
+        fp.set_preference('browser.helperApps.neverAsk.saveToDisk',
+                  'application/vnd.ms-excel, application/msword')
+        self.driver = webdriver.Firefox(fp)
+
+        #self.driver = webdriver.PhantomJS()
 
     def test_url(self):
         self.driver.set_window_size(1920,1080)
