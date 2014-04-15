@@ -54,20 +54,25 @@ The TNT-WEB-WIZARD (TWW)  is a wizard for tntnet projects with a web user interf
             <ul>
                 <li>Planned
                     <ul>
+                        <li>Flash messages support in a separated module</li>
                         <li>favicon.ico upload in core create process</li>
-                        <li>GitHub support (open existing projects)</li>
                         <li>Support for editing the project configuration of a existing project</li>
-                        <li>Support for editing the makefile of a existing project</li>
-                        <li>Add new resources (images, files and so on) in a existing project</li>
+                        <ul>
+                            <li>GitHub support (open existing projects)</li>
+                            <li>Support for editing the makefile of a existing project</li>
+                            <li>Add new resources (images, files and so on) in a existing project</li>
+                            <li>Adding new ecpp files (in a existing project)</li>
+                            <li>Adding new ecpp files (in a existing project) with a generated form</li>
+                            <li>Adding new ecpp files (in a existing project) with flash messages support</li>
+                            <li>Adding new model classes (in a existing project) with generated  getter and setter methods</li>
+                            <li>Adding new controller classes (in a existing project)</li>
+                            <li>Adding new components with view, model and controller (in a existing project)</li>
+                            <li>Adding new components with a own name space (in a existing project)</li>
+                        </ul>
                         <li>Adding (own) session classes</li>
                         <li>Access Control List (ACL) support</li>
                         <li>REST-API (json,xml) server/client support</li>
                         <li>Adding own exception classes</li>
-                        <li>Adding new ecpp files (in a existing project)</li>
-                        <li>Adding new model classes (in a existing project) with generated  getter and setter methods</li>
-                        <li>Adding new controller classes (in a existing project)</li>
-                        <li>Adding new components with view, model and controller (in a existing project)</li>
-                        <li>Adding new components with a own name space (in a existing project)</li>
                         <li>Unit-Test support</li>
                         <li>Add IPv6 support</li>
                         <li>Add support for a lists of IPs</li>

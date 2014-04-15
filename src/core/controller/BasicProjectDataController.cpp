@@ -52,6 +52,9 @@ void BasicProjectDataController::formDataAssume ( tnt::QueryParams& qparam ){
     this->projectData.setFormToken(
         qparam.arg<bool>("form_csrf_token")
     );
+    this->projectData.setFlashMessagesSupport(
+        qparam.arg<bool>("flash_messages_support")
+    );
     this->projectData.setCxxtoolsLoging(
         qparam.arg<bool>("form_cxxtools_loging")
     );

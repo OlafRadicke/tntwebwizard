@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     scope="shared"
     include="core/model/UserSession.h"
     include="core/model/ProjectData.h"
+    include="core/model/NewControllerData.h"
     include="core/model/MakefileData.h"
     include="core/model/NewModelData.h"
     include="core/model/NewViewData.h"
@@ -38,6 +39,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 projectData,
                 makefileData
         );
+        Tww::Core::NewControllerData newControllerData(
+                userSession,
+                projectData,
+                makefileData,
+                newModelData
+        );
 </%session>
 <%request
     include="core/controller/NewComponentController.h" >
@@ -47,7 +54,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 projectData,
                 makefileData,
                 newModelData,
-                newViewData
+                newViewData,
+                newControllerData
             );
 </%request>
 <%pre>
@@ -77,18 +85,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <form method="post">
             <fieldset>
                 <legend>BASIC COMPONENT DATA</legend>
-                    <div class="form_labels">
-                        <label from="namespace">Namespace:</label>
-                    </div>
-                    <div class="form_inputs">
-                        <input
-                            id="namespace"
-                            name="form_namespace"
-                            type="text"
-                            size="30"
-                            maxlength="30"
-                            value="<$ controller.getNameSpace() $>">
-                    </div>
+                <div class="form_labels">
+                    <label from="namespace">Namespace:</label>
+                </div>
+                <div class="form_inputs">
+                    <input
+                        id="namespace"
+                        name="form_namespace"
+                        type="text"
+                        size="30"
+                        maxlength="30"
+                        value="<$ controller.getNameSpace() $>">
+                </div>
+
             </fieldset>
 
             <fieldset>
@@ -151,7 +160,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         type="text"
                         size="30"
                         maxlength="30"
-                        value="<$ controller.getControllerName() $>">
+                        value="<$ newControllerData.getName() $>">
                 </div>
             </fieldset>
 

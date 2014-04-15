@@ -61,6 +61,7 @@ public:
 
     ProjectData():
         configFormat("json"),
+        flashMessagesSupport(true),
         wizardVersion( 1 ),
         projectName("newproject"),
         doxygenTemplates(true),
@@ -126,6 +127,13 @@ public:
     { return this->cxxtoolsLoging; };
 
     /**
+     * If that get "true" than it is need generating code for flash messages.
+     */
+    bool isFlashMessagesSupport( ){
+        return this->flashMessagesSupport;
+    };
+
+    /**
      * If that "true" than use doxygen comments.
      */
     const bool isDoxygenTemplates( ) const
@@ -172,6 +180,13 @@ public:
      */
     void setConfigFormat( std::string _configFormat ) {
         this->configFormat = _configFormat;
+    };
+
+    /**
+     * If that set "true" than it is generating code for flash messages.
+     */
+    void setFlashMessagesSupport( bool _yesOrNo ){
+        this->flashMessagesSupport = _yesOrNo;
     };
 
     /**
@@ -239,6 +254,11 @@ private:
      * This format can be "xml" or "json".
      */
     std::string configFormat;
+
+    /**
+     * If that value "true" than it is need to generating code for flash messages.
+     */
+    bool flashMessagesSupport;
 
     /**
      * The version of wizard that is create the configuration file.

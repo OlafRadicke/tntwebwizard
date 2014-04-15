@@ -239,7 +239,7 @@ void initcomponent ( tnt::Tntnet &app ) {
         "resources"
     ).setPathInfo( "routereverse/manager/manager.h" );
     RouteReverse::Manager::add(
-        "routereverse_manager.h",
+        "routereverse_manager_h",
         "routereverse/manager/manager.h"
     );
 
@@ -250,10 +250,46 @@ void initcomponent ( tnt::Tntnet &app ) {
         "resources"
     ).setPathInfo( "routereverse/model/routereverseexception.h" );
     RouteReverse::Manager::add(
-        "routereverse_routereverseexception.h",
+        "routereverse_routereverseexception_h",
         "routereverse/model/routereverseexception.h"
     );
 
+
+    // ======= flashmessages =======
+
+
+    // "flashmessages/subpage_flashmessages.dox"
+
+    app.mapUrl(
+        "^/flashmessages/subpage_flashmessages.dox$",
+        "resources"
+    ).setPathInfo( "flashmessages/subpage_flashmessages.dox" );
+    RouteReverse::Manager::add(
+        "flashmessages_subpage_flashmessages.dox",
+        "flashmessages/subpage_flashmessages.dox"
+    );
+
+    // "flashmessages/model/MessageData.h"
+
+    app.mapUrl(
+        "^/flashmessages/model/MessageData.h$",
+        "resources"
+    ).setPathInfo( "flashmessages/model/MessageData.h" );
+    RouteReverse::Manager::add(
+        "flashmessages_MessageData.h",
+        "flashmessages/model/MessageData.h"
+    );
+
+    // "flashmessages/view/flashmessages_feedbackbox.eccp",
+
+    app.mapUrl(
+        "^/flashmessages/view/flashmessages_feedbackbox.eccp$",
+        "resources"
+    ).setPathInfo( "flashmessages/view/flashmessages_feedbackbox.eccp" );
+    RouteReverse::Manager::add(
+        "flashmessages_view_feedbackbox.eccp",
+        "flashmessages/view/flashmessages_feedbackbox.eccp"
+    );
 
     // ############################ SITES ##########################
 

@@ -1,0 +1,50 @@
+/** ***************************************************************************
+*******************************************************************************
+
+\page subpage_flashmessages  The flash messages module
+
+\section mod_flashmessages The flash messages module
+
+ This is the namespace for module flashmessages. This module support to embedded
+ a box for messages in the view.
+
+\subsection mod_flashmessages_pre preparation
+
+
+\subsection mod_flashmessages_example use example
+
+Include your ecpp view file the code line:
+
+@code
+
+<%request
+    include="core/controller/MyController.h"
+    include="flashmessages/model/MessageData.h" >
+
+        FlashMessages::MessageData messagedata;
+        Core::MyController controller( messagedata );
+
+</%request>
+<%cpp>
+
+    messageData.feedback = "That is a example!";
+    messageData.warning = true;
+
+</%cpp>
+
+<!DOCTYPE HTML>
+<html>
+<body>
+
+    <%include>flashmessages/view/flashmessages_feedbackbox.eccp</%include>
+
+</body>
+</html>
+@endcode
+
+The name "messagedata" of the instance MessageData is a is a must.
+The flashmessages_feedbackbox.eccp is search name and check his
+values.
+
+*******************************************************************************
+***************************************************************************** */

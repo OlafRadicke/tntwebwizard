@@ -24,6 +24,7 @@
 #include <core/model/MakefileData.h>
 #include <core/model/ProjectData.h>
 #include <core/model/UserSession.h>
+#include <core/model/NewControllerData.h>
 #include <core/model/NewModelData.h>
 #include <core/model/NewViewData.h>
 
@@ -50,12 +51,15 @@ public:
         Tww::Core::ProjectData& _projectData,
         Tww::Core::MakefileData& _makefileData,
         Tww::Core::NewModelData& _newModelData,
-        Tww::Core::NewViewData& _newViewData
+        Tww::Core::NewViewData& _newViewData,
+        Tww::Core::NewControllerData& _newControllerData
     ):
         warning(false),
+        controllerName("NewConroller"),
+        makefileData( _makefileData ),
+        newControllerData( _newControllerData ),
         newModelData( _newModelData ),
         newViewData( _newViewData ),
-        makefileData( _makefileData ),
         projectData( _projectData ),
         userSession( _userSession )
         {};
@@ -116,6 +120,18 @@ private:
      */
     std::string nameSpace;
 
+
+    /**
+     * Represent the makefile data.
+     */
+    Tww::Core::MakefileData& makefileData;
+
+    /**
+     * This class storage the information about the controller class in
+     * the new component.
+     */
+    Tww::Core::NewControllerData& newControllerData;
+
     /**
      * This class storage the information about the model class in
      * the new component.
@@ -128,10 +144,6 @@ private:
      */
     Tww::Core::NewViewData& newViewData;
 
-    /**
-     * Represent the makefile data.
-     */
-    Tww::Core::MakefileData& makefileData;
 
     /**
      * Class with project data.
@@ -169,7 +181,7 @@ private:
      * Some plausibility data checks before start working.
      */
     bool isProjectFounded( );
-    
+
     /**
      * Convert stings to lower-case.
      */

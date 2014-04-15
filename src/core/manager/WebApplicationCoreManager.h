@@ -182,6 +182,12 @@ private:
     void createModulRouteReverse( const tnt::HttpRequest& request );
 
     /**
+     * Create all directories and files of die module "FlashMessages";
+     */
+    void createModulFlashMessages( const tnt::HttpRequest& request );
+
+
+    /**
      * Create the "src/core/view/core_home.ecpp" file.
      */
     void createHomeSite_epcc();

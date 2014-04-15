@@ -65,6 +65,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <fieldset>
             <legend>BASIC PROJECT DATA</legend>
             <form method="post">
+
+<!-- Project name -->
                 <div class="form_labels">
                     <label from="projectname">Project name:</label>
                 </div>
@@ -91,6 +93,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         value="<$ makefileData.getBinName() $>">
                 </div>
 
+<!-- Source code header -->
                 <div class="form_labels">
                     <label from="licence_template">Source code header:</label>
                 </div>
@@ -121,6 +124,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         cols="80"><$ projectData.getSourceCodeHeader()  $></textarea>
                 </div>
 
+<!-- Doxygen templates -->
                 <div class="form_labels">
                     <label from="doxygen_templates">Doxygen templates:</label>
                 </div>
@@ -137,6 +141,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %     }
                 </div>
 
+<!-- Reverse routing support -->
                 <div class="form_labels">
                     <label from="route_reverse">Reverse routing support (dynamic links):</label>
                 </div>
@@ -153,6 +158,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %     }
                 </div>
 
+<!-- Forms with csrf -->
                 <div class="form_labels">
                     <label from="csrf_token">Forms with csrf(cross site request forgery) token:</label>
                 </div>
@@ -169,6 +175,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %     }
                 </div>
 
+<!-- Flash Messages Support -->
+                <div class="form_labels">
+                    <label from="ecppfilename">Flash messages support:</label>
+                </div>
+                <div class="form_inputs">
+                    <input
+                        type="checkbox"
+                        id="flash_messages_support"
+                        value="true"
+                        name="form_flash_messages_support"
+%     if ( projectData.isFlashMessagesSupport() ) {
+                        checked >
+%     } else {
+                        >
+%     }
+                </div>
+
+<!-- Cxxtools loging support -->
                 <div class="form_labels">
                     <label from="cxxtools_loging">Cxxtools loging support:</label>
                 </div>
@@ -185,6 +209,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 %     }
                 </div>
 
+<!-- tntdb_support -->
                 <div class="form_labels">
                     <label from="tntdb_support"><a href="http://www.tntnet.org/tntdb.html">TntDB</a> support:</label>
                 </div>

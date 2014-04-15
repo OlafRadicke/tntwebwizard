@@ -57,7 +57,7 @@ public:
         projectData( _projectData ),
         userSession( _userSession )
         {};
-        
+
    /**
     * This function is call from the view when it comes a client request.
     */

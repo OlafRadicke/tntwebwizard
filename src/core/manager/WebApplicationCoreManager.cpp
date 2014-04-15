@@ -71,11 +71,11 @@ void WebApplicationCoreManager::createApplicationCore(
     if ( this->projectData.isFormToken( ) ) {
         this->createModulFormToken( request );
     }
-    log_debug("##################################" );
-    log_debug("this->projectData.isRouteReverse()" << this->projectData.isRouteReverse() );
-    log_debug("##################################" );
     if ( this->projectData.isRouteReverse() ) {
         this->createModulRouteReverse( request );
+    }
+    if ( this->projectData.isFlashMessagesSupport() ) {
+        this->createModulFlashMessages( request );
     }
 }
 
@@ -1051,6 +1051,84 @@ void WebApplicationCoreManager::createModulRouteReverse(
         this->makefileData.write( this->getMakefilePath() );
     };
 }
+
+void WebApplicationCoreManager::createModulFlashMessages(
+    const tnt::HttpRequest& request
+) {
+    log_debug("createModulFlashMessages()" );
+    std::ofstream writting_file;
+    std::ostringstream fileContent;
+
+    if ( !cxxtools::Directory::exists( this->getSourceDir() + "/flashmessages" ) ) {
+        cxxtools::Directory::create( this->getSourceDir() + "/flashmessages" );
+    }
+    if ( !cxxtools::Directory::exists( this->getSourceDir() + "/flashmessages/model" ) ) {
+        cxxtools::Directory::create( this->getSourceDir() + "/flashmessages/model" );
+    }
+    if ( !cxxtools::Directory::exists( this->getSourceDir() + "/flashmessages/view" ) ) {
+        cxxtools::Directory::create( this->getSourceDir() + "/flashmessages/view" );
+    }
+
+    if ( !system(NULL) ) {
+        throw Core::TntWebWizardException( "Can not do systems command!" );
+    }
+    // ====== creating files ======
+
+    const unsigned int PATH = 0;
+    const unsigned int ALIAS = 1;
+    const unsigned int TYPE = 2;
+
+    std::string files[3][3] = {
+        {"routereverse/initcomponent.h", "routereverse_initcomponent_h","h"},
+        {"routereverse/subpage_route_reverse.dox", "routereverse_subpage_route_reverse_dox","dox"},
+        {"routereverse/manager/manager.cpp", "routereverse_manager_cpp","cpp"}
+    };
+
+    for (unsigned int i = 0 ; i < 3; i++) {
+        std::cout
+            << "##############################################################"
+            << std::endl;
+        std::cout << "path: " << files[i][0] << " alias: " << files[i][1] << std::endl;
+        std::cout
+            << "##############################################################"
+            << std::endl;
+
+        std::string fileName = this->getSourceDir() + "/" + files[i][PATH] ;
+        std::stringstream sysCommand;
+        std::stringstream errorText;
+
+        std::string href_file =
+            RouteReverse::Manager::getAbsolutURL(
+                files[i][ALIAS],
+                request
+            );
+        sysCommand
+            << "curl " <<  href_file << " > " <<  fileName << ";"
+        ;
+
+        log_debug( "[" << __LINE__ << "] command: " << sysCommand.str() );
+        int returncode = system( sysCommand.str().c_str() );
+        log_debug( "[" << __LINE__ << "]The value returned was: " << returncode);
+        if ( returncode != 0 ) {
+            errorText
+                << "Download file is Failed: \""
+                << sysCommand.str()
+            ;
+            throw Core::TntWebWizardException( errorText.str() );
+        }
+
+        // Add new file in Makefile.tnt configuration.
+        this->makefileData.read( this->getMakefilePath() );
+        if ( files[i][TYPE] == "cpp" ) {
+            this->makefileData.addCppFile( "./src/" + files[i][PATH] );
+        }
+        if ( files[i][TYPE] == "h" ) {
+            this->makefileData.addHFile( "./src/" + files[i][PATH] );
+        }
+        this->makefileData.write( this->getMakefilePath() );
+    };
+}
+
 
 // G --------------------------------------------------------------------------
 

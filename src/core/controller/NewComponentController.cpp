@@ -158,8 +158,12 @@ void NewComponentController::worker (
 
         // Controller class
 
-        this->controllerName =
-            qparam.arg<std::string>("form_controllername");
+        this->newControllerData.setName(
+            qparam.arg<std::string>("form_controllername")
+        );
+        this->newControllerData.setNamespace(
+            qparam.arg<std::string>("form_namespace")
+        );
 
         // Model class
 
