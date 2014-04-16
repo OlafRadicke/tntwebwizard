@@ -89,7 +89,7 @@ void NewControllerData::createHFile(){
     ;
     if( this->projectData.isFlashMessagesSupport() == true ){
         fileContent
-            << "#include <flashmessages/model/MessageData.h \n"
+            << "#include <flashmessages/model/messagedata.h \n"
         ;
     }
     fileContent
