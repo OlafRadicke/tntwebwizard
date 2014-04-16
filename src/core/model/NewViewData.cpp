@@ -67,6 +67,15 @@ void NewViewData::createFiles( std::map<std::string,std::string>& _propertyMap )
         << "<# \n"
         << this->projectData.getSourceCodeHeader()
         << "\n#> \n\n"
+    ;
+    if( this->projectData.isFormToken() == true ){
+        fileContent
+            << "<%pre> \n"
+            << "    #include <formtoken/manager/manager.h> \n"
+            << "</%pre> \n"
+        ;
+    }
+    fileContent
         << "<%session\n"
         << "    scope=\"shared\"\n"
         << "    include=\""
@@ -76,6 +85,13 @@ void NewViewData::createFiles( std::map<std::string,std::string>& _propertyMap )
         << " inst_" << this->toLower( this->modelName ) << "();\n"
         << "</%session>\n\n"
         << "<%request\n"
+    ;
+    if( this->projectData.isFlashMessagesSupport() == true ){
+        fileContent
+            << "    include=\"flashmessages/model/MessageData.h\" \n"
+        ;
+    }
+    fileContent
         << "    include=\"" << this->toLower( this->componentNamespace )
         << "/controller/" << this->toLower( this->controllerName ) << ".h\" >\n"
         << "        " << this->componentNamespace << "::" << this->controllerName << "\n"
@@ -95,9 +111,22 @@ void NewViewData::createFiles( std::map<std::string,std::string>& _propertyMap )
         << "</head>\n"
         << "<body>\n"
     ;
+
+    if( this->projectData.isFlashMessagesSupport() == true ){
+        fileContent
+            << "    <%include>flashmessages/view/flashmessages_feedbackbox.eccp</%include> \n"
+        ;
+    }
+
     if ( this->formSupport == true ) {
         fileContent << "    <form method=\"post\">  \n";
-        std::vector<std::string> allProperties;
+
+        if( this->projectData.isFormToken() == true ){
+            fileContent
+                << "        <$$  SessionForm::Manager::getFormToken( request );  $>\n"
+            ;
+        }
+
         for (
             std::map<std::string,std::string>::iterator it=_propertyMap.begin();
             it!=_propertyMap.end();
