@@ -553,8 +553,6 @@ void NewModelData::createHFile(){
     }
     fileContent << "#endif" ;
 
-    log_debug( "\n++++++++++++++++++++++++++++\n" << fileContent.str() << "\n+++++++++++++++++++++++++++\n");
-
     std::stringstream compHFileName;
     compHFileName
         << this->userSession.getSessionPath()

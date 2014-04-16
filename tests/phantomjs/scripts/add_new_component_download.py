@@ -49,6 +49,7 @@ class TestOne( unittest.TestCase ):
         #self.driver.find_element_by_id("route_reverse").click()
         #self.driver.find_element_by_id("csrf_token").click()
         #self.driver.find_element_by_id("tntdb_support").click()
+        #self.driver.find_element_by_id("flash_messages_support").click()
         self.driver.save_screenshot("/tmp/" + testname + "_02_05.png")
 
 # 6
@@ -128,7 +129,7 @@ class TestOne( unittest.TestCase ):
                 option.click()
 
         # ende item 1
-        
+
         # start item 2
         self.driver.find_element_by_id("property_name").clear();
         self.driver.find_element_by_id("property_name").send_keys("bar")

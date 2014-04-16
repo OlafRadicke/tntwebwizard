@@ -240,22 +240,22 @@ void NewControllerData::createHFile(){
     ;
 
     // --------- witting file(s) ---------
-    std::stringstream compEcppFileName;
-    compEcppFileName
+    std::stringstream compControllerHFileName;
+    compControllerHFileName
         << this->userSession.getSessionPath()
         << "/src/"
         << this->toLower( this->componentNamespace )
-        << "/view/"
-        << this->controllerName
+        << "/controller/"
+        << this->toLower( this->controllerName )
         << ".h"
     ;
 
     log_debug(
         __LINE__
         << " write in: \n"
-        << compEcppFileName.str()
+        << compControllerHFileName.str()
     );
-    std::ofstream compEcppFile( compEcppFileName.str().c_str() );
+    std::ofstream compEcppFile( compControllerHFileName.str().c_str() );
     compEcppFile << fileContent.str() ;
     compEcppFile.close();
 
@@ -264,8 +264,8 @@ void NewControllerData::createHFile(){
     this->makefileData.addHFile(
         "./src/"
         + this->toLower( this->componentNamespace )
-        + "/view/"
-        + this->controllerName
+        + "/controller/"
+        + this->toLower( this->controllerName )
         + ".h"
     );
     this->makefileData.write( this->userSession.getSessionPath() + "/Makefile.tnt" );

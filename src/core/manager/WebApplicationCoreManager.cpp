@@ -856,13 +856,13 @@ void WebApplicationCoreManager::createModulFormToken(
     };
 
     for (unsigned int i = 0 ; i < 6; i++) {
-        std::cout
-            << "##############################################################"
-            << std::endl;
-        std::cout << "path: " << files[i][0] << " alias: " << files[i][1] << std::endl;
-        std::cout
-            << "##############################################################"
-            << std::endl;
+//         std::cout
+//             << "##############################################################"
+//             << std::endl;
+//         std::cout << "path: " << files[i][0] << " alias: " << files[i][1] << std::endl;
+//         std::cout
+//             << "##############################################################"
+//             << std::endl;
 
         std::string fileName = this->getSourceDir() + "/" + files[i][PATH] ;
         std::stringstream sysCommand;
@@ -1003,18 +1003,18 @@ void WebApplicationCoreManager::createModulRouteReverse(
         {"routereverse/initcomponent.h", "routereverse_initcomponent_h","h"},
         {"routereverse/subpage_route_reverse.dox", "routereverse_subpage_route_reverse_dox","dox"},
         {"routereverse/manager/manager.cpp", "routereverse_manager_cpp","cpp"},
-        {"routereverse/manager/manager.h", "routereverse_manager.h","h"},
-        {"routereverse/model/routereverseexception.h", "routereverse_routereverseexception.h","h"}
+        {"routereverse/manager/manager.h", "routereverse_manager_h","h"},
+        {"routereverse/model/routereverseexception.h", "routereverse_routereverseexception_h","h"}
     };
 
     for (unsigned int i = 0 ; i < 5; i++) {
-        std::cout
-            << "##############################################################"
-            << std::endl;
-        std::cout << "path: " << files[i][0] << " alias: " << files[i][1] << std::endl;
-        std::cout
-            << "##############################################################"
-            << std::endl;
+//         std::cout
+//             << "##############################################################"
+//             << std::endl;
+//         std::cout << "path: " << files[i][0] << " alias: " << files[i][1] << std::endl;
+//         std::cout
+//             << "##############################################################"
+//             << std::endl;
 
         std::string fileName = this->getSourceDir() + "/" + files[i][PATH] ;
         std::stringstream sysCommand;
@@ -1078,10 +1078,11 @@ void WebApplicationCoreManager::createModulFlashMessages(
     const unsigned int ALIAS = 1;
     const unsigned int TYPE = 2;
 
+
     std::string files[3][3] = {
-        {"routereverse/initcomponent.h", "routereverse_initcomponent_h","h"},
-        {"routereverse/subpage_route_reverse.dox", "routereverse_subpage_route_reverse_dox","dox"},
-        {"routereverse/manager/manager.cpp", "routereverse_manager_cpp","cpp"}
+        {"flashmessages/model/MessageData.h", "flashmessages_MessageData_h","h"},
+        {"flashmessages/subpage_flashmessages.dox", "flashmessages_subpage_flashmessages_dox","dox"},
+        {"flashmessages/view/flashmessages_feedbackbox.eccp", "flashmessages_view_feedbackbox_eccp","ecpp"}
     };
 
     for (unsigned int i = 0 ; i < 3; i++) {

@@ -265,7 +265,7 @@ void initcomponent ( tnt::Tntnet &app ) {
         "resources"
     ).setPathInfo( "flashmessages/subpage_flashmessages.dox" );
     RouteReverse::Manager::add(
-        "flashmessages_subpage_flashmessages.dox",
+        "flashmessages_subpage_flashmessages_dox",
         "flashmessages/subpage_flashmessages.dox"
     );
 
@@ -276,7 +276,7 @@ void initcomponent ( tnt::Tntnet &app ) {
         "resources"
     ).setPathInfo( "flashmessages/model/MessageData.h" );
     RouteReverse::Manager::add(
-        "flashmessages_MessageData.h",
+        "flashmessages_MessageData_h",
         "flashmessages/model/MessageData.h"
     );
 
@@ -287,7 +287,7 @@ void initcomponent ( tnt::Tntnet &app ) {
         "resources"
     ).setPathInfo( "flashmessages/view/flashmessages_feedbackbox.eccp" );
     RouteReverse::Manager::add(
-        "flashmessages_view_feedbackbox.eccp",
+        "flashmessages_view_feedbackbox_eccp",
         "flashmessages/view/flashmessages_feedbackbox.eccp"
     );
 

@@ -207,7 +207,7 @@ void NewComponentController::worker (
         log_debug("create_button is pushed..." );
         this->newModelData.createFiles();
         this->newViewData.createFiles( this->newModelData.getPropertyMap() );
-
+        this->newControllerData.createFiles();
         this->feedback = "Okay! Project core is created now!";
         this->warning = false;
         return;

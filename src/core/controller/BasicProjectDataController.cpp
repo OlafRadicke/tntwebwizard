@@ -38,6 +38,7 @@ log_define("Core.BasicProjectDataController")
 
 void BasicProjectDataController::formDataAssume ( tnt::QueryParams& qparam ){
     // query parameters
+    log_debug("################## formDataAssume ####################" );
 
     // project data
     this->projectData.setProjectName(
@@ -52,9 +53,16 @@ void BasicProjectDataController::formDataAssume ( tnt::QueryParams& qparam ){
     this->projectData.setFormToken(
         qparam.arg<bool>("form_csrf_token")
     );
+
+    log_debug("form_flash_messages_support: "
+        << qparam.arg<bool>("form_flash_messages_support") );
+
     this->projectData.setFlashMessagesSupport(
-        qparam.arg<bool>("flash_messages_support")
+        qparam.arg<bool>("form_flash_messages_support")
     );
+    log_debug("isFlashMessagesSupport(): "
+        << this->projectData.isFlashMessagesSupport() );
+
     this->projectData.setCxxtoolsLoging(
         qparam.arg<bool>("form_cxxtools_loging")
     );
@@ -109,6 +117,7 @@ void BasicProjectDataController::worker (
 
     // save button pressed
     if ( form_save_button ) {
+        log_debug( "###### " << __LINE__ << " ######" );
         this->formDataAssume ( qparam );
         if( qparam.arg<std::string>("form_projectname") == "" ){
                 this->feedback="The project name is not set!.";
@@ -131,10 +140,10 @@ void BasicProjectDataController::worker (
         this->warning = false;
         return;
     } else {
-        log_debug( "## " << __LINE__ << " ##" );
+        log_debug( "###### " << __LINE__ << " ######" );
         // assume licence button pressed
         if ( form_assume_licence ) {
-            log_debug( "## " << __LINE__ << " ##" );
+            log_debug( "###### " << __LINE__ << " ######" );
             this->formDataAssume ( qparam );
             log_debug("add licence: " << form_licence_template );
             if( form_licence_template == "" ){
@@ -146,7 +155,7 @@ void BasicProjectDataController::worker (
             }
         // page (first) load
         } else {
-            log_debug( "## " << __LINE__ << " ##" );
+            log_debug( "###### " << __LINE__ << " ######" );
             // read project configuration...
             log_debug("file_projectdata: " << file_projectdata.str() );
             this->projectData.read( file_projectdata.str() );
