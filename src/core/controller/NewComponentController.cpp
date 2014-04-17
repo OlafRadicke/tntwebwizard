@@ -202,6 +202,11 @@ void NewComponentController::worker (
         }
     }
 
+    if ( qparam.arg<bool>("form_clear_property_button") == true ) {
+        this->newModelData.clearProperty();
+        return;
+    }
+
     // save button pressed
     if ( qparam.arg<bool>("form_create_button") == true ) {
         log_debug("create_button is pushed..." );
@@ -211,24 +216,24 @@ void NewComponentController::worker (
         this->feedback = "Okay! Project core is created now!";
         this->warning = false;
         return;
-    } else {
-        // click button "add a property"
-        if ( qparam.arg<bool>("form_add_property") == true  ) {
-            log_debug("add_property is pushed..." );
-            if ( qparam.arg<std::string>("form_property_name") == "" ) {
-                this->feedback = "A property must be have a name!";
-                this->warning = true;
-                return;
-            } else {
-                this->newModelData.addProperty(
-                    qparam.arg<std::string>("form_property_name"),
-                    qparam.arg<std::string>("form_property_type")
-                );
-            }
-        } else {
+    }
 
+    // click button "add a property"
+    if ( qparam.arg<bool>("form_add_property") == true  ) {
+        log_debug("add_property is pushed..." );
+        if ( qparam.arg<std::string>("form_property_name") == "" ) {
+            this->feedback = "A property must be have a name!";
+            this->warning = true;
+            return;
+        } else {
+            this->newModelData.addProperty(
+                qparam.arg<std::string>("form_property_name"),
+                qparam.arg<std::string>("form_property_type")
+            );
+            return;
         }
     }
+    return;
 }
 
 

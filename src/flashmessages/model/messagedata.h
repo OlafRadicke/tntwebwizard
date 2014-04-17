@@ -36,9 +36,12 @@ class MessageData {
 
 public:
 
+    /**
+     * Constructor with default value sets.
+     */
     MessageData ( ):
         feedback(""),
-        warning(false);
+        warning(false){};
 
     /**
      * If this variable value not empty than it is a message for the

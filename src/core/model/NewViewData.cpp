@@ -81,21 +81,37 @@ void NewViewData::createFiles( std::map<std::string,std::string>& _propertyMap )
         << "    include=\""
         << this->toLower( this->componentNamespace )
         << "/model/" << this->toLower( this->modelName ) << ".h\">\n"
-        << "    " << this->componentNamespace << "::" << this->modelName
+        << "        " << this->componentNamespace << "::" << this->modelName
         << " inst_" << this->toLower( this->modelName ) << "();\n"
         << "</%session>\n\n"
         << "<%request\n"
     ;
     if( this->projectData.isFlashMessagesSupport() == true ){
         fileContent
-            << "    include=\"flashmessages/model/MessageData.h\" \n"
+            << "    include=\"flashmessages/model/messagedata.h\" \n"
         ;
     }
     fileContent
         << "    include=\"" << this->toLower( this->componentNamespace )
         << "/controller/" << this->toLower( this->controllerName ) << ".h\" >\n"
+    ;
+    if( this->projectData.isFlashMessagesSupport() == true ){
+        fileContent
+            << "        FlashMessages::MessageData  flashmessage;\n"
+        ;
+    }
+    fileContent
         << "        " << this->componentNamespace << "::" << this->controllerName << "\n"
-        << "            controller( inst_" << this->toLower( this->modelName ) << ");\n"
+        << "            controller( \n"
+        << "                inst_" << this->toLower( this->modelName )
+    ;
+    if( this->projectData.isFlashMessagesSupport() == true ){
+        fileContent
+            << ",\n                flashmessage\n"
+        ;
+    }
+    fileContent
+        << "            );\n"
         << "</%request>\n"
         << "<%cpp>\n"
         << "    controller.worker(\n"
@@ -123,7 +139,7 @@ void NewViewData::createFiles( std::map<std::string,std::string>& _propertyMap )
 
         if( this->projectData.isFormToken() == true ){
             fileContent
-                << "        <$$  SessionForm::Manager::getFormToken( request );  $>\n"
+                << "        <$$  FormToken::Manager::getFormToken( request )  $>\n"
             ;
         }
 

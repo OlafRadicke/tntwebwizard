@@ -21,8 +21,8 @@ Include your ecpp view file the code line:
     include="core/controller/MyController.h"
     include="flashmessages/model/MessageData.h" >
 
-        FlashMessages::MessageData messagedata;
-        Core::MyController controller( messagedata );
+        FlashMessages::MessageData flashmessages;
+        Core::MyController controller( flashmessages );
 
 </%request>
 <%cpp>
@@ -42,7 +42,7 @@ Include your ecpp view file the code line:
 </html>
 @endcode
 
-The name "messagedata" of the instance MessageData is a is a must.
+The name "flashmessages" of the instance MessageData is a is a must.
 The flashmessages_feedbackbox.eccp is search name and check his
 values.
 

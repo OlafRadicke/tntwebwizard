@@ -272,12 +272,12 @@ void initcomponent ( tnt::Tntnet &app ) {
     // "flashmessages/model/MessageData.h"
 
     app.mapUrl(
-        "^/flashmessages/model/MessageData.h$",
+        "^/flashmessages/model/messagedata.h$",
         "resources"
-    ).setPathInfo( "flashmessages/model/MessageData.h" );
+    ).setPathInfo( "flashmessages/model/messagedata.h" );
     RouteReverse::Manager::add(
-        "flashmessages_MessageData_h",
-        "flashmessages/model/MessageData.h"
+        "flashmessages_messagedata_h",
+        "flashmessages/model/messagedata.h"
     );
 
     // "flashmessages/view/flashmessages_feedbackbox.eccp",

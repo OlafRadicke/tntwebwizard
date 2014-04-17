@@ -65,8 +65,122 @@ void NewControllerData::createFiles( ){
 }
 
 void NewControllerData::createCppFile(){
+    std::stringstream fileContent;
+    std::map<std::string,std::string>& propertyMap =
+        this->newModelData.getPropertyMap();
+    fileContent
+        << "/* \n"
+        << this->projectData.getSourceCodeHeader()
+        << "\n*/ \n\n"
+        << "#include <" <<  this->toLower( this->componentNamespace )
+        << "/controller/" << this->toLower( this->controllerName ) << ".h>\n\n"
+    ;
+    if( this->projectData.isFlashMessagesSupport() == true ){
+        fileContent
+            << "#include <flashmessages/model/messagedata.h> \n"
+        ;
+    }
+    fileContent
+        << "#include <tnt/httprequest.h>\n"
+        << "#include <tnt/httpreply.h>\n"
+    ;
+    for (
+        std::map<std::string,std::string>::iterator it=propertyMap.begin();
+        it!=propertyMap.end();
+        ++it
+    ){
+        // std::cout << it->first << " => " << it->second << '\n';
+        if ( it->second == "std::string") {
+            fileContent  << "#include <string>\n";
+            break;
+        }
+    }
+    for (
+        std::map<std::string,std::string>::iterator it=propertyMap.begin();
+        it!=propertyMap.end();
+        ++it
+    ){
+        // std::cout << it->first << " => " << it->second << '\n';
+        if ( it->second == "std::vector") {
+            fileContent  << "#include <vector>\n";
+            break;
+        }
+    }
+    for (
+        std::map<std::string,std::string>::iterator it=propertyMap.begin();
+        it!=propertyMap.end();
+        ++it
+    ){
+        // std::cout << it->first << " => " << it->second << '\n';
+        if ( it->second == "std::map") {
+            fileContent  << "#include <map>\n";
+            break;
+        }
+    }
+    for (
+        std::map<std::string,std::string>::iterator it=propertyMap.begin();
+        it!=propertyMap.end();
+        ++it
+    ){
+        // std::cout << it->first << " => " << it->second << '\n';
+        if ( it->second == "std::list") {
+            fileContent  << "#include <list>\n";
+            break;
+        }
+    }
+    for (
+        std::map<std::string,std::string>::iterator it=propertyMap.begin();
+        it!=propertyMap.end();
+        ++it
+    ){
+        // std::cout << it->first << " => " << it->second << '\n';
+        if ( it->second == "std::stringstream" ) {
+            fileContent  << "#include <sstream>\n";
+            break;
+        }
+    }
+    if( this->componentNamespace != "" ){
+        fileContent  << "\nnamespace " << this->componentNamespace << " {\n\n";
+    }
+    fileContent
+        << "void " << this->controllerName << "::worker ( \n"
+        << "    tnt::HttpRequest& request, \n"
+        << "    tnt::HttpReply& reply, \n"
+        << "    tnt::QueryParams& qparam \n"
+        << "); \n\n"
+        << "} // namespace  \n"
+    ;
 
-    return;
+    // --------- witting file(s) ---------
+    std::stringstream compControllerCppFileName;
+    compControllerCppFileName
+        << this->userSession.getSessionPath()
+        << "/src/"
+        << this->toLower( this->componentNamespace )
+        << "/controller/"
+        << this->toLower( this->controllerName )
+        << ".cpp"
+    ;
+
+    log_debug(
+        __LINE__
+        << " write in: \n"
+        << compControllerCppFileName.str()
+    );
+    std::ofstream compCppFile( compControllerCppFileName.str().c_str() );
+    compCppFile << fileContent.str() ;
+    compCppFile.close();
+
+    // Add new file in Makefile.tnt configuration.
+    this->makefileData.read( this->userSession.getSessionPath() + "/Makefile.tnt" );
+    this->makefileData.addHFile(
+        "./src/"
+        + this->toLower( this->componentNamespace )
+        + "/controller/"
+        + this->toLower( this->controllerName )
+        + ".cpp"
+    );
+    this->makefileData.write( this->userSession.getSessionPath() + "/Makefile.tnt" );
 }
 
 void NewControllerData::createHFile(){
@@ -89,7 +203,7 @@ void NewControllerData::createHFile(){
     ;
     if( this->projectData.isFlashMessagesSupport() == true ){
         fileContent
-            << "#include <flashmessages/model/messagedata.h \n"
+            << "#include <flashmessages/model/messagedata.h> \n"
         ;
     }
     fileContent
@@ -162,25 +276,17 @@ void NewControllerData::createHFile(){
             << "*/\n"
         ;
     }
-    if( this->projectData.isDoxygenTemplates( ) == true ){
-        fileContent
-            << "/** \n"
-            << "* @class " << this->controllerName << " This class has the function of a controller ... \n"
-            << "* @todo fill this with information!\n"
-            << "*/\n"
-        ;
-    }
     fileContent << "class " << this->controllerName << " {\n\n"
         << " public: \n\n"
     ;
 
     if( this->projectData.isDoxygenTemplates( ) == true ){
         fileContent
-            << "/** \n"
-            << "* Thisis the class constructor... \n"
-            << "* @arg _" << this->toLower( this->newModelData.getName() ) << " This is the model...\n"
-            << "* @todo fill this with information!\n"
-            << "*/\n"
+            << "    /** \n"
+            << "    * Thisis the class constructor... \n"
+            << "    * @arg _" << this->toLower( this->newModelData.getName() ) << " This is the model...\n"
+            << "    * @todo fill this with information!\n"
+            << "    */\n"
         ;
     }
     fileContent
@@ -191,19 +297,21 @@ void NewControllerData::createHFile(){
     if( this->projectData.isFlashMessagesSupport() == true ){
         fileContent
             << ",\n"
-            << "         FlashMessages  _flashMessages"
+            << "         FlashMessages::MessageData  _flashmessage"
         ;
     }
+
+
     fileContent
-        << "): "
-        << this->toLower( this->newModelData.getName() )
-        << "        ( _" << this->toLower( this->newModelData.getName() )
-        << ")"
+        << "): \n"
+        << "        " << this->toLower( this->newModelData.getName() )
+        << "( _" << this->toLower( this->newModelData.getName() )
+        << " )"
     ;
     if( this->projectData.isFlashMessagesSupport() == true ){
         fileContent
             << ",\n"
-            << "        flashMessages( _flashMessages )"
+            << "        flashmessage( _flashmessage )"
         ;
     }
     fileContent
@@ -225,16 +333,19 @@ void NewControllerData::createHFile(){
         << "        tnt::HttpRequest& request, \n"
         << "        tnt::HttpReply& reply, \n"
         << "        tnt::QueryParams& qparam \n"
-        << "    ); \n"
-        << "private: \n"
+        << "    ); \n\n"
+        << "private: \n\n"
+        << this->newModelData.getName() << " "
+        << this->toLower( this->newModelData.getName() ) << ";\n"
     ;
+
     if( this->projectData.isFlashMessagesSupport() == true ){
         fileContent
-            << "FlashMessages  flashMessages; \n\n"
+            << "FlashMessages::MessageData  flashmessage; \n"
         ;
     }
     fileContent
-        << "}; \n"
+        << "\n}; //end class\n"
         << "} // namespace  \n"
         << "#endif \n"
     ;
@@ -255,9 +366,9 @@ void NewControllerData::createHFile(){
         << " write in: \n"
         << compControllerHFileName.str()
     );
-    std::ofstream compEcppFile( compControllerHFileName.str().c_str() );
-    compEcppFile << fileContent.str() ;
-    compEcppFile.close();
+    std::ofstream compHFile( compControllerHFileName.str().c_str() );
+    compHFile << fileContent.str() ;
+    compHFile.close();
 
     // Add new file in Makefile.tnt configuration.
     this->makefileData.read( this->userSession.getSessionPath() + "/Makefile.tnt" );

@@ -1080,7 +1080,7 @@ void WebApplicationCoreManager::createModulFlashMessages(
 
 
     std::string files[3][3] = {
-        {"flashmessages/model/MessageData.h", "flashmessages_MessageData_h","h"},
+        {"flashmessages/model/messagedata.h", "flashmessages_messagedata_h","h"},
         {"flashmessages/subpage_flashmessages.dox", "flashmessages_subpage_flashmessages_dox","dox"},
         {"flashmessages/view/flashmessages_feedbackbox.eccp", "flashmessages_view_feedbackbox_eccp","ecpp"}
     };

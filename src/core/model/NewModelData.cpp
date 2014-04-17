@@ -58,7 +58,7 @@ void NewModelData::createCppFile(){
     ;
     fileContent
         << "#include <" << this->toLower( this->componentNamespace) << "/model/"
-        << this->modelName << ".h>\n"
+        << this->toLower( this->modelName ) << ".h>\n"
     ;
     for (
         std::map<std::string,std::string>::iterator it=this->propertyMap.begin();

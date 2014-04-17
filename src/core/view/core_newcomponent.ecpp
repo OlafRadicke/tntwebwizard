@@ -190,6 +190,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             <li><$  allProperties[i] $></li>
 % }
                     </ul>
+                    <button
+                        name="form_clear_property_button"
+                        type="submit"
+                        value="form_clear_property_button" >Clear property</button>
                 </div>
 
                 <div class="form_inputs">

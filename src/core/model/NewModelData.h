@@ -83,7 +83,6 @@ public:
         return this->modelName;
      }
 
-
     /**
      * Get back a map of model properties. The property name is the map key
      * and the map value is the property type.
@@ -191,6 +190,16 @@ public:
     void isXmlSerializationSupported( bool _newValue ) {
         this->xmlSerializationSupport = _newValue;
     }
+
+    // === R ===
+
+    /**
+     *Clear the list of property.
+     */
+    void clearProperty( ){
+        this->propertyMap.clear();
+    };
+
     // === S ===
 
     /**

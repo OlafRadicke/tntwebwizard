@@ -65,7 +65,7 @@
         "core/resources/tntwebwizard.css",
         "core/resources/tntwebwizard_beta.css",
         "flashmessages/subpage_flashmessages.dox",
-        "flashmessages/model/MessageData.h",
+        "flashmessages/model/messagedata.h",
         "flashmessages/view/flashmessages_feedbackbox.eccp",
         "formtoken/controller/controller.cpp",
         "formtoken/initcomponent.h",
