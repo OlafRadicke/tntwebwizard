@@ -236,6 +236,8 @@ void NewViewData::createFiles( std::map<std::string,std::string>& _propertyMap )
         + ".ecpp"
     );
     this->makefileData.write( this->userSession.getSessionPath() + "/Makefile.tnt" );
+
+    this->createInitcomponent_hFile();
 }
 
 void NewViewData::createInitcomponent_hFile(){
