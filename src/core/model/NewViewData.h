@@ -51,7 +51,7 @@ public:
         formSupport(false),
         modelName(""),
         urlRoute("comp/newview"),
-        viewName("newview"){};
+        viewName("namespace_new_view_name"){};
 
     // === C ===
 
