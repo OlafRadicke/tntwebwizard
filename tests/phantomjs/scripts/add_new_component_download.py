@@ -91,7 +91,7 @@ class TestOne( unittest.TestCase ):
                 option.click()
         self.driver.save_screenshot("/tmp/" + testname + "_03_05.png")
 
-# 04
+# 04 - Create new component
         self.driver.find_element_by_link_text('New component').click()
         self.driver.save_screenshot("/tmp/" + testname + "_04_01.png")
 
@@ -120,7 +120,8 @@ class TestOne( unittest.TestCase ):
         for option in el.find_elements_by_tag_name('option'):
             if option.text == 'int':
                 option.click()
-        self.driver.find_element_by_name("form_add_property").click()
+
+        self.driver.save_screenshot("/tmp/" + testname + "_04_02.png")
 
         el = self.driver.find_elements_by_xpath("//*[contains(text(), 'Add property')]")
         print el
@@ -129,6 +130,8 @@ class TestOne( unittest.TestCase ):
                 option.click()
 
         # ende item 1
+
+        self.driver.save_screenshot("/tmp/" + testname + "_04_03.png")
 
         # start item 2
         self.driver.find_element_by_id("property_name").clear();
@@ -145,12 +148,13 @@ class TestOne( unittest.TestCase ):
             if option.text == 'Add property':
                 option.click()
         # ende item 2
+        self.driver.save_screenshot("/tmp/" + testname + "_04_04.png")
 
         self.driver.find_element_by_id("destructor").click()
         self.driver.find_element_by_id("json_serialization").click()
         self.driver.find_element_by_id("xml_serialization").click()
 
-        self.driver.save_screenshot("/tmp/" + testname + "_04_02.png")
+        self.driver.save_screenshot("/tmp/" + testname + "_04_05.png")
 
         el = self.driver.find_elements_by_xpath("//*[contains(text(), 'Create component')]")
         print el
@@ -158,7 +162,7 @@ class TestOne( unittest.TestCase ):
             if option.text == 'Create component':
                 option.click()
 
-        self.driver.save_screenshot("/tmp/" + testname + "_04_03.png")
+        self.driver.save_screenshot("/tmp/" + testname + "_04_06.png")
 
 
 # 05 - download

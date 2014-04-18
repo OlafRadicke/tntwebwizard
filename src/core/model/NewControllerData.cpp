@@ -147,7 +147,9 @@ void NewControllerData::createCppFile(){
         << "    tnt::HttpRequest& request, \n"
         << "    tnt::HttpReply& reply, \n"
         << "    tnt::QueryParams& qparam \n"
-        << "); \n\n"
+        << "){\n"
+        << "    return;\n"
+        << "}\n\n"
         << "} // namespace  \n"
     ;
 
@@ -173,7 +175,7 @@ void NewControllerData::createCppFile(){
 
     // Add new file in Makefile.tnt configuration.
     this->makefileData.read( this->userSession.getSessionPath() + "/Makefile.tnt" );
-    this->makefileData.addHFile(
+    this->makefileData.addCppFile(
         "./src/"
         + this->toLower( this->componentNamespace )
         + "/controller/"
