@@ -3,6 +3,7 @@
 import time
 import unittest
 from selenium import webdriver
+import urllib
 
 class TestOne( unittest.TestCase ):
 
@@ -165,10 +166,15 @@ class TestOne( unittest.TestCase ):
         self.driver.save_screenshot("/tmp/" + testname + "_04_06.png")
 
 
-# 05 - download
+# 05 - download 0.0.0.0:8001/core/download.zip
 
         self.driver.find_element_by_link_text('Download').click()
+
+        #urllib.urlretrieve("http://127.0.0.1:8001/core/download.zip", "/tmp/download.zip")
+
         self.driver.save_screenshot("/tmp/" + testname + "_05_01.png")
+
+
 # ende ...
 
 

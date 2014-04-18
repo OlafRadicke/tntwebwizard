@@ -51,7 +51,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>TNT-WEB-WIZARD - create application core</title>
+    <title>TNT-WEB-WIZARD - CREATE APPLICATION CORE</title>
     <& core_part_head qparam >
 </head>
 <body>

@@ -125,6 +125,10 @@ void WebApplicationCoreManager::createMain_cpp(){
     if ( this->projectData.isRouteReverse( ) ) {
         fileContent << "#include <routereverse/initcomponent.h>\n";
     }
+// is not needed
+//     if( this->projectData.isFlashMessagesSupport() == true ){
+//         fileContent << "#include <flashmessages/initcomponent.h> \n" ;
+//     }
     fileContent << "\n";
     // ***** tnt lib part *****
     fileContent
@@ -195,10 +199,14 @@ void WebApplicationCoreManager::createMain_cpp(){
         fileContent << "\t FormToken::initcomponent( app );\n";
     }
     if ( this->projectData.isRouteReverse( ) ) {
-        fileContent << "\t RouteReverse::initcomponent( app );\n\n";
+        fileContent << "\t RouteReverse::initcomponent( app );\n";
     }
+// is not needed
+//     if ( this->projectData.isFlashMessagesSupport() == true  ) {
+//         fileContent << "\t FlashMessages::initcomponent( app );\n\n";
+//     }
     fileContent
-        << "\t std::cout \n"
+        << "\n\t std::cout \n"
         << "\t\t << \""
         << this->projectData.getProjectName()
         << " is started and run on http://\" \n"

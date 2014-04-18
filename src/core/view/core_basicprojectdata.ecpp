@@ -143,7 +143,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <!-- Reverse routing support -->
                 <div class="form_labels">
-                    <label from="route_reverse">Reverse routing support (dynamic links):</label>
+                    <label from="route_reverse">Reverse routing support (generic links):</label>
                 </div>
                 <div class="form_inputs">
                     <input

@@ -153,13 +153,16 @@ void NewViewData::createFiles( std::map<std::string,std::string>& _propertyMap )
             ) {
                 fileContent
                     << "        <label from=\"" << it->first << "\">" << it->first << ":</label>\n"
+                    << "        <br>\n"
                     << "        <input\n"
                     << "            id=\"" << it->first << "\"\n"
                     << "            name=\"form_" << it->first << "\"\n"
                     << "            type=\"text\"\n"
                     << "            size=\"40\"\n"
                     << "            maxlength=\"40\"\n"
-                    << "            value=\"<$ inst_" << this->toLower( this->modelName ) << ".get_" << it->first << "() $>\">\n\n"
+                    << "            value=\"<$ inst_" << this->toLower( this->modelName )
+                    << ".get_" << it->first << "() $>\">\n"
+                    << "        <br>\n\n"
                 ;
             }
             if ( it->second == "int"
@@ -169,18 +172,22 @@ void NewViewData::createFiles( std::map<std::string,std::string>& _propertyMap )
             ) {
                 fileContent
                     << "        <label from=\"" << it->first << "\">" << it->first << ":</label>\n"
+                    << "        <br>\n"
                     << "        <input\n"
                     << "            id=\"" << it->first << "\"\n"
                     << "            name=\"form_" << it->first << "\"\n"
                     << "            type=\"number\"\n"
                     << "            size=\"40\"\n"
                     << "            maxlength=\"40\"\n"
-                    << "            value=\"<$ inst_" << this->toLower( this->modelName ) << ".get_" << it->first << "() $>\">\n\n"
+                    << "            value=\"<$ inst_" << this->toLower( this->modelName )
+                    << ".get_" << it->first << "() $>\">\n"
+                    << "        <br>\n\n"
                 ;
             }
             if ( it->second == "bool" ) {
                 fileContent
                     << "        <label from=\"" << it->first << "\">" << it->first << ":</label>\n"
+                    << "        <br>\n"
                     << "        <input\n"
                     << "            id=\"" << it->first << "\"\n"
                     << "            name=\"form_" << it->first << "\"\n"
@@ -191,7 +198,8 @@ void NewViewData::createFiles( std::map<std::string,std::string>& _propertyMap )
                     << "            checked >\n"
                     << "%     } else {\n"
                      << "                   >\n"
-                    << "%     }\n\n"
+                    << "%     }\n"
+                    << "        <br>\n\n"
                 ;
             }
         }
