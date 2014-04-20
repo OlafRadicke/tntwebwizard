@@ -49,6 +49,7 @@ log_define("Core.NewModelData")
 
 void NewModelData::createCppFile(){
     log_debug("createCppFile()" );
+    bool firstItem = true;
     std::ostringstream fileContent;
 
     fileContent
@@ -58,15 +59,27 @@ void NewModelData::createCppFile(){
     ;
     fileContent
         << "#include <" << this->toLower( this->componentNamespace) << "/model/"
-        << this->toLower( this->modelName ) << ".h>\n"
+        << this->toLower( this->modelName ) << ".h>\n\n"
     ;
+
+    if ( this->projectData.isTntDB() == true ) {
+        fileContent
+            << "#include <tntdb/connect.h>\n"
+            << "#include <tntdb/transaction.h>\n"
+            << "#include <tntdb/statement.h>\n\n"
+            << "#include <string>\n"
+        ;
+    }
     for (
         std::map<std::string,std::string>::iterator it=this->propertyMap.begin();
         it!=this->propertyMap.end();
         ++it
     ){
         // std::cout << it->first << " => " << it->second << '\n';
-        if ( it->second == "std::string") {
+        if (
+            it->second == "std::string"
+            and this->projectData.isTntDB() == false
+        ) {
             fileContent  << "#include <string>\n";
             break;
         }
@@ -217,6 +230,80 @@ void NewModelData::createCppFile(){
         ;
     }
 
+    // isTntDB( )
+    if ( this->projectData.isTntDB() == true ){
+        fileContent
+            << "int " << this->modelName << "::saveAsNew() {\n"
+        ;
+        if ( this->projectData.isCxxtoolsLoging( ) ){
+            fileContent
+                << "    log_debug(\"saveAsNew\"  );\n"
+            ;
+        }
+        fileContent
+            << "    std::string dbDriver;\n"
+            << "    dbDriver = \"sqlite:" << this->makefileData.getBinName() << ".db\";\n"
+            << "    // alternativ driver configuration for PostgreSQL\n"
+            << "    // dbDriver = \"postgresql:password=XXX dbname="
+            << this->makefileData.getBinName() << " host=localhost port=5432 user="
+            << this->makefileData.getBinName() << "\";\n"
+            << "    tntdb::Connection conn( tntdb::connectCached( dbDriver ) );\n"
+            << "    tntdb::Transaction trans(conn);\n"
+            << "    tntdb::Statement insQuote = conn.prepare(\n"
+            << "        \"INSERT INTO " << this->modelName << " (\\\n"
+        ;
+        for (
+            std::map<std::string,std::string>::iterator it=this->propertyMap.begin();
+            it!=this->propertyMap.end();
+            ++it
+        ){
+            if ( firstItem == true ) {
+                firstItem = false;
+            } else {
+                fileContent << ",\\\n" ;
+            }
+            fileContent  << "            " << it->first ;
+        }
+        fileContent
+            << "\\\n        ) VALUES ( \\\n"
+        ;
+        firstItem = true;
+        for (
+            std::map<std::string,std::string>::iterator it=this->propertyMap.begin();
+            it!=this->propertyMap.end();
+            ++it
+        ){
+            if ( firstItem == true ) {
+                firstItem = false;
+            } else {
+                fileContent << ",\\\n" ;
+            }
+            fileContent  << "            :" << it->first ;
+        }
+        fileContent
+            << "\\\n        )\"\n"
+            << "    );\n"
+            << "    insQuote\n"
+        ;
+        for (
+            std::map<std::string,std::string>::iterator it=this->propertyMap.begin();
+            it!=this->propertyMap.end();
+            ++it
+        ){
+            fileContent
+                << "        .set( \"" << it->first << "\", this->"
+                << it->first << ")\n"
+            ;
+        }
+        fileContent
+            << "        .execute(); \n"
+            << "    int itemID = conn.lastInsertId(\"" << this->modelName << "_id_seq\");\n"
+            << "    return itemID;\n"
+            << "}\n"
+        ;
+    }
+
+
     if( this->componentNamespace != ""){
         fileContent  << "} // and of namespace " << this->componentNamespace << "\n";
     }
@@ -276,11 +363,12 @@ void NewModelData::createFiles(){
 void NewModelData::createHFile(){
     log_debug("createHFile()" );
     std::ostringstream fileContent;
+    bool firstItem = true;
 
     fileContent
-        << "/* \n"
+        << "/*****************************************************************************\n"
         << this->projectData.getSourceCodeHeader()
-        << "\n*/ \n\n"
+        << "\n*****************************************************************************/\n\n"
         << "#ifndef " << toUpper( this->componentNamespace )
         << "_" << toUpper( this->modelName ) << "_H \n"
         << "#define " << toUpper( this->componentNamespace )
@@ -353,9 +441,57 @@ void NewModelData::createHFile(){
     }
     if( this->projectData.isDoxygenTemplates( ) == true ){
         fileContent
-            << "/** \n"
+            << "/**\n"
             << "* @class " << this->modelName << " This class storage the data of ... \n"
-            << "* @todo fill this with information!\n"
+        ;
+    // isTntDB( )
+    if ( this->projectData.isTntDB() == true ){
+        fileContent
+            << "* This class has a database support. The function \"saveAsNew()\" save\n"
+            << "* the class properties as new data set in a datab dase. For createing \n"
+            << "* a new table for data storage you can use this command:\n"
+            << "* @code \n"
+            << "* CREATE TABLE " <<  this->modelName << " (\n"
+            << "*     id INT PRIMARY KEY NOT NULL,\n"
+        ;
+        firstItem = true;
+        for (
+            std::map<std::string,std::string>::iterator it=this->propertyMap.begin();
+            it!=this->propertyMap.end();
+            ++it
+        ){
+            if ( firstItem == true ) {
+                firstItem = false;
+            } else {
+                fileContent << ",\n" ;
+            }
+            if(
+                it->second  == "std::string"
+                or it->second  == "cxxtools::String"
+            ){
+                fileContent << "*     " << this->modelName << " TEXT";
+            }
+            if(
+                it->second  == "int"
+                or it->second  == "long int"
+                or it->second  == "unsigned int"
+                or it->second  == "bool"
+            ){
+                fileContent << "*     " << this->modelName << " INT";
+            }
+            if( it->second  == "float" ){
+                fileContent << "*     " << this->modelName << " REAL";
+            }
+
+        }
+        fileContent
+            << "\n"
+            << "* );\n"
+            << "* @endcode \n"
+        ;
+    }
+        fileContent
+            << "* @todo fill this with more information!\n"
             << "*/\n"
         ;
     }
@@ -389,7 +525,7 @@ void NewModelData::createHFile(){
     if ( this->isConstructor() == true){
         if ( this->projectData.isDoxygenTemplates( ) == true ) {
             fileContent
-                << "    /** \n"
+                << "    /**\n"
                 << "     * @todo need a comment for constructor. \n"
                 << "     */\n"
             ;
@@ -438,6 +574,16 @@ void NewModelData::createHFile(){
                     fileContent << "        " << it->first << "(0.0)";
                     ++contvarinits;
                 }
+                if( it->second  == "bool" ){
+                    if(contvarinits == 0) {
+                        fileContent << "    " << this->modelName << "():\n";
+                    }
+                    if(contvarinits > 0) {
+                        fileContent << ",\n";
+                    }
+                    fileContent << "        " << it->first << "(true)";
+                    ++contvarinits;
+                }
 
             }
             fileContent << "{};\n\n";
@@ -448,7 +594,7 @@ void NewModelData::createHFile(){
     if ( this->isDestructor() == true){
         if ( this->projectData.isDoxygenTemplates( ) == true ) {
             fileContent
-                << "    /** \n"
+                << "    /**\n"
                 << "     * @todo need a comment for destructor. \n"
                 << "     */\n"
             ;
@@ -493,7 +639,7 @@ void NewModelData::createHFile(){
         ){
             if ( this->projectData.isDoxygenTemplates( ) == true ) {
                 fileContent
-                    << "    /** \n"
+                    << "    /**\n"
                     << "     * @todo need a comment. \n"
                     << "     * @return \n"
                     << "     */\n"
@@ -506,7 +652,6 @@ void NewModelData::createHFile(){
 
         }
     }
-    log_debug("isSetterFunctions(): " << this->isSetterFunctions() );
     if ( this->isSetterFunctions() == true){
         log_debug("this->propertyMap.end(): " << this->propertyMap.size() );
         for (
@@ -517,7 +662,7 @@ void NewModelData::createHFile(){
             std::cout << it->first << " => " << it->second << '\n';
             if ( this->projectData.isDoxygenTemplates( ) == true ) {
                 fileContent
-                    << "    /** \n"
+                    << "    /**\n"
                     << "     * @todo need a comment. \n"
                     << "     * @arg _newValue \n"
                     << "     */\n"
@@ -533,7 +678,22 @@ void NewModelData::createHFile(){
         }
     }
 
-    fileContent << "private:\n";
+    // isTntDB( )
+    if ( this->projectData.isTntDB() == true ){
+        if ( this->projectData.isDoxygenTemplates( ) == true ) {
+            fileContent
+                << "    /**\n"
+                << "     * This function save the value(s) of the class in a \n"
+                << "     * data base. \n"
+                << "     * @return the id of the new data set. \n"
+                << "     */\n"
+            ;
+        }
+        fileContent
+            << "     int saveAsNew();\n"
+        ;
+    }
+    fileContent << "\nprivate:\n\n";
     for (
         std::map<std::string,std::string>::iterator it=this->propertyMap.begin();
         it!=this->propertyMap.end();
@@ -541,7 +701,11 @@ void NewModelData::createHFile(){
     ){
         // std::cout << it->first << " => " << it->second << '\n';
         if ( this->projectData.isDoxygenTemplates( ) == true ) {
-            fileContent  << "    /** @todo need a comment. */\n" ;
+            fileContent
+                << "    /**\n"
+                << "     * @todo need a comment.\n"
+                << "*/\n"
+            ;
         }
         fileContent << "    " << it->second << " " << it->first << ";\n\n";
 
