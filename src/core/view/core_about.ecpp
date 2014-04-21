@@ -52,22 +52,61 @@ The TNT-WEB-WIZARD (TWW)  is a wizard for tntnet projects with a web user interf
 
         <h3>Features</h3>
             <ul>
-                <li>Planned
+                <li><b>Ready implemented</b>
                     <ul>
-                        <li>Flash messages support in a separated module</li>
+                        <li>Finished components for...
+                            <ul>
+                                <li>Flash messages support</li>
+                                <li>Reverse routing support (generic links)</li>
+                                <li>Forms with csrf (cross site request forgery) token support</li>
+                            </ul>
+                        </li>
+                        <li>Source code header template</li>
+                        <li>Doxygen templates</li>
+                        <li>Cxxtools loging support</li>
+                        <li>Basic tntdb support</li>
+                        <li>CLI support (cxxtools::Arg)</li>
+                        <li>Adding new components (in a existing project)
+                            <ul>
+                                <li>with a own name space</li>
+                                <li>Included new ecpp file
+                                    <ul>
+                                        <li>with flash messages support</li>
+                                        <li>with a generated html form</li>
+                                        <li>with csrf (cross site request forgery) token support</li>
+                                        <li>with generated routes for reverse routing support</li>
+                                    </ul>
+                                <li>Included new model class
+                                    <ul>
+                                        <li>with generated constructor</li>
+                                        <li>with generated namespace</li>
+                                        <li>with generated getter and setter methods</li>
+                                        <li>with json and xml serialisation support</li>
+                                        <li>with tntdb backend support</li>
+                                    </ul>
+                                </li>
+                                <li>Included new controller class
+                                    <ul>
+                                        <li>with generated constructor</li>
+                                        <li>with generated namespace</li>
+                                        <li>with flash messages support</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>Planned</b>
+                    <ul>
                         <li>favicon.ico upload in core create process</li>
                         <li>Support for editing the project configuration of a existing project</li>
                         <ul>
                             <li>GitHub support (open existing projects)</li>
                             <li>Support for editing the makefile of a existing project</li>
                             <li>Add new resources (images, files and so on) in a existing project</li>
-                            <li>Adding new ecpp files (in a existing project)</li>
-                            <li>Adding new ecpp files (in a existing project) with a generated form</li>
-                            <li>Adding new ecpp files (in a existing project) with flash messages support</li>
-                            <li>Adding new model classes (in a existing project) with generated  getter and setter methods</li>
+
                             <li>Adding new controller classes (in a existing project)</li>
                             <li>Adding new components with view, model and controller (in a existing project)</li>
-                            <li>Adding new components with a own name space (in a existing project)</li>
                         </ul>
                         <li>Adding (own) session classes</li>
                         <li>Access Control List (ACL) support</li>
@@ -80,19 +119,7 @@ The TNT-WEB-WIZARD (TWW)  is a wizard for tntnet projects with a web user interf
                         <li>Add url prefixes support for revers proxy configurations</li>
                     </ul>
                 </li>
-                <li>Ready implemented
-                    <ul>
-                        <li>Source code header template</li>
-                        <li>Doxygen templates</li>
-                        <li>Reverse routing support (dynamic links)</li>
-                        <li>Forms with csrf (cross site request forgery) token support</li>
-                        <li>Cxxtools loging support</li>
-                        <li>Basic tntdb support</li>
-                        <li>CLI support (cxxtools::Arg)</li>
-                    </ul>
-                </li>
             </ul>
-
       </div>
 </body>
 </html>

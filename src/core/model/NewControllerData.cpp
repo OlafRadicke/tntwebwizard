@@ -337,13 +337,13 @@ void NewControllerData::createHFile(){
         << "        tnt::QueryParams& qparam \n"
         << "    ); \n\n"
         << "private: \n\n"
-        << this->newModelData.getName() << " "
+        << "    " << this->newModelData.getName() << " "
         << this->toLower( this->newModelData.getName() ) << ";\n"
     ;
 
     if( this->projectData.isFlashMessagesSupport() == true ){
         fileContent
-            << "FlashMessages::MessageData  flashmessage; \n"
+            << "    FlashMessages::MessageData  flashmessage; \n"
         ;
     }
     fileContent
