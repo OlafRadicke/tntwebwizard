@@ -81,7 +81,8 @@ The TNT-WEB-WIZARD (TWW)  is a wizard for tntnet projects with a web user interf
                                         <li>with generated constructor</li>
                                         <li>with generated namespace</li>
                                         <li>with generated getter and setter methods</li>
-                                        <li>with json and xml serialisation support</li>
+                                        <li>with json serialisation support</li>
+                                        <li>with xml serialisation support</li>
                                         <li>with tntdb backend support</li>
                                     </ul>
                                 </li>
