@@ -93,6 +93,7 @@ void operator>>= (
     si.getMember("form_token")         >>= projektData.formToken;
     si.getMember("route_reverse")      >>= projektData.routeReverse;
     si.getMember("cxxtools_loging")    >>= projektData.cxxtoolsLoging;
+    si.getMember("tntdb_support")      >>= projektData.tntDBsupport;
 
 }
 
@@ -107,6 +108,7 @@ void operator<<= (
     si.addMember("form_token")         <<= projektData.isFormToken( );
     si.addMember("route_reverse")      <<= projektData.isRouteReverse( );
     si.addMember("cxxtools_loging")    <<= projektData.isCxxtoolsLoging( );
+    si.addMember("tntdb_support")      <<= projektData.isTntDB( );
 }
 
 // === R ===
