@@ -1,0 +1,70 @@
+<# 
+Copyright (C) <year>  <name of author> 
+
+This program is free software: you can redistribute it and/or modify 
+it under the terms of the GNU Affero General Public License as published by 
+the Free Software Foundation, either version 3 of the License, or later 
+version. 
+
+This program is distributed in the hope that it will be useful, 
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+GNU Affero General Public License for more details. 
+
+You should have received a copy of the GNU Affero General Public License 
+along with this program.  If not, see <http://www.gnu.org/licenses/>.    
+
+#> 
+
+<%pre> 
+    #include <formtoken/manager/manager.h> 
+</%pre> 
+<%session
+    scope="shared"
+    include="githubsupport/model/githubdata.h">
+        GithubSupport::GithubData inst_githubdata();
+</%session>
+
+<%request
+    include="flashmessages/model/messagedata.h" 
+    include="githubsupport/controller/githubsupportcontroller.h" >
+        FlashMessages::MessageData  flashmessage;
+        GithubSupport::GithubSupportController
+            controller( 
+                inst_githubdata,
+                flashmessage
+            );
+</%request>
+<%cpp>
+    controller.worker(
+        request,
+        reply,
+        qparam
+    );
+</%cpp>
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>GITHUBSUPPORT</title>
+</head>
+<body>
+    <%include>flashmessages/view/flashmessages_feedbackbox.eccp</%include> 
+    <form method="post">  
+        <$$  FormToken::Manager::getFormToken( request )  $>
+        <label from="downloadUrl">downloadUrl:</label>
+        <br>
+        <input
+            id="downloadUrl"
+            name="form_downloadUrl"
+            type="text"
+            size="40"
+            maxlength="40"
+            value="<$ inst_githubdata.get_downloadUrl() $>">
+        <br>
+
+        <button
+            name="form_submit_button"
+            type="submit"
+            value="form_submit_button" >Submit form</button>
+    </form>
+</body>
