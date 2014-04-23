@@ -702,9 +702,9 @@ void NewModelData::createHFile(){
         // std::cout << it->first << " => " << it->second << '\n';
         if ( this->projectData.isDoxygenTemplates( ) == true ) {
             fileContent
-                << "    /**\n"
-                << "     * @todo need a comment.\n"
-                << "*/\n"
+                << "   /**\n"
+                << "    * @todo need a comment.\n"
+                << "    */\n"
             ;
         }
         fileContent << "    " << it->second << " " << it->first << ";\n\n";

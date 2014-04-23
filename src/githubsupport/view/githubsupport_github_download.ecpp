@@ -1,36 +1,41 @@
-<# 
-Copyright (C) <year>  <name of author> 
+<#
+Copyright (C) <year>  <name of author>
 
-This program is free software: you can redistribute it and/or modify 
-it under the terms of the GNU Affero General Public License as published by 
-the Free Software Foundation, either version 3 of the License, or later 
-version. 
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or later
+version.
 
-This program is distributed in the hope that it will be useful, 
-but WITHOUT ANY WARRANTY; without even the implied warranty of 
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
-GNU Affero General Public License for more details. 
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
-You should have received a copy of the GNU Affero General Public License 
-along with this program.  If not, see <http://www.gnu.org/licenses/>.    
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#> 
+#>
 
-<%pre> 
-    #include <formtoken/manager/manager.h> 
-</%pre> 
+<%pre>
+    #include <formtoken/manager/manager.h>
+</%pre>
 <%session
     scope="shared"
+    include="core/model/UserSession.h"
     include="githubsupport/model/githubdata.h">
+        Tww::Core::UserSession userSession(
+            FormToken::Manager::getRawToken( request )
+        );
         GithubSupport::GithubData inst_githubdata();
 </%session>
 
 <%request
-    include="flashmessages/model/messagedata.h" 
+    include="flashmessages/model/messagedata.h"
     include="githubsupport/controller/githubsupportcontroller.h" >
         FlashMessages::MessageData  flashmessage;
         GithubSupport::GithubSupportController
-            controller( 
+            controller(
+                userSession,
                 inst_githubdata,
                 flashmessage
             );
@@ -45,26 +50,41 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>GITHUBSUPPORT</title>
+    <title>TNT-WEB-WIZARD -GITHUB SUPPORT</title>
 </head>
 <body>
-    <%include>flashmessages/view/flashmessages_feedbackbox.eccp</%include> 
-    <form method="post">  
-        <$$  FormToken::Manager::getFormToken( request )  $>
-        <label from="downloadUrl">downloadUrl:</label>
-        <br>
-        <input
-            id="downloadUrl"
-            name="form_downloadUrl"
-            type="text"
-            size="40"
-            maxlength="40"
-            value="<$ inst_githubdata.get_downloadUrl() $>">
-        <br>
 
-        <button
-            name="form_submit_button"
-            type="submit"
-            value="form_submit_button" >Submit form</button>
-    </form>
+    <& core_part_title qparam >
+    <& core_part_menu qparam >
+
+    <div id="content">
+
+        <%include>flashmessages/view/flashmessages_feedbackbox.eccp</%include>
+
+        <fieldset>
+            <legend>GITHUB SUPPORT</legend>
+
+            <form method="post">
+                <$$  FormToken::Manager::getFormToken( request )  $>
+
+                <div class="form_labels">
+                    <label from="downloadUrl">downloadUrl:</label>
+                </div>
+                <div class="form_inputs">
+                    <input
+                        id="downloadUrl"
+                        name="form_downloadUrl"
+                        type="text"
+                        size="40"
+                        maxlength="40"
+                        value="<$ inst_githubdata.get_downloadUrl() $>">
+                </div>
+
+                <button
+                    name="form_submit_button"
+                    type="submit"
+                    value="form_submit_button" >Submit form</button>
+            </form>
+        <fieldset>
+    </div>
 </body>

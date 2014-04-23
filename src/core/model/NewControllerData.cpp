@@ -299,13 +299,13 @@ void NewControllerData::createHFile(){
     if( this->projectData.isFlashMessagesSupport() == true ){
         fileContent
             << ",\n"
-            << "         FlashMessages::MessageData  _flashmessage"
+            << "        FlashMessages::MessageData  _flashmessage"
         ;
     }
 
 
     fileContent
-        << "): \n"
+        << "\n): \n"
         << "        " << this->toLower( this->newModelData.getName() )
         << "( _" << this->toLower( this->newModelData.getName() )
         << " )"
@@ -337,11 +337,27 @@ void NewControllerData::createHFile(){
         << "        tnt::QueryParams& qparam \n"
         << "    ); \n\n"
         << "private: \n\n"
+    ;
+    if( this->projectData.isDoxygenTemplates( ) == true ){
+        fileContent
+            << "   /** \n"
+            << "    * @todo fill this with information. \n"
+            << "    */ \n"
+        ;
+    }
+    fileContent
         << "    " << this->newModelData.getName() << " "
         << this->toLower( this->newModelData.getName() ) << ";\n"
     ;
 
     if( this->projectData.isFlashMessagesSupport() == true ){
+        if( this->projectData.isDoxygenTemplates( ) == true ){
+            fileContent
+                << "   /** \n"
+                << "    * Flash message class. \n"
+                << "    */ \n"
+            ;
+        }
         fileContent
             << "    FlashMessages::MessageData  flashmessage; \n"
         ;
