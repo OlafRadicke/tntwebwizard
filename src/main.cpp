@@ -23,6 +23,7 @@
 #include <formtoken/initcomponent.h>
 #include <githubsupport/initcomponent.h>
 #include <routereverse/initcomponent.h>
+#include <githubsupport/initcomponent.h>
 
 #include <tnt/tntnet.h>
 #include <tnt/configurator.h>
@@ -61,6 +62,7 @@ int main ( int argc, char* argv[] )
         GithubSupport::initcomponent( app );
         RouteReverse::initcomponent( app );
         Tww::Core::initcomponent( app );
+        GithubSupport::initcomponent( app );
 
 
         std::cout << "tntwebwizard is started and run on http://" << config.appIp()
