@@ -21,17 +21,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <flashmessages/model/messagedata.h>
 #include <tnt/httprequest.h>
 #include <tnt/httpreply.h>
+#include <cxxtools/log.h>
 #include <string>
 
 namespace GithubSupport {
+
+log_define("GithubSupport.GithubSupportController")
 
 void GithubSupportController::worker (
     tnt::HttpRequest& request,
     tnt::HttpReply& reply,
     tnt::QueryParams& qparam
 ){
+    log_debug("worker()" );
 
-    
+    if ( qparam.arg<bool>("form_submit_button") ) {
+        this->githubdata.set_downloadUrl( qparam.arg<std::string>("form_downloadUrl") );
+        this->githubdata.gitClone();
+        this->flashmessage.feedback="Clone project data is ready.";
+        this->flashmessage.warning = false;
+    }
     return;
 }
 

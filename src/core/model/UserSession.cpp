@@ -46,7 +46,7 @@ UserSession::UserSession ( std::string token ) {
 UserSession::~UserSession ( ) {
     if ( cxxtools::Directory::exists( this->getSessionPath() ) ) {
         std::ostringstream syscommand;
-        syscommand << "rm -r " << this->getSessionPath();
+        syscommand << "rm -Rf " << this->getSessionPath();
         system( syscommand.str().c_str() );
     }
 }

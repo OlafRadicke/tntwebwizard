@@ -39,7 +39,7 @@ log_define("Core.NewControllerData")
 // === C ===
 
 
-void NewControllerData::createFiles( ){
+void NewControllerData::createFiles(){
     log_debug("createFile()" );
 
     std::stringstream fileContent;
@@ -148,6 +148,44 @@ void NewControllerData::createCppFile(){
         << "    tnt::HttpReply& reply, \n"
         << "    tnt::QueryParams& qparam \n"
         << "){\n"
+    ;
+
+    if ( this->formSupport == true ) {
+        fileContent
+            << "    if ( qparam.arg<bool>(\"form_submit_button\") ) {\n"
+        ;
+        for (
+            std::map<std::string,std::string>::iterator it2=propertyMap.begin();
+            it2!=propertyMap.end();
+            ++it2
+        ){
+            fileContent
+                << "        " << this->toLower( this->newModelData.getName() )
+                << ".set_" << it2->first << "( qparam.arg<" << it2->second
+                << ">( \"form_" << it2->first << "\" ) );\n"
+            ;
+        }
+        if ( this->projectData.isTntDB() == true ){
+            fileContent
+                << "        this->" << this->toLower( this->newModelData.getName() ) << ".saveAsNew();\n"
+            ;
+        } else {
+            fileContent
+                << "        \\\\\\ @todo modified this function call\n"
+                << "        \\\\ this->" << this->toLower( this->newModelData.getName() ) << ".save();\n"
+            ;
+        }
+        if( this->projectData.isFlashMessagesSupport() == true ){
+            fileContent
+                << "        this->flashmessage.feedback=\"Data is all ready submit\";\n"
+                << "        this->flashmessage.warning = false;\n"
+            ;
+        }
+        fileContent
+            << "    }\n"
+        ;
+    }
+    fileContent
         << "    return;\n"
         << "}\n\n"
         << "} // namespace  \n"
@@ -212,6 +250,9 @@ void NewControllerData::createHFile(){
         << "#include <tnt/httprequest.h>\n"
         << "#include <tnt/httpreply.h>\n"
     ;
+    if ( this->projectData.isCxxtoolsLoging( ) ){
+        fileContent  << "#include <cxxtools/log.h>\n";
+    }
     for (
         std::map<std::string,std::string>::iterator it=propertyMap.begin();
         it!=propertyMap.end();
@@ -267,9 +308,17 @@ void NewControllerData::createHFile(){
             break;
         }
     }
+
     if( this->componentNamespace != "" ){
         fileContent  << "\nnamespace " << this->componentNamespace << " {\n\n";
     }
+    if ( this->projectData.isCxxtoolsLoging( ) ){
+        fileContent
+            << "log_define(\"" << this->componentNamespace << "."
+            << this->controllerName << "\")\n\n"
+        ;
+    }
+
     if( this->projectData.isDoxygenTemplates( ) == true ){
         fileContent
             << "/** \n"

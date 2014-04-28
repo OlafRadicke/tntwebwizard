@@ -21,6 +21,7 @@
 #include <core/initcomponent.h>
 
 #include <formtoken/initcomponent.h>
+#include <githubsupport/initcomponent.h>
 #include <routereverse/initcomponent.h>
 
 #include <tnt/tntnet.h>
@@ -46,7 +47,7 @@ int main ( int argc, char* argv[] )
         log_init( config.logging() );
 
         if ( cxxtools::Directory::exists( "/tmp/tntwebwizard/" ) ) {
-            system("rm -r /tmp/tntwebwizard/");
+            system("rm -Rf /tmp/tntwebwizard/");
         }
 
         // Init Application Server
@@ -57,8 +58,10 @@ int main ( int argc, char* argv[] )
 
         // init comonent parts
         FormToken::initcomponent( app );
+        GithubSupport::initcomponent( app );
         RouteReverse::initcomponent( app );
         Tww::Core::initcomponent( app );
+
 
         std::cout << "tntwebwizard is started and run on http://" << config.appIp()
             << ":" <<  config.appPort() << "/" << std::endl;

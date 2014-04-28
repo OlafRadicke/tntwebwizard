@@ -17,6 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include <githubsupport/model/githubdata.h>
+#include <core/model/TntWebWizardException.h>
 
 #include <tntdb/connect.h>
 #include <tntdb/transaction.h>
@@ -29,8 +30,10 @@ namespace GithubSupport {
 
 log_define("GithubSupport.GithubData")
 
-bool GithubData::gitCheckout() {
+void GithubData::gitClone() {
     log_debug("gitCheckout"  );
+    std::ostringstream sysCommand;
+    std::ostringstream errorText;
 
     sysCommand
         << "git clone "
@@ -47,7 +50,7 @@ bool GithubData::gitCheckout() {
             << "Download file is Failed: \""
             << sysCommand.str()
         ;
-        throw Core::TntWebWizardException( errorText.str() );
+        throw Tww::Core::TntWebWizardException( errorText.str() );
     }
     return;
 }

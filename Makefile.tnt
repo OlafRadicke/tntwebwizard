@@ -19,6 +19,8 @@
         "./src/core/model/UserSession.cpp",
         "./src/formtoken/controller/controller.cpp",
         "./src/formtoken/manager/manager.cpp",
+        "./src/githubsupport/controller/githubsupportcontroller.cpp",
+        "./src/githubsupport/model/githubdata.cpp",
         "./src/routereverse/manager/manager.cpp"
     ],
     "cppFlags": "-c -Wall -pedantic  -I ./src  ",
@@ -41,6 +43,9 @@
         "./src/core/model/UserSession.h",
         "./src/routereverse/initcomponent.h",
         "./src/formtoken/manager/manager.h",
+        "./src/githubsupport/initcomponent.h",
+        "./src/githubsupport/controller/githubsupportcontroller.h",
+        "./src/githubsupport/model/githubdata.h",
         "./src/routereverse/manager/manager.h"
     ],
     "ecppFiles": [
@@ -54,7 +59,8 @@
         "./src/core/view/core_part_menu.eccp",
         "./src/core/view/core_part_title.eccp",
         "./src/core/view/core_projectreset.ecpp",
-        "./src/formtoken/view/formtoken_no_availabe_token.ecpp"
+        "./src/formtoken/view/formtoken_no_availabe_token.ecpp",
+        "./src/githubsupport/view/githubsupport_github_download.ecpp"
     ],
     "resourcesRoot": "./src/",
     "resourcesFiles": [

@@ -72,7 +72,7 @@ public:
     /**
      * This function create the code files of a model.
      */
-    void createFiles( );
+    void createFiles();
 
     // === G ===
 

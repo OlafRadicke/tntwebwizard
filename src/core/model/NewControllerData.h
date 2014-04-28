@@ -58,7 +58,7 @@ public:
     /**
      * This function create the *.cpp and *.h view file of the controller class.
      */
-    void createFiles( );
+    void createFiles();
 
 
     // === G ===
@@ -150,7 +150,7 @@ private:
     /**
      * This function create the header code file (".h") of a model.
      */
-    void createHFile( );
+    void createHFile();
 
 
     /**

@@ -65,8 +65,11 @@ class GithubSupportController {
 
 private:
 
+    /**
+     * Data about github sources.
+     */
     GithubData githubdata;
-    
+
     FlashMessages::MessageData  flashmessage;
 
     /**

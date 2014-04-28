@@ -80,9 +80,9 @@ void NewViewData::createFiles( std::map<std::string,std::string>& _propertyMap )
         << "    scope=\"shared\"\n"
         << "    include=\""
         << this->toLower( this->componentNamespace )
-        << "/model/" << this->toLower( this->modelName ) << ".h\">\n"
+        << "/model/" << this->toLower( this->modelName ) << ".h\">\n\n"
         << "        " << this->componentNamespace << "::" << this->modelName
-        << " inst_" << this->toLower( this->modelName ) << "();\n"
+        << " inst_" << this->toLower( this->modelName ) << "();\n\n"
         << "</%session>\n\n"
         << "<%request\n"
     ;
@@ -93,7 +93,7 @@ void NewViewData::createFiles( std::map<std::string,std::string>& _propertyMap )
     }
     fileContent
         << "    include=\"" << this->toLower( this->componentNamespace )
-        << "/controller/" << this->toLower( this->controllerName ) << ".h\" >\n"
+        << "/controller/" << this->toLower( this->controllerName ) << ".h\" >\n\n"
     ;
     if( this->projectData.isFlashMessagesSupport() == true ){
         fileContent
@@ -111,15 +111,15 @@ void NewViewData::createFiles( std::map<std::string,std::string>& _propertyMap )
         ;
     }
     fileContent
-        << "            );\n"
+        << "            );\n\n"
         << "</%request>\n"
-        << "<%cpp>\n"
+        << "<%cpp>\n\n"
         << "    controller.worker(\n"
         << "        request,\n"
         << "        reply,\n"
         << "        qparam\n"
-        << "    );\n"
-        << "</%cpp>\n"
+        << "    );\n\n"
+        << "</%cpp>\n\n"
         << "<!DOCTYPE HTML>\n"
         << "<html>\n"
         << "<head>\n"

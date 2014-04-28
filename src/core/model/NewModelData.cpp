@@ -47,7 +47,7 @@ log_define("Core.NewModelData")
 // === C ===
 
 
-void NewModelData::createCppFile(){
+void NewModelData::createCppFile( ){
     log_debug("createCppFile()" );
     bool firstItem = true;
     std::ostringstream fileContent;

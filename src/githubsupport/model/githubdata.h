@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef GITHUBSUPPORT_GITHUBDATA_H
 #define GITHUBSUPPORT_GITHUBDATA_H
 
+#include <core/model/UserSession.h>
 #include <string>
 
 namespace GithubSupport {
@@ -33,14 +34,15 @@ public:
     /**
      * @todo need a comment for constructor.
      */
-    GithubData():
-        downloadUrl("https://github.com/OlafRadicke/tntwebwizard.git"){};
+    GithubData( Tww::Core::UserSession& _userSession ):
+        downloadUrl("https://github.com/OlafRadicke/tntwebwizard.git"),
+        userSession( _userSession ){};
 
     /**
-     * Get the url from github sources.
-     * @return
-     */
-     const std::string get_downloadUrl() const {
+    * Get the url from github sources.
+    * @return
+    */
+    const std::string get_downloadUrl() const {
         return this->downloadUrl;
     }
 
@@ -53,9 +55,9 @@ public:
     }
 
     /**
-     * This function make a git checkout with the url from property  downloadUrl.
+     * This function make a git checkout/clone with the url from property  downloadUrl.
      */
-     bool gitCheckout();
+     void gitClone();
 
 private:
 
@@ -63,6 +65,11 @@ private:
     * @todo need a comment.
     */
     std::string downloadUrl;
+
+    /**
+     * Session information.
+     */
+    Tww::Core::UserSession& userSession;
 
 }; // and of class GithubData
 } // and of namespace GithubSupport

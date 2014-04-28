@@ -59,7 +59,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             "core_downloadzip",
             request
         );
-
     std::string href_core_newcomponent =
         RouteReverse::Manager::getLinkTo(
             "core_newcomponent",
@@ -75,6 +74,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             "core_about",
             request
         );
+    std::string href_githubsupport_github_download =
+        RouteReverse::Manager::getLinkTo(
+            "githubsupport_github_download",
+            request
+        );
 
 
 </%cpp>
@@ -83,6 +87,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <ul class="nav">
             <li class="header">Project configuration</li>
             <li><a href="<$ href_core_basicprojectdata $>">Basic project data</a></li>
+% if( !webappManager.isApplicationCoreExist() ){
+            <li><a href="<$ href_githubsupport_github_download $>">Load existing project</a></li>
+% }
 % if(
 %     !webappManager.isApplicationCoreExist()
 %     && makefileData.getBinName() != ""

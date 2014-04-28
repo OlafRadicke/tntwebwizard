@@ -164,6 +164,9 @@ void NewComponentController::worker (
         this->newControllerData.setNamespace(
             qparam.arg<std::string>("form_namespace")
         );
+        this->newControllerData.isFormSupport(
+            qparam.arg<bool>("form_webform_support")
+        );
 
         // Model class
 
@@ -210,10 +213,20 @@ void NewComponentController::worker (
     // save button pressed
     if ( qparam.arg<bool>("form_create_button") == true ) {
         log_debug("create_button is pushed..." );
+        std::stringstream infoText;
+        infoText
+            << "Okay! Project core is created now! "
+            << "For activating this new component you have to add a "
+            << "[your component namespace]::initcomponent( app ) function call "
+            << "in your main.cpp file. Read the \"./README.md\" for more "
+            << "information."
+        ;
+
         this->newModelData.createFiles();
         this->newViewData.createFiles( this->newModelData.getPropertyMap() );
         this->newControllerData.createFiles();
-        this->feedback = "Okay! Project core is created now!";
+//         this->feedback = "Okay! Project core is created now!";
+        this->feedback = infoText.str();
         this->warning = false;
         return;
     }
