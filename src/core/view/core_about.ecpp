@@ -91,6 +91,7 @@ The TNT-WEB-WIZARD (TWW)  is a wizard for tntnet projects with a web user interf
                                         <li>with generated constructor</li>
                                         <li>with generated namespace</li>
                                         <li>with flash messages support</li>
+                                        <li>with form action (reading form values in the modal class)</li>
                                     </ul>
                                 </li>
                             </ul>
