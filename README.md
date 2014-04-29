@@ -30,6 +30,7 @@ A tntnnet environment with cxxtools and tntnet
 ## runtime requirement
 * zip
 * curl
+* git
 
 # Build
 
