@@ -22,6 +22,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <githubsupport/model/githubdata.h>
 #include <flashmessages/model/messagedata.h>
 #include <core/model/UserSession.h>
+#include <core/model/MakefileData.h>
+#include <core/model/ProjectData.h>
 #include <tnt/httprequest.h>
 #include <tnt/httpreply.h>
 #include <string>
@@ -60,7 +62,9 @@ class GithubSupportController {
     void worker (
         tnt::HttpRequest& request,
         tnt::HttpReply& reply,
-        tnt::QueryParams& qparam
+        tnt::QueryParams& qparam,
+        Tww::Core::ProjectData& _projectData,
+        Tww::Core::MakefileData& _makefileData
     );
 
 private:

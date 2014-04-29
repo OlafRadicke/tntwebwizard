@@ -85,7 +85,7 @@ void DownloadZipController::worker (
         << "; "
         << "zip -r "
         << this->makefileData.getBinName()
-        << ".zip ./* ;"
+        << ".zip .* * ;"
     ;
 
     log_debug( "[" << __LINE__ << "] command: " << sysCommand.str() );

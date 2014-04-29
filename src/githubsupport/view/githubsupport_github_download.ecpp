@@ -22,12 +22,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <%session
     scope="shared"
     include="core/model/UserSession.h"
+    include="core/model/ProjectData.h"
+    include="core/model/MakefileData.h"
     include="githubsupport/model/githubdata.h">
 
         Tww::Core::UserSession userSession(
             FormToken::Manager::getRawToken( request )
         );
         GithubSupport::GithubData inst_githubdata( userSession );
+        Tww::Core::ProjectData projectData();
+        Tww::Core::MakefileData makefileData();
 
 </%session>
 
@@ -46,7 +50,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     controller.worker(
         request,
         reply,
-        qparam
+        qparam,
+        projectData,
+        makefileData
     );
 </%cpp>
 <!DOCTYPE HTML>

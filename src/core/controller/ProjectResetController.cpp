@@ -52,7 +52,6 @@ void ProjectResetController::worker (
         log_debug( "## " << __LINE__ << " ##" );
         std::string command = "rm -Rf " + this->userSession.getSessionPath() + "/";
         log_debug( "do command: " << command );
-        // I wish good luck and all the best...!
         system( command.c_str() );
         // Create new...
         command = "mkdir " + this->userSession.getSessionPath() + "/";

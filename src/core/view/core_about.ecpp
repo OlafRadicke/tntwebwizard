@@ -95,6 +95,7 @@ The TNT-WEB-WIZARD (TWW)  is a wizard for tntnet projects with a web user interf
                                 </li>
                             </ul>
                         </li>
+                        <li>GitHub support (clone existing projects from github.com)</li>
                     </ul>
                 </li>
                 <li><b>Planned</b>
@@ -102,12 +103,11 @@ The TNT-WEB-WIZARD (TWW)  is a wizard for tntnet projects with a web user interf
                         <li>favicon.ico upload in core create process</li>
                         <li>Support for editing the project configuration of a existing project</li>
                         <ul>
-                            <li>GitHub support (open existing projects)</li>
                             <li>Support for editing the makefile of a existing project</li>
                             <li>Add new resources (images, files and so on) in a existing project</li>
-
-                            <li>Adding new controller classes (in a existing project)</li>
-                            <li>Adding new components with view, model and controller (in a existing project)</li>
+                            <li>Adding new separate controller classes (in a existing project)</li>
+                            <li>Adding new separate view file (in a existing project)</li>
+                            <li>Adding new separate model classes (in a existing project)</li>
                         </ul>
                         <li>Adding (own) session classes</li>
                         <li>Access Control List (ACL) support</li>
