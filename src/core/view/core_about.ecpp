@@ -46,8 +46,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <h2>About the TNT-WEB-WIZARD</h2>
         <br />
-A witzard for tntnet with web gui.
-The TNT-WEB-WIZARD (TWW)  is a wizard for tntnet projects with a web user interface. TWW is programmed with tntnet framework and open source (AGPL).
+The TNT-WEB-WIZARD (TWW)  is a wizard for tntnet projects with a web user interface. TWW is programmed with tntnet framework and it is open source (AGPL).
 
 
         <h3>Features</h3>
