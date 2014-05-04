@@ -96,7 +96,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <button
                         name="form_submit_button"
                         type="submit"
-                        value="form_submit_button" >Submit form</button>
+                        value="form_submit_button" >Pull source code</button>
                 </div>
 
             </form>
