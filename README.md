@@ -7,7 +7,8 @@ A witzard for tntnet with web gui.
 
 # Project page
 
-[https://github.com/OlafRadicke/tntwebwizard](https://github.com/OlafRadicke/tntwebwizard)
+* *Sources:* [https://github.com/OlafRadicke/tntwebwizard](https://github.com/OlafRadicke/tntwebwizard)
+* *Test instance:* [http://peruschim.de:8010/](http://peruschim.de:8010/)
 
 # License
 
