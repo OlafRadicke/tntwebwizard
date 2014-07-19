@@ -171,8 +171,8 @@ void NewControllerData::createCppFile(){
             ;
         } else {
             fileContent
-                << "        \\\\\\ @todo modified this function call\n"
-                << "        \\\\ this->" << this->toLower( this->newModelData.getName() ) << ".save();\n"
+                << "        /// @todo modified this function call\n"
+                << "        /// this->" << this->toLower( this->newModelData.getName() ) << ".save();\n"
             ;
         }
         if( this->projectData.isFlashMessagesSupport() == true ){

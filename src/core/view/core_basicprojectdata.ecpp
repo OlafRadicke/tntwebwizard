@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #>
 
 <%session
-    scope="shared"
+    ="shared"
     include="core/model/UserSession.h"
     include="core/model/ProjectData.h"
     include="core/model/MakefileData.h"

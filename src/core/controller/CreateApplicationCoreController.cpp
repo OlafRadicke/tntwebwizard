@@ -18,6 +18,14 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+
+#include <tnt/ecpp.h>
+// #include <tnt/httpheader.h>
+// #include <tnt/http.h>
+// #include <tnt/data.h>
+// #include <tnt/componentfactory.h>
+
+
 #include <core/controller/CreateApplicationCoreController.h>
 
 #include <core/model/MakefileData.h>
@@ -54,6 +62,15 @@ void CreateApplicationCoreController::worker (
 
     bool form_create =
         qparam.arg<bool>("form_create_button");
+
+    HttpReply& reply;
+    tnt::QueryParams _tnt_cq2(qparam);
+    callComp(tnt::Compident(std::string(), "core_part_menu"), request, reply, _tnt_cq2);
+
+
+    log_debug("######### file conten #############" );
+    log_debug( reply.out() );
+
 
     // save button pressed
     if ( form_create ) {

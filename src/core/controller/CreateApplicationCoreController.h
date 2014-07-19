@@ -21,6 +21,9 @@
 #ifndef CORE_CREATEAPPLICATIONCORECONTROLLER_H
 #define CORE_CREATEAPPLICATIONCORECONTROLLER_H
 
+#include <tnt/ecpp.h>
+
+
 #include <core/model/MakefileData.h>
 #include <core/model/ProjectData.h>
 #include <core/model/UserSession.h>
@@ -39,7 +42,7 @@ class WebApplicationCoreManager;
 * @class CreateApplicationCoreController This class is the controller of
 * the Site core_createapplicationcore.
 */
-class CreateApplicationCoreController {
+class CreateApplicationCoreController : public tnt::EcppComponent{
 
 public:
 
@@ -55,7 +58,8 @@ public:
         warning(false),
         makefileData( _makefileData ),
         projectData( _projectData ),
-        userSession( _userSession )
+        userSession( _userSession ),
+        EcppComponent("resources")
         {};
 
    /**
